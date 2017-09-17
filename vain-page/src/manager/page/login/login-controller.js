@@ -7,7 +7,7 @@ angular.module("login.controllers", []).controller(
         function ($cookieStore, appConstant, $cookies, $scope, loginHttpService) {
             $scope.init = function () {
                 $scope.loginError = 0;
-                if ($cookieStore.get("lsc-user")) {
+                if ($cookieStore.get("vain-user")) {
                     window.location.href = '../home/home.html';
                     return;
                 }
@@ -30,7 +30,7 @@ angular.module("login.controllers", []).controller(
                 loginHttpService.login($scope.user, function (data) {
                     $scope.formSubmitting = false;
                     if (data.code == 200) {
-                        $cookies.putObject("lsc-user", data.data, {
+                        $cookies.putObject("vain-user", data.data, {
                             path: appConstant.COOKIE_ROOT_PATH
                         });
                         window.location.href = "../home/home.html";
@@ -42,7 +42,7 @@ angular.module("login.controllers", []).controller(
                 })
             };
 
-            $scope.enterPwd = function (error) {
-                $scope.loginError = error;
+            $scope.enterPwd = function () {
+                $scope.loginError = 0;
             }
         }])

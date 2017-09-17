@@ -1,5 +1,5 @@
 /**
- * Created by xuxiang on 2016/3/28.
+ * 登录
  */
 angular.module("login.services",["ngResource","common.services"])
     .factory("loginHttpService",["$resource","appConstant",function ($resource,appConstant) {

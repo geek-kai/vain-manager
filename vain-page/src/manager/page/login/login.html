@@ -37,8 +37,9 @@
                         </p>
                     </div>
                     <div class="am-u-sm-12">
-                        <input type="password" class="login-pw-font am-form-field am-round" placeholder="密码" name="password" required
-                               ng-change="enterPwd(false)"
+                        <input type="password" class="login-pw-font am-form-field am-round" placeholder="密码"
+                               name="password" required
+                               ng-change="enterPwd()"
                                ng-model="user.passwd" ng-keypress="enter($event)" ng-maxlength="16" ng-minlength="6"
                                ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/"/>
                         <div>
@@ -48,12 +49,14 @@
                                 <span ng-show="form.password.$error.pattern&&!form.password.$error.maxlength&&!form.password.$error.minlength">请输入数字和字母组成的密码</span>
                                 <span ng-show="form.password.$error.maxlength">输入长度为6-16个字符</span>
                                 <span ng-show="form.password.$error.minlength">输入长度为6-16个字符</span>
-                                <span ng-show="loginErrorMsg">{{loginErrorMsg}}</span>
+                                <span ng-show="loginError">{{loginErrorMsg}}</span>
                             </div>
                         </div>
                     </div>
                     <p class="am-u-sm-12">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="login()">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                        <button type="submit"
+                                ng-disabled="formSubmitting" class="am-btn am-btn-default" ng-click="login()">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录
+                        </button>
                     </p>
                 </fieldset>
             </form>
