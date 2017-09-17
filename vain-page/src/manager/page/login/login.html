@@ -1,0 +1,78 @@
+<!doctype html>
+<html data-ng-app="login.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台登录系统</title>
+    <meta name="description" content="后台登录页面">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../image/favicon.png">
+    <link rel="stylesheet" href="../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../assets/css/app.css">
+</head>
+
+<body data-type="login" ng-controller="LoginCtrl" ng-init="init()">
+
+<div class="am-g myapp-login">
+    <div class="myapp-login-logo-block  tpl-login-max">
+        <div class="myapp-login-logo-text">
+            <div class="myapp-login-logo-text">
+                后台<span> 登录</span> <i class="am-icon-vine"></i>
+
+            </div>
+        </div>
+
+        <div class="login-font">
+            <i>登录 </i> 或 <span>注册</span>
+        </div>
+        <div class="am-u-sm-10 login-am-center">
+            <form class="am-form" name="form" novalidate="novalidate" method="post">
+                <fieldset>
+                    <div class="am-u-sm-12">
+                        <p><input type="text" class="am-form-field am-round" placeholder="账号" ng-model="user.userName"/>
+                        </p>
+                    </div>
+                    <div class="am-u-sm-12">
+                        <input type="password" class="login-pw-font am-form-field am-round" placeholder="密码" name="password" required
+                               ng-change="enterPwd(false)"
+                               ng-model="user.passwd" ng-keypress="enter($event)" ng-maxlength="16" ng-minlength="6"
+                               ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/"/>
+                        <div>
+                            <div class="divPwd"
+                                 ng-show="((form.password.$dirty || formSubmitInvalid)&&form.password.$invalid) || loginError">
+                                <span ng-show="form.password.$error.required">请输入密码</span>
+                                <span ng-show="form.password.$error.pattern&&!form.password.$error.maxlength&&!form.password.$error.minlength">请输入数字和字母组成的密码</span>
+                                <span ng-show="form.password.$error.maxlength">输入长度为6-16个字符</span>
+                                <span ng-show="form.password.$error.minlength">输入长度为6-16个字符</span>
+                                <span ng-show="loginErrorMsg">{{loginErrorMsg}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="am-u-sm-12">
+                        <button type="submit" class="am-btn am-btn-default" ng-click="login()">登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;录</button>
+                    </p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../assets/js/jquery.min.js"></script>
+<script src="../../assets/js/amazeui.min.js"></script>
+<script src="../../assets/js/app.js"></script>
+<script type="application/javascript" src="../../lib/angular/angular.js"></script>
+<script type="application/javascript" src="../../lib/angular-resource/angular-resource.js"></script>
+<script type="application/javascript" src="../../lib/angular-cookie/angular-cookies.js"></script>
+<script type="application/javascript" src="../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="application/javascript" src="../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="application/javascript" src="login-app.js"></script>
+<script type="application/javascript" src="login-controller.js"></script>
+<script type="application/javascript" src="login-services.js"></script>
+<script type="application/javascript" src="../../common/common-services.js"></script>
+</body>
+
+</html>

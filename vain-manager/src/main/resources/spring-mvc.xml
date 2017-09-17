@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+	<!--父子容器-->
+	<context:component-scan base-package="com.vain.manager" use-default-filters="false">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+
+	<!--拦截器-->
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="com.vain.manager.interceptor.UserIdentityInterceptor"/>
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!--json转换-->
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<!-- fastjosn spring support -->
+			<bean id="jsonConverter"
+				class="com.vain.manager.converter.ExFastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes" value="application/json" />
+				<property name="serializerFeature">
+					<list>
+						<value>QuoteFieldNames</value>
+						<value>WriteDateUseDateFormat</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+
+	<!-- 启动Spring MVC的注解功能 -->
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+	<bean
+		class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter" />
+
+	<!-- 控制器异常处理 -->
+	<bean id="exceptionHandlerExceptionResolver"
+		class="org.springframework.web.servlet.mvc.method.annotation.ExceptionHandlerExceptionResolver">
+	</bean>
+	<bean class="com.vain.manager.common.exception.DefaultExceptionHandler" />
+
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- set the max upload size 100MB -->
+		<property name="maxUploadSize">
+			<value>104857600</value>
+		</property>
+		<property name="maxInMemorySize">
+			<value>1024000</value>
+		</property>
+	</bean>
+</beans>

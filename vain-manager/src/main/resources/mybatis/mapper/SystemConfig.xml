@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.SystemConfig">
+
+	<!-- 复制操作 -->
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vain.manager.entity.SystemConfig">
+		INSERT INTO t_sys_config
+		(name, code, value, valueType, type, description,visible,createTime,modifyTime)
+		VALUES(#{name}, #{code}, #{value}, #{valueType},#{type}, #{description},#{visible},now(),now())
+	</insert>
+
+	<!-- 获取分页列表 -->
+	<select id="getPageList" resultType="com.vain.manager.entity.SystemConfig"
+		parameterType="com.vain.manager.entity.SystemConfig">
+		select *
+		from t_sys_config
+		<where>
+			<if test="name != null"> and name like '%${name}%' </if>
+			<if test="type != null"> and type = #{type} </if>
+			and visible = 1
+		</where>
+		order by type asc
+	</select>
+
+	<!-- 获取列表 -->
+	<select id="getList" resultType="com.vain.manager.entity.SystemConfig"
+		parameterType="com.vain.manager.entity.SystemConfig">
+		select *
+		from t_sys_config
+		<where>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			and visible = 1
+		</where>
+		order by modifyTime desc
+	</select>
+
+	<!-- 获取客户端版本 -->
+	<select id="getVersionList" resultType="com.vain.manager.entity.SystemConfig"
+			parameterType="com.vain.manager.entity.SystemConfig">
+		select name,description,code,value,modifyTime
+		from t_sys_config
+		<where>
+			<if test="type != null">
+				and type = #{type}
+			</if>
+			<if test="code != null">
+				and code = #{code}
+			</if>
+			and visible = 1
+		</where>
+		order by modifyTime desc
+	</select>
+
+	<!--code重复校验-->
+	<select id="isExistCode" resultType="com.vain.manager.entity.SystemConfig"
+			parameterType="com.vain.manager.entity.SystemConfig">
+		select * from t_sys_config
+		<where>
+			<if test="code != null"> and code = #{code} </if>
+			and visible = 1
+		</where>
+	</select>
+
+	<!-- 获取配置详情 -->
+	<select id="get" resultType="com.vain.manager.entity.SystemConfig"
+			parameterType="com.vain.manager.entity.SystemConfig">
+		select *
+		from t_sys_config
+		where id = #{id}
+	</select>
+
+	<!-- 修改 -->
+	<update id="update" parameterType="com.vain.manager.entity.SystemConfig">
+		update t_sys_config
+		<set>
+			<if test="name != null">
+				name=#{name},
+			</if>
+			<if test="value != null">
+				value=#{value},
+			</if>
+			<if test="code != null">
+				code=#{code},
+			</if>
+			<if test="valueType != null">
+				valueType=#{valueType},
+			</if>
+			<if test="type != null and type != 0">
+				type=#{type},
+			</if>
+			<if test="description != null">
+				description=#{description},
+			</if>
+			modifyTime=now(),
+		</set>
+		<where>
+			id=#{id}
+		</where>
+	</update>
+
+</mapper>

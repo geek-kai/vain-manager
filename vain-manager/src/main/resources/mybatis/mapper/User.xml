@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.User">
+
+    <sql id="Base_Column_List">
+       id,userName,passwd,salt,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted
+    </sql>
+
+    <insert id="insert" parameterType="com.vain.manager.entity.User" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO t_user
+    (type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createtime,modifyTime)
+    VALUES
+    (#{type},#{userName},#{passwd},#{salt},#{nickname},#{phone},#{email},#{head},#{sex},#{birthday},#{address},#{state},#{attr1},#{attr2},#{attr3},#{attr4},#{attr5},#{deleted},now(),now())
+    </insert>
+
+    <!--登录-->
+    <select id="get" resultType="com.vain.manager.entity.User"
+            parameterType="com.vain.manager.entity.User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_user
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            <if test="userName !=null and userName != ''">
+                and userName = #{userName}
+            </if>
+            <if test="phone !=null and phone != ''">
+                and phone = #{phone}
+            </if>
+            <if test="email !=null and email != ''">
+                and email = #{email}
+            </if>
+            and deleted=0
+        </where>
+    </select>
+
+    <select id="getPagedList" resultType="com.vain.manager.entity.User"
+            parameterType="com.vain.manager.entity.User">
+        select
+          <include refid="Base_Column_List"/>
+        from t_user
+        <where>
+            <if test="type != null and type != 0">
+                and type = #{type}
+            </if>
+            <if test="userName != null and userName != ''">
+                and userName like '%${userName}%'
+            </if>
+            <if test="id!=null">
+                and id != #{id}
+            </if>
+            and deleted=0
+        </where>
+        order by modifyTime desc,createTime desc
+    </select>
+
+
+    <update id="update" parameterType="com.vain.manager.entity.User">
+        update t_user
+        <set>
+            <if test="nickname != null and nickname !=''">
+                nickname=#{nickname},
+            </if>
+            <if test="passwd != null and passwd != ''">
+                passwd=#{passwd},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt=#{salt},
+            </if>
+            <if test="state != null and state !=-1">
+                state=#{state},
+            </if>
+            <if test="phone != null and phone !=''">
+                phone=#{phone},
+            </if>
+            <if test="email != null and email !=''">
+                email=#{email},
+            </if>
+            <if test="head != null and head != ''">
+                head = #{head},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="birthday != null and birthday != ''">
+                birthday = #{birthday},
+            </if>
+            <if test="address != null and address !=''">
+                address=#{address},
+            </if>
+            <if test="state != null and state != ''">
+                state = #{state},
+            </if>
+            <if test="attr1 != null and attr1 != ''">
+                attr1 = #{attr1},
+            </if>
+            <if test="attr2 != null and attr2 != ''">
+                attr2 = #{attr2},
+            </if>
+            <if test="attr3 != null and attr3 != ''">
+                attr3 = #{attr3},
+            </if>
+            <if test="attr4 != null and attr4 != ''">
+                attr4 = #{attr4},
+            </if>
+            <if test="attr5 != null and attr5 != ''">
+                attr5 = #{attr5},
+            </if>
+            modifyTime=now()
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <update id="delete" parameterType="com.vain.manager.entity.User">
+        update t_user
+        <set>
+            <if test="deleted!=null">
+                deleted = #{deleted},
+            </if>
+            modifyTime=now()
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+
+    <update id="forgetPassword" parameterType="com.vain.manager.entity.User">
+        update t_user
+        <set>
+            <if test="passwd != null and passwd != ''">
+                passwd=#{passwd},
+            </if>
+            modifyTime=now()
+        </set>
+        <where>
+            phone=#{phone}
+        </where>
+    </update>
+</mapper>

@@ -1,0 +1,100 @@
+@charset "UTF-8";
+
+/*左侧导航菜单箭头*/
+.aside h4.active {
+    background: #3d8ece url(../images/arrowR.png) no-repeat 170px center;
+}
+
+/*登录页面错误提示语*/
+.lsc_login div {
+    padding-left: 0px;
+    background: url("");
+}
+
+.lsc_login .divPwd, .lsc_login .divUser {
+    background: url(../images/alert.png) no-repeat 22px center;
+}
+
+.lsc_login span {
+    margin-left: 49px;
+}
+
+/*预览页面的图片位置，H3*/
+.homePage_notice_view > img {
+    position: absolute;
+    right: 0;
+    top: 80px;
+    width: 10%;
+}
+
+.homePage_notice_view .preview_div img {
+    position: relative;
+    right: 0;
+    top: 0;
+    width: auto;
+}
+
+.homePage_notice_view .preview_div h3 {
+    font-weight: normal;
+    margin: 40px 0 40px 0;
+}
+
+/*
+1.菜单管理，新增修改页面（文本框错误提示语位置）
+2.角色管理，新增修改页面（文本框错误提示语位置）
+*/
+.menu_error_textarea,.role_error_textarea {
+    left: 8.4%;
+    bottom: -10px
+}
+
+/*
+1.菜单管理，(新增、修改页面，错误提示语span标签宽度)
+2.城市管理，(新增、修改页面，错误提示语span标签宽度)
+3.用户管理，(新增、修改页面，错误提示语span标签宽度)
+4.角色管理，(新增、修改页面，错误提示语span标签宽度)
+5.组织管理，(新增、修改页面，错误提示语span标签宽度)
+*/
+.cont_input .tip .org_error_div span,
+.cont_input .tip .menu_error_div span,
+.cont_input .tip .user_error_div span,
+.cont_input .tip .role_error_div span,
+.cont_input .tip .struc_error_div span{
+    width: 100%;
+}
+
+/*
+1.个人用户管理，修改个人密码、个人联系信息（错误提示语弹出位置及样式）
+2.用户管理，重置密码（错误提示语弹出位置及样式）
+*/
+.personal_pwd_info .error_div span,
+.user_pwd_div .error_div span,
+.org_pwd_div .error_div span{
+    position: relative;
+    left: 40px;
+}
+
+.personal_pwd_info .error_div,
+.user_pwd_div .error_div,
+.org_pwd_div .error_div{
+    width: 32%;
+    height: 20px;
+    line-height: 20px;
+    box-sizing: border-box;
+    color: #f36e5d;
+    font-size: 14px;
+    position: relative;
+    left: 169px;
+    top: -5px;
+}
+
+.personal_pwd_info .error_div,
+.user_pwd_div .error_div,
+.org_pwd_div .error_div{
+    background: url(../images/alert.png) no-repeat 22px center;
+}
+
+/*收藏页面失败提示弹窗，提示语位置*/
+.addFavorite_setHome h3 {
+    height: auto;
+}
