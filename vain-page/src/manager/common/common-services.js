@@ -2,7 +2,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
     /*nginx 路径配置*/
     .constant("appConstant", {
         BASE_URL: "../../../vain/manager/api",
-        COOKIE_ROOT_PATH: "/vain/manager/",
+        COOKIE_ROOT_PATH: "/",
         AK_BAIDU_LOCATION: '4p6C0D43v2kXDYbFqg7F0MKP3FjTeTAZ',
         AK_JUHE_WEATHER: '873650bec677b0fd991d8994a3501161',
         QUERYPARAM_PAGE_SIZE: 10,
