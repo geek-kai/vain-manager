@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="com.vain.manager.shiro"/>
+
+    <bean id="sessionyManager"
+          class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager">
+    </bean>
+
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realm" ref="defaultRealm"/>
+        <property name="cacheManager" ref="shiroCacheManager"/>
+        <property name="sessionManager" ref="sessionyManager"/>
+    </bean>
+
+    <!--配置的自己的realm-->
+    <bean id="defaultRealm" class="com.vain.manager.shiro.realm.DefaultAuthorizingRealm">
+        <property name="authenticateRealms">
+            <list>
+                <ref bean=""/>
+            </list>
+        </property>
+        <property name="authorizationServiceImpl" ref="authorizationServiceImpl"></property>
+    </bean>
+
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
+    </bean>
+
+  <!--  <bean id="urlFilter" class="com.mic.ikaycity.manager.shiro.filter.UrlFilter"/>
+    <bean id="userFilter" class="com.mic.ikaycity.manager.shiro.filter.AjaxUserFilter"/>
+    <bean id="permissionFilterMgt" class="com.mic.ikaycity.manager.shiro.filter.PermissionFilterManager">
+        <property name="filterName" value="url"/>
+    </bean>-->
+
+    <bean id="authFilter" class="com.mic.ikaycity.manager.shiro.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="filterChainManager" ref="permissionFilterMgt"/>
+        <property name="filters">
+            <map>
+                <!-- 基于url拦截 -->
+                <entry key="url" value-ref="urlFilter"/>
+                <!-- shiro自带拦截器，判断用户是否登录 -->
+                <entry key="user" value-ref="userFilter"/>
+            </map>
+        </property>
+        <property name="filterChainDefinitions">
+            <value>
+                /css/** = anon
+                /js/** = anon
+                /images/** = anon
+                /resources/** = anon
+                /api/lsc/user/login = anon
+                /api/** = user
+            </value>
+        </property>
+    </bean>
+</beans>
+
