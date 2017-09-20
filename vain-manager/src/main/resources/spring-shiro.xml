@@ -24,29 +24,27 @@
     <bean id="defaultRealm" class="com.vain.manager.shiro.realm.DefaultAuthorizingRealm">
         <property name="authenticateRealms">
             <list>
-                <ref bean=""/>
+                <ref bean="simpleAuthenticateRealm"/>
             </list>
         </property>
-        <property name="authorizationServiceImpl" ref="authorizationServiceImpl"></property>
     </bean>
 
-    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager">
-    </bean>
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
-  <!--  <bean id="urlFilter" class="com.mic.ikaycity.manager.shiro.filter.UrlFilter"/>
-    <bean id="userFilter" class="com.mic.ikaycity.manager.shiro.filter.AjaxUserFilter"/>
-    <bean id="permissionFilterMgt" class="com.mic.ikaycity.manager.shiro.filter.PermissionFilterManager">
+    <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
+    <bean id="userFilter" class="com.vain.manager.shiro.filter.AjaxFilter"/>
+    <bean id="permissionFilterManager" class="com.vain.manager.shiro.filter.PermissionFilterManager">
         <property name="filterName" value="url"/>
-    </bean>-->
+    </bean>
 
-    <bean id="authFilter" class="com.mic.ikaycity.manager.shiro.web.ShiroFilterFactoryBean">
+    <bean id="authFilter" class="com.vain.manager.shiro.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="filterChainManager" ref="permissionFilterMgt"/>
+        <property name="filterChainManager" ref="permissionFilterManager"/>
         <property name="filters">
             <map>
-                <!-- 基于url拦截 -->
+                <!--基于url拦截 -->
                 <entry key="url" value-ref="urlFilter"/>
-                <!-- shiro自带拦截器，判断用户是否登录 -->
+                <!--shiro自带拦截器，判断用户是否登录-->
                 <entry key="user" value-ref="userFilter"/>
             </map>
         </property>

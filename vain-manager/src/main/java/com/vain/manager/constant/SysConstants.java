@@ -185,4 +185,9 @@ public class SysConstants {
         public static final int TYPE_OPERATE = 3;
     }
 
+    /**
+     * referer允许的地址
+     */
+    public static final String RefererConstant = "vain/manager";
+
 }

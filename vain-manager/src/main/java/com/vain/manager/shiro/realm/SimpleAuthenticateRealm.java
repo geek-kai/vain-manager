@@ -40,6 +40,7 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
         } else {
             user.setUserName(principal);
         }
+        user.setPasswd(password);
         User dbUser;
         try {
             dbUser = userService.login(user);
