@@ -1,5 +1,6 @@
 package com.vain.manager.util;
 
+import com.vain.manager.entity.BNews;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -81,7 +82,7 @@ public class ReptileUtils {
                     }
 
                     Reader reader = new InputStreamReader(instream, contentEncode);
-                   // Reader reader = new InputStreamReader(instream);
+                    // Reader reader = new InputStreamReader(instream);
                     CharArrayBuffer buffer = new CharArrayBuffer(i);
                     char[] tmp = new char[1024];
                     int l;
@@ -102,9 +103,9 @@ public class ReptileUtils {
             httpClient.getConnectionManager().shutdown();
         }
         String encoding = getEncoding(html);
-        if(StringUtils.isEmpty(encoding))
+        if (StringUtils.isEmpty(encoding))
             try {
-                return new String(html.getBytes(),encoding);
+                return new String(html.getBytes(), encoding);
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -115,6 +116,7 @@ public class ReptileUtils {
 
     /**
      * 通过meta的标签获取网页的字符编码
+     *
      * @param html
      * @return
      */
@@ -137,5 +139,51 @@ public class ReptileUtils {
             return null;
         }
         return null;
+    }
+
+    //获取实时热点
+    public static List<BNews> getNowNews() {
+        String url = "http://top.baidu.com/buzz?b=1&c=513&fr=topbuzz_b341_c513";
+        String http = ReptileUtils.getHttp(url, "gb2312");
+        Document html = Jsoup.parse(http);
+        Elements select = html.select("table.list-table > tbody > tr");
+        List<BNews> news = new ArrayList<>();
+        for (int i = 1; i < 15 && select.size() > 10; i++) {
+            if (StringUtils.isEmpty(select.get(i).select("td.keyword > a.list-title").text()))
+                continue;
+            BNews entity = new BNews(select.get(i).select("td.keyword > a.list-title").text(),
+                    select.get(i).select("td.keyword > a.list-title").attr("href"),
+                    Integer.valueOf(select.get(i).select("td.first > span").first().text()),
+                    Integer.valueOf(select.get(i).select("td.last > span").text()),
+                    select.get(i).select("td.last > span").hasClass("icon-rise"),
+                    select.get(i).select("td.keyword > span").hasClass("icon-new")
+            );
+            news.add(entity);
+        }
+        return news;
+    }
+
+    //获取今日热点
+    public static List<BNews> getTodayNews() {
+        String url = "http://top.baidu.com/buzz?b=341&c=513&fr=topbuzz_b1";
+        String http = ReptileUtils.getHttp(url, "gb2312");
+        Document html = Jsoup.parse(http);
+        Elements select = html.select("table.list-table > tbody > tr");
+        select.removeAttr("tr.item-tr");
+        //select.remove(select.select("tr.item-tr"));
+        List<BNews> news = new ArrayList<>();
+        for (int i = 1; i < 11 && select.size() > 10; i++) {
+            if (select.get(i).hasClass("item-tr"))
+                continue;
+            BNews entity = new BNews(select.get(i).select("td.keyword > a.list-title").text(),
+                    select.get(i).select("td.keyword > a.list-title").attr("href"),
+                    Integer.valueOf(select.get(i).select("td.first > span").text()),
+                    Integer.valueOf(select.get(i).select("td.last > span").text()),
+                    select.get(i).select("td.last > span").hasClass("icon-rise"),
+                    select.get(i).select("td.keyword > span").hasClass("icon-new")
+            );
+            news.add(entity);
+        }
+        return news;
     }
 }

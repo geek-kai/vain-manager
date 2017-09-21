@@ -32,7 +32,7 @@
     <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
     <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
-    <bean id="userFilter" class="com.vain.manager.shiro.filter.AjaxFilter"/>
+    <bean id="userFilter" class="com.vain.manager.shiro.filter.UserFilter"/>
     <bean id="permissionFilterManager" class="com.vain.manager.shiro.filter.PermissionFilterManager">
         <property name="filterName" value="url"/>
     </bean>
@@ -54,7 +54,7 @@
                 /js/** = anon
                 /images/** = anon
                 /resources/** = anon
-                /api/lsc/user/login = anon
+                /api/user/login = anon
                 /api/** = user
             </value>
         </property>

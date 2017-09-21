@@ -188,6 +188,6 @@ public class SysConstants {
     /**
      * referer允许的地址
      */
-    public static final String RefererConstant = "vain/manager";
+    public static final String RefererConstant = "manager";
 
 }

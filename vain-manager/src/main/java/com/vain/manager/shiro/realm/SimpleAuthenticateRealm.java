@@ -7,7 +7,10 @@ import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.authenticator.SubjectInfo;
 import com.vain.manager.shiro.authenticator.UserSubjectInfo;
 import com.vain.manager.shiro.exception.AuthenticationException;
+import com.vain.manager.shiro.token.AccountToken;
+import com.vain.manager.shiro.token.Token;
 import com.vain.manager.util.StrUtil;
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +31,7 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
     private IUserService userService;
 
     @Override
-    public SubjectInfo login(AuthenticationToken token) {
+    public SubjectInfo login(Token token) {
         UserSubjectInfo userSubjectInfo = null;
         String principal = (String) token.getPrincipal();
         String password = (String) token.getCredentials();
@@ -70,7 +73,7 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
     }
 
     @Override
-    public boolean accept(AuthenticationToken token) {
+    public boolean accept(Token token) {
         return true;
     }
 }

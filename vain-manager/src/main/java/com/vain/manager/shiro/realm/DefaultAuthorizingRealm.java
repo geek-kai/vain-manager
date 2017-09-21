@@ -3,6 +3,7 @@ package com.vain.manager.shiro.realm;
 import com.vain.manager.shiro.SecurityHelper;
 import com.vain.manager.shiro.authenticator.DefaultAccountSubject;
 import com.vain.manager.shiro.authenticator.SubjectInfo;
+import com.vain.manager.shiro.token.Token;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -39,7 +40,7 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         logger.info("------------------获取认证信息---------------------");
-        SubjectInfo subjectInfo = authenticate(token);
+        SubjectInfo subjectInfo = authenticate((Token) token);
         if (subjectInfo == null)
             throw new AuthenticationException("SubjectInfo is null");
         AuthenticationInfo info = new SimpleAuthenticationInfo(subjectInfo.getIdentification(), token.getCredentials(), getName());
@@ -60,7 +61,7 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
         return info;
     }
 
-    protected SubjectInfo authenticate(AuthenticationToken token) throws AuthenticationException {
+    private SubjectInfo authenticate(Token token) throws AuthenticationException {
         SubjectInfo subjectInfo = null;
         if (authenticateRealms == null) {
             logger.error("------------------realm为空请检查配置---------------------");
