@@ -74,6 +74,6 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
 
     @Override
     public boolean accept(Token token) {
-        return true;
+        return token instanceof AccountToken;
     }
 }
