@@ -1,7 +1,7 @@
 package com.vain.manager.shiro.authenticator;
 
 import com.vain.manager.shiro.exception.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationToken;
+import com.vain.manager.shiro.token.Token;
 
 import java.io.Serializable;
 
@@ -11,7 +11,7 @@ public class DefaultAccountSubject extends ShiroSubject implements AccountSubjec
     private SubjectInfo subjectInfo;
 
     @Override
-    public void login(AuthenticationToken token) throws AuthenticationException {
+    public void login(Token token) throws AuthenticationException {
         super.login(token);
     }
 

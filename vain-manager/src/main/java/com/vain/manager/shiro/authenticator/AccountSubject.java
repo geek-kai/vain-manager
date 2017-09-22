@@ -1,13 +1,13 @@
 package com.vain.manager.shiro.authenticator;
 
-import org.apache.shiro.authc.AuthenticationToken;
+import com.vain.manager.shiro.token.Token;
 
 /**
  * Created by vain on 2017/9/19.
  */
 public interface AccountSubject {
 
-    void login(AuthenticationToken token);
+    void login(Token token);
 
     void logout();
 

@@ -2,7 +2,7 @@ package com.vain.manager.shiro.token;
 
 /**
  * Created by vain on 2017/9/21.
- * 自己token信息 保留自己的属性
+ * 自己token信息 扩展自己的属性
  */
 public class AccountToken implements Token {
     /**
@@ -62,13 +62,19 @@ public class AccountToken implements Token {
         this.password = password;
     }
 
+    /**
+     * @return 实现自己的token 在返回主要凭据的时候返回的是用户名
+     */
     @Override
     public Object getPrincipal() {
-        return null;
+        return this.userName;
     }
 
+    /**
+     * @return 实现自己的token 在返回主要凭据的时候返回的是密码
+     */
     @Override
     public Object getCredentials() {
-        return null;
+        return this.password;
     }
 }

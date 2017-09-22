@@ -9,6 +9,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
@@ -28,6 +29,16 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     List<AuthenticateRealm> authenticateRealms;
+
+    /**
+     * 构造传入token类否则会爆出 UnSupportAuthrizingRealmException
+     *
+     * @see AuthorizationException
+     */
+    public DefaultAuthorizingRealm() {
+        super();
+        this.setAuthenticationTokenClass(Token.class);
+    }
 
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
