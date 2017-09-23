@@ -31,7 +31,7 @@ import java.util.Set;
 
 /**
  * Created by vain on 2017/9/19.
- * 实现自己的shiro认证登录方式
+ * 实现自己的shiro认证 登录方式
  */
 public class DefaultAuthorizingRealm extends AuthorizingRealm {
 
