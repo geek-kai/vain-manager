@@ -7,7 +7,7 @@ import com.vain.manager.shiro.authenticator.UserSubjectInfo;
 
 /**
  * Created by vain on 2017/9/23.
- * 用户Session
+ * shiro中的用户Session
  */
 public class UserSession {
 
@@ -33,11 +33,11 @@ public class UserSession {
      *
      * @return
      */
-    public static Long getUserId() {
+    public static long getUserId() {
         UserSubjectInfo info = getUserSubjectInfo();
         if (info != null)
             return info.getUserId();
-        return null;
+        return 0;
     }
 
     /**
@@ -69,11 +69,11 @@ public class UserSession {
      *
      * @return
      */
-    public static Integer getUserType() {
+    public static int getUserType() {
         UserSubjectInfo info = getUserSubjectInfo();
         if (info != null)
             return info.getUserType();
-        return null;
+        return 0;
     }
 
 
