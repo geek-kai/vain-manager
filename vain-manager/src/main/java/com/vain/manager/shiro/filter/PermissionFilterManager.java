@@ -6,6 +6,7 @@ import javax.servlet.FilterConfig;
 
 /**
  * Created by vain on 2017/9/20.
+ * filterManager管理
  */
 public class PermissionFilterManager extends DefaultFilterChainManager {
 

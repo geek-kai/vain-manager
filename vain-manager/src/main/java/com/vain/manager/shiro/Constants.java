@@ -10,8 +10,8 @@ public class Constants {
     /**
      * 普通用户
      */
-    public static final int ORDINARY_USER = 2;
-    
+    public static final int USER = 2;
+
     /**
      * 超级管理员
      */
@@ -20,6 +20,6 @@ public class Constants {
     /**
      * 普通角色
      */
-    public static final String ROLE_COMMON = "ROLE_COMMON";
+    public static final String ROLE_USER = "ROLE_USER";
 
 }

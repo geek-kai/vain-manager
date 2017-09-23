@@ -1,5 +1,6 @@
 package com.vain.manager.shiro.realm;
 
+import com.vain.manager.entity.Role;
 import com.vain.manager.shiro.Constants;
 import com.vain.manager.shiro.PermissionContext;
 import com.vain.manager.shiro.SecurityHelper;
@@ -13,7 +14,6 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.AllPermission;
@@ -24,6 +24,8 @@ import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -40,9 +42,9 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
     IAuthorizationService authorizationServiceImpl;
 
     /**
-     * 构造传入token类否则会爆出 UnSupportAuthrizingRealmException
+     * 构造传入自定义的token否则会爆出 UnsupportedTokenException
      *
-     * @see AuthorizationException
+     * @see org.apache.shiro.authc.pam.UnsupportedTokenException
      */
     public DefaultAuthorizingRealm() {
         super();
@@ -74,6 +76,11 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
         return info;
     }
 
+    /**
+     * @param token
+     * @return
+     * @throws AuthenticationException
+     */
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
         logger.info("------------------获取认证信息---------------------");
@@ -115,16 +122,34 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
     }
 
     /**
-     * 获取角色信息
+     * 获取角色key的集合信息
      *
      * @param accountSubject
      * @return
      */
     private Set<String> getSubjectRoles(SubjectInfo accountSubject) {
-        return null;
+        if (accountSubject == null)
+            return null;
+        Set<String> roleSet = new HashSet<>();
+        List<Role> roles = new ArrayList<>();
+        int userType = accountSubject.getUserType();
+        if (userType == Constants.SUPER_ADMIN) {
+            roles.add(new Role(Constants.ROLE_SUPER_ADMINISTRATOR));
+        } else if (userType == Constants.USER) {
+            roles.add(new Role(Constants.ROLE_USER));
+        }
+        for (Role role : roles) {
+            roleSet.add(role.getRoleKey());
+        }
+        return roleSet;
     }
 
     public void setAuthenticateRealms(List<AuthenticateRealm> authenticateRealms) {
         this.authenticateRealms = authenticateRealms;
     }
+
+    public void setAuthorizationServiceImpl(IAuthorizationService authorizationServiceImpl) {
+        this.authorizationServiceImpl = authorizationServiceImpl;
+    }
+
 }

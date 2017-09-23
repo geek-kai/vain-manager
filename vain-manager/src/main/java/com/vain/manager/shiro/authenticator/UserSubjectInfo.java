@@ -26,9 +26,9 @@ public class UserSubjectInfo implements SubjectInfo, Serializable {
     private Long userId;
 
     /**
-     * @see com.vain.manager.shiro.Constants 管理员、机构管理员、普通用户
+     * @see com.vain.manager.shiro.Constants 管理员、普通用户
      */
-    private int userType = Constants.ORDINARY_USER;
+    private int userType = Constants.USER;
 
 
     @Override
