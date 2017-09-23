@@ -159,6 +159,12 @@ public class SysConstants {
          */
         public static final int STATUS_UN_LOCKED = 0;
         public static final int STATUS_LOCKED = 1;
+
+        /**
+         * 账户类型 1：管理员 2：普通用户
+         */
+        public static final int ACCOUNT_TYPE_ADMIN = 1;
+        public static final int ACCOUNT_TYPE_USER = 2;
     }
 
     /**

@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class User extends PagedEntity {
 
     /**
-     * 用户类型 1-管理员2-其他
+     * 用户类型 1-管理员2-普通用户
      */
     private int type;
     /**

@@ -10,9 +10,9 @@
 
     <context:component-scan base-package="com.vain.manager.shiro"/>
 
-    <bean id="sessionyManager"
-          class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager">
-    </bean>
+    <bean id="sessionyManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager"/>
+
+    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="defaultRealm"/>
@@ -27,9 +27,9 @@
                 <ref bean="simpleAuthenticateRealm"/>
             </list>
         </property>
+        <property name="authorizationServiceImpl" ref="authorizationServiceImpl"/>
     </bean>
 
-    <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
     <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
     <bean id="userFilter" class="com.vain.manager.shiro.filter.UserFilter"/>
