@@ -7,9 +7,7 @@ import com.vain.manager.entity.Menu;
 import com.vain.manager.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +22,18 @@ public class MenuController extends AbstractBaseController<Menu> {
 
     @Autowired
     private IMenuService menuService;
+
+    /**
+     * 获取用户自己的菜单
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "/getMyMenu", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<Menu> getMyMenu(@RequestBody Menu entity) {
+        return null;
+    }
 
     @Override
     public Response<Menu> getPagedList(@RequestBody Menu entity, HttpServletRequest request) throws Exception {
