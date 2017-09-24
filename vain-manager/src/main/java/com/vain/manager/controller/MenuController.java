@@ -1,7 +1,6 @@
 package com.vain.manager.controller;
 
 import com.vain.manager.common.controller.AbstractBaseController;
-import com.vain.manager.common.controller.BaseController;
 import com.vain.manager.common.entity.Response;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.service.IMenuService;
