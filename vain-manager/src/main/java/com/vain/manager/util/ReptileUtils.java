@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by vain on 2017/8/18.
- * 百度网页抓取帮助类 java爬虫实践 可删除
+ * 百度网页抓取帮助类 java爬虫实验 可删除
  */
 public class ReptileUtils {
     protected static Log log = LogFactory.getLog(ReptileUtils.class);
@@ -134,7 +134,7 @@ public class ReptileUtils {
         }
         if (!list.isEmpty() && list.size() == 1) {
             String[] split = list.get(0).split("=");
-            if (null != split && split.length == 2)
+            if (split.length == 2)
                 return split[1];
             return null;
         }

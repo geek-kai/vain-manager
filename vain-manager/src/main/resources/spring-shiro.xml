@@ -55,7 +55,7 @@
                 /images/** = anon
                 /resources/** = anon
                 /api/user/login = anon
-                /api/** = user
+                /api/** = url
             </value>
         </property>
     </bean>
