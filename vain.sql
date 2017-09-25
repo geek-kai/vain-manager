@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-09-23 20:00:32
+Date: 2017-09-25 18:16:00
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -32,12 +32,16 @@ CREATE TABLE `t_menu` (
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_menuKey` (`menuKey`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=110001 DEFAULT CHARSET=utf8 COMMENT='保存菜单数据';
+) ENGINE=InnoDB AUTO_INCREMENT=120101 DEFAULT CHARSET=utf8 COMMENT='保存菜单数据';
 
 -- ----------------------------
 -- Records of t_menu
 -- ----------------------------
 INSERT INTO `t_menu` VALUES ('110000', '系统管理', '0', 'system', '1', null, '系统管理', '0', '2017-09-23 15:55:16', '2017-09-23 15:55:17');
+INSERT INTO `t_menu` VALUES ('110100', '个人账号管理', '110000', 'system.user', '2', '../../page/main/main.html', null, '0', '2017-09-25 10:35:07', '2017-09-25 10:35:09');
+INSERT INTO `t_menu` VALUES ('110200', '个人菜单', '110000', 'system.menu', '3', '/api/menu/getMyMenus', null, '0', '2017-09-25 14:05:51', '2017-09-25 14:05:51');
+INSERT INTO `t_menu` VALUES ('120000', '动态管理', '0', 'dynamic', '1', null, null, '0', '2017-09-25 15:09:34', '2017-09-25 15:09:35');
+INSERT INTO `t_menu` VALUES ('120100', '发布动态', '120000', 'dynamic.send', '2', null, null, '0', '2017-09-25 15:35:35', '2017-09-25 15:35:35');
 
 -- ----------------------------
 -- Table structure for `t_role`
@@ -73,12 +77,16 @@ CREATE TABLE `t_role_menu` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='保存角色和菜单的关联关系数据';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='保存角色和菜单的关联关系数据';
 
 -- ----------------------------
 -- Records of t_role_menu
 -- ----------------------------
 INSERT INTO `t_role_menu` VALUES ('1', '1', '110000', '2017-09-23 18:20:36', '2017-09-23 18:20:37');
+INSERT INTO `t_role_menu` VALUES ('2', '1', '110100', '2017-09-25 12:03:13', '2017-09-25 12:03:14');
+INSERT INTO `t_role_menu` VALUES ('3', '1', '110200', '2017-09-25 14:07:08', '2017-09-25 14:07:09');
+INSERT INTO `t_role_menu` VALUES ('4', '1', '120000', '2017-09-25 15:10:05', '2017-09-25 15:10:05');
+INSERT INTO `t_role_menu` VALUES ('5', '1', '120100', '2017-09-25 15:35:46', '2017-09-25 15:35:47');
 
 -- ----------------------------
 -- Table structure for `t_sys_config`
@@ -147,11 +155,12 @@ CREATE TABLE `t_user_menu` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='保存用户与菜单的管理关系数据';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='保存用户与菜单的管理关系数据';
 
 -- ----------------------------
 -- Records of t_user_menu
 -- ----------------------------
+INSERT INTO `t_user_menu` VALUES ('1', '1', '110000', '2017-09-25 11:39:10', '2017-09-25 11:39:11');
 
 -- ----------------------------
 -- Table structure for `t_user_role`
