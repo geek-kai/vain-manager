@@ -8,10 +8,13 @@
 
 ### 约束：
 ####日志：
+
  日志默认的级别为*info*
   
  错误日志级别为*error*
+ 
 ####分层：
+
  controller用名称+Controller结尾
  
  service接口为I+名称+Service结尾
