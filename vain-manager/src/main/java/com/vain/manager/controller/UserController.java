@@ -11,23 +11,17 @@ import com.vain.manager.shiro.authenticator.DefaultAccountSubject;
 import com.vain.manager.shiro.session.UserSession;
 import com.vain.manager.shiro.token.AccountToken;
 import com.vain.manager.util.ReptileUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author vain
- * @description: 账号信息操作controller
+ * @Date
+ * @Description 账号信息操作controller
  * @date 2017/8/31 11:54
  */
 @RequestMapping("/user")
@@ -54,6 +48,11 @@ public class UserController extends AbstractBaseController<User> {
         return response;
     }
 
+    /**
+     * @author vain
+     * @Descritpion
+     * @Date 23:04 2017/9/23
+     */
     @Override
     public Response<User> getPagedList(@RequestBody User entity, HttpServletRequest request) throws Exception {
         return null;
@@ -108,6 +107,7 @@ public class UserController extends AbstractBaseController<User> {
         data.setUserName(UserSession.getUserName());
         data.setNickname(UserSession.getNickName());
         data.setId(UserSession.getUserId());
+        data.setType(UserSession.getUserType());
         response.setData(data);
         response.setCode(SysConstants.Code.SUCCESS_CODE);
         response.setMsg(SysConstants.Code.SUCCESS_MSG);
