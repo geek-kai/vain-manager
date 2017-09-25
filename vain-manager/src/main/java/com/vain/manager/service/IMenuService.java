@@ -19,5 +19,16 @@ public interface IMenuService extends BaseService<Menu> {
 
     HashSet<Menu> getMenusByUserId(Long userId, Integer userType);
 
+    /**
+     * 获取所有数据
+     *
+     * @param entity      参数实体
+     * @param isHierarchy 是否返回层级结构 父子
+     * @return
+     */
+    List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorRCodeException;
+
+
+    List<Menu> getMyMenus(Menu entity) throws ErrorRCodeException;
 
 }

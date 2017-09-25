@@ -20,7 +20,7 @@ public class MenuDao extends AbstractBaseDao<Menu> {
 
     @Override
     public List<Menu> getList(Menu entity) {
-        return null;
+        return this.sqlSession.selectList("com.vain.manager.entity.Menu.getList", entity);
     }
 
     @Override
@@ -91,9 +91,8 @@ public class MenuDao extends AbstractBaseDao<Menu> {
      * @return
      */
     public List<Menu> getMenusByUserRoles(Menu menu) {
-        return this.sqlSession.selectList("com.vain.manager.entity.Menu.getMenusByUserRoles",menu);
+        return this.sqlSession.selectList("com.vain.manager.entity.Menu.getMenusByUserRoles", menu);
     }
-
 
 
 }

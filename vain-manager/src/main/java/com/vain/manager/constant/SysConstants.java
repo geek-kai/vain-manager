@@ -176,7 +176,7 @@ public class SysConstants {
     }
 
     /**
-     * 菜单相关
+     * 菜单相关 菜单初始化使用
      */
     public static final class MenuConstant {
         /**
@@ -189,6 +189,14 @@ public class SysConstants {
         public static final int TYPE_DIR = 1;
         public static final int TYPE_MENU = 2;
         public static final int TYPE_OPERATE = 3;
+    }
+
+    /**
+     * 角色相关
+     */
+    public static final class RoleConstant {
+
+        public static final String SUPER_ADMINISTRATOR = "SUPER_ADMINISTRATOR";
     }
 
     /**
