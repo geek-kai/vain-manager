@@ -14,7 +14,6 @@ angular.module("home.controllers", [])
                 homeHttpServices.getMyMenus({}, function (data) {
                     if (data.code == 200) {
                         $scope.menus = data.dataList;
-                        console.log($scope.menus);
                     } else {
                         msgModal.alertMsg("暂无权限");
                     }
@@ -22,14 +21,29 @@ angular.module("home.controllers", [])
             };
 
 
-            $scope.testA = function (index) {
-                console.log(index);
-                $("ul.tpl-left-nav-sub-menu:lt(1)").css("display", "block");
-            }
+            //保存点击的菜单
+            $scope.checkState = function (index) {
+                $("a.tpl-left-nav-link-list").eq($scope.checkIndex).removeClass('active'); //先移除原来的选择状态
+                $scope.checkIndex = index;
+                $("#homePage").removeClass('active'); //移除首页的选择状态
+                $("a.tpl-left-nav-link-list").eq(index).addClass('active');
+            };
 
+            //修改style 属性 展示子菜单
+            $scope.showSubMenu = function (index) {
+                if ($scope.checkIndex == index)
+                    return {"display": "block"};
+                return {};
+            };
+
+            //跳转对应的子菜单页面
+            $scope.clickMenu = function (menu) {
+                if (typeof menu.url != "undefined")
+                    $scope.menuUrl = menu.url;
+            };
 
             $scope.logout = function () {//注销登录
                 $cookieStore.remove("vain-user");
                 window.location.href = "../login/login.html";
             }
-        }])
+        }]);
