@@ -4,20 +4,22 @@ import java.sql.Timestamp;
 import java.util.List;
 
 /**
+ * @author vain
  * @description: resufull相应实体
- * @author  vain
  * @date 2017/8/31 11:42
  */
-public class Response<T extends IEntity> {
+public class Response<T extends Entity> {
 
     /**
      * 响应码，参见SysConstants中Code常量类
+     *
      * @see com.vain.manager.constant.SysConstants.Code
      */
     private Integer code;
 
     /**
      * 响应消息，参见SysConstants中Msg常量类
+     *
      * @see com.vain.manager.constant.SysConstants.Code
      */
     private String msg;

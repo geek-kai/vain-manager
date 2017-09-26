@@ -5,7 +5,7 @@ package com.vain.manager.common.entity;
  * @author  vain
  * @date 2017/8/31 11:41
  */
-public class Entity implements IEntity {
+public class Entity {
 
     /**
      * 实体记录的id

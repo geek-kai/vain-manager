@@ -14,15 +14,15 @@ import java.util.Map;
 public class PermissionCache {
 
     //存储的menu数据
-    public Map<String, Response<Menu>> permissionCacheMap;
+    private Map<String, Response<Menu>> permissionCacheMap;
 
     //menu存储到map中的key
-    public static final String MENU_KEY = "root";
+    private static final String MENU_KEY = "root";
 
     //session 存储的key
     public static final String SESSION_KEY_PERMISSION_CACHE = "permissionCache";
 
-    public PermissionCache() {
+    private PermissionCache() {
         permissionCacheMap = new HashMap<>();
     }
 

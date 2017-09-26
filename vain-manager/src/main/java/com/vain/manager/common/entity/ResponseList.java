@@ -7,8 +7,8 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
+ * @author vain
  * @description: 响应分页list集合基类
- * @author  vain
  * @date 2017/8/31 11:46
  */
 public class ResponseList<E> extends PageList<E> implements Serializable {

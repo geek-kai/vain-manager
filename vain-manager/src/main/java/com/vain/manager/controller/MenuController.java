@@ -43,7 +43,7 @@ public class MenuController extends AbstractBaseController<Menu> {
             logger.info("菜单操作权限列表");
         } else {
             if (response != null) {
-                logger.debug("获取菜单权限缓存数据");
+                logger.info("获取菜单权限缓存数据");
                 response.setCode(SysConstants.Code.SUCCESS_CODE);
                 response.setData(SysConstants.Code.SUCCESS_MSG);
                 return response;
@@ -56,7 +56,7 @@ public class MenuController extends AbstractBaseController<Menu> {
             response.setMsg(SysConstants.Code.SUCCESS_MSG);
             return response;
         }
-        return null;
+        return response;
     }
 
     @Override

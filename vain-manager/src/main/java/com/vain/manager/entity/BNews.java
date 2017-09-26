@@ -1,12 +1,12 @@
 package com.vain.manager.entity;
 
-import com.vain.manager.common.entity.IEntity;
+import com.vain.manager.common.entity.Entity;
 
 /**
  * Created by vain on 2017/8/22.
  * 百度搜索头条新闻实体
  */
-public class BNews implements IEntity {
+public class BNews extends Entity {
 
     /**
      * 新闻标题
@@ -17,7 +17,7 @@ public class BNews implements IEntity {
      */
     private String url;
     /**
-     *新闻排名
+     * 新闻排名
      */
     private Integer numTop;
     /**
