@@ -82,7 +82,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     var childWinWidth = $(window.document).width();
                     var childWinHeight = $(window.document).height();
                     var menuWidth;//菜单栏的高度
-                    
+
                 }
             }
 
