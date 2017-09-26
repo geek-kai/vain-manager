@@ -66,9 +66,52 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             /*存储查询参数*/
             storeQueryParam: function (queryParam) {
                 window.document.location.href = "#" + encodeURI(JSON.stringify(queryParam));
+            },
+            /*传入元素在屏幕居中 接收参数为jQuery对象*/
+            centerElem: function (elem) {
+                var widowWidth = $(window.parent).width();
+                var windowHeight = $(window.parent).height();
+                var toolbarHeight = 100;
+                var elemWidth = elem.width();
+                var elemHeight = elem.height();
+                var left = (widowWidth - elemWidth) / 2;
+                var top = (windowHeight - elemHeight) / 2;
+                //距离底部最低
+                var bottomLest = top;
+                if(window.parent!==window){
+                    var childWinWidth = $(window.document).width();
+                    var childWinHeight = $(window.document).height();
+                    var menuWidth;//菜单栏的高度
+                    
+                }
             }
+
         };
     }])
+    .factory("msgModal", ['$modal', function ($modal) {
+        return {
+            /*提示语弹窗*/
+            alertMsg: function (msg) {
+                var t = $modal.open({
+                    template: '<div class="cover" style="display:block;"></div>' +
+                    '<div id="coverAlert" class="am-modal am-modal-alert" tabindex="-1" style="display:block;">'
+                    + '<div class="am-modal-dialog">'
+                    + '<div class="am-modal-hd">提示：</div>'
+                    + '<div class="am-modal-bd">'
+                    + '<h3>' + msg + '</h3>'
+                    + '</div>'
+                    + '<div class="am-modal-footer">'
+                    + '<span  class="am-modal-btn">确定</span>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>',
+                    controller: "ModalInstanceCtrl"
+                });
+            }
+        };
+
+    }])
+    /*弹窗msgModal的依赖*/
     .controller("ModalInstanceCtrl", ["$scope", "$modalInstance", "commonUtils",
         function (e, t, commonUtils) {
         }])
@@ -76,6 +119,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
         function (e, t, commonUtils) {
         }])
 
+    /*拦截用户状态*/
     .factory('userInterceptor', ["$cookieStore", "$cookies", "appConstant",
         function ($cookieStore, $cookies, appConstant) {
             var userInterceptor = {
