@@ -51,7 +51,8 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
 
     @Override
     public PageList<User> getPagedList(User entity) throws ErrorRCodeException {
-        return null;
+        entity.initPageParam();
+        return userDao.getPagedList(entity,entity.getCurPage(),entity.getPageSize());
     }
 
     @Override

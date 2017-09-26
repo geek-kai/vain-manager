@@ -1,11 +1,6 @@
 /**
- * admin.css
+ * 特定样式在这
  */
-
-
-/*
- fixed-layout 固定头部和边栏布局
-*/
 
 html,
 body {
@@ -214,7 +209,6 @@ ul {
 .admin-content-pagination li a {
   padding: 4px 8px;
 }
-
 @media only screen and (min-width: 641px) {
   .admin-sidebar {
     display: block;
@@ -323,4 +317,25 @@ gallery.html css
   border: none;
   width: 200px;
   margin: 0 auto;
+}
+
+
+
+/**************在原基础样式上面添加的样式********************/
+/*iframe的大小*/
+#Main_iframe {
+  min-height: 600px;
+  background: #fff;
+  width: 100%;
+}
+
+.login-am-center .divPwd {
+  background: url(../../image/alert.png) no-repeat 22px center;
+}
+
+.login-am-center .divPwd span {
+  color: #F00;
+  margin-left: 50px;
+  font-size: 15px;
+  font-family: '微软雅黑', 'Microsoft Yahei', 'Hiragino Sans GB', 'tahoma', 'arial', '宋体';
 }

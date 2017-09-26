@@ -7,9 +7,10 @@ import com.vain.manager.entity.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+
 /**
+ * @author vain
  * @description: 用户信息操作dao
- * @author  vain
  * @date 2017/8/31 11:57
  */
 @Repository
@@ -27,18 +28,6 @@ public class UserDao extends AbstractBaseDao<User> {
         PageBounds pageBounds = new PageBounds(curPage, pageSize);
         return (PageList) this.sqlSession.selectList("com.vain.manager.entity.User.getPagedList", entity, pageBounds);
     }
-
-    /**
-     * 获取全部数据
-     * @param entity
-     * @return
-     * @return
-     */
-    public List<User> getPagedList(User entity) {
-        PageBounds pageBounds = new PageBounds();
-        return this.sqlSession.selectList("com.vain.manager.entity.User.getPagedList", entity, pageBounds);
-    }
-
 
     /**
      * 获取所有数据

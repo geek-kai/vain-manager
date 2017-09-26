@@ -108,7 +108,6 @@ public class MenuController extends AbstractBaseController<Menu> {
             perCache = PermissionCache.create();
             session.setAttribute(PermissionCache.SESSION_KEY_PERMISSION_CACHE, perCache);
         }
-
         return perCache;
     }
 }

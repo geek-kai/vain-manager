@@ -12,7 +12,7 @@ angular.module("login.controllers", []).controller(
                     return;
                 }
                 $scope.user = {};
-            }
+            };
 
 
             $scope.enter = function (event) {
@@ -45,4 +45,4 @@ angular.module("login.controllers", []).controller(
             $scope.enterPwd = function () {
                 $scope.loginError = 0;
             }
-        }])
+        }]);

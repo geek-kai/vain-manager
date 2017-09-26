@@ -1,8 +1,5 @@
-/**
- * Created by xuxiang on 2016/9/27.
- */
 angular.module("common.directive", [])
-        .directive('onRepeatFinishedRender', function ($timeout) {
+    .directive('onRepeatFinishedRender', function ($timeout) {
         return {
             restrict: 'A', link: function (scope, element, attr) {
                 if (scope.$last === true) {
@@ -43,29 +40,30 @@ angular.module("common.directive", [])
         }
     }])
     .directive('sdate', function () {
-    return {
-        restrict: 'A',
-        scope: false,
-        require: 'ngModel',
-        link: function (scope, element, attr, ngModel) {
-            element.val(ngModel.$viewValue);
-            function onpicked(dp) {
-                var date = dp.cal.getNewDateStr();
-                scope.$apply(function () {
-                    ngModel.$setViewValue(date);
+        return {
+            restrict: 'A',
+            scope: false,
+            require: 'ngModel',
+            link: function (scope, element, attr, ngModel) {
+                element.val(ngModel.$viewValue);
+                function onpicked(dp) {
+                    var date = dp.cal.getNewDateStr();
+                    scope.$apply(function () {
+                        ngModel.$setViewValue(date);
+                    });
+                }
+
+                element.bind('click', function () {
+                    window.WdatePicker({
+                        onpicked: onpicked,
+                        oncleared: function () {
+                            scope.$apply(function () {
+                                ngModel.$setViewValue("");
+                            });
+                        },
+                        dateFmt: 'yyyy-MM-dd'
+                    })
                 });
             }
-            element.bind('click', function () {
-                window.WdatePicker({
-                    onpicked: onpicked,
-                    oncleared: function(){
-                        scope.$apply(function () {
-                            ngModel.$setViewValue("");
-                        });
-                    },
-                    dateFmt: 'yyyy-MM-dd'
-                })
-            });
-        }
-    };
-});
+        };
+    });

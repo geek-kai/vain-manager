@@ -10,9 +10,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
+
 /**
+ * @author vain
  * @description: 捕获异常 返回相应的code和msg
- * @author  vain
  * @date 2017/8/31 11:48
  */
 @ControllerAdvice
@@ -20,8 +21,10 @@ public class DefaultExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(DefaultExceptionHandler.class);
 
-    @ExceptionHandler({ Exception.class })
-    public @ResponseBody
+    // 定义全局异常处理，value属性可以过滤拦截条件，此处拦截所有的Exception
+    @ExceptionHandler({Exception.class})
+    public
+    @ResponseBody
     Response<Entity> processControllerException(NativeWebRequest request, Exception e) {
 
         Response<Entity> response = new Response<>();

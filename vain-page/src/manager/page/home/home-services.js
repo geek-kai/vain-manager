@@ -8,6 +8,10 @@ angular.module("home.services", ["ngResource", "common.services"])
                 getMyMenus: {
                     method: 'post',
                     url: appConstant.BASE_URL + "/menu/getMyMenus"
+                },
+                logout: {
+                    method: 'get',
+                    url: appConstant.BASE_URL + "/user/logout"
                 }
             })
     }]);

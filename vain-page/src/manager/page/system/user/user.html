@@ -1,0 +1,123 @@
+<!doctype html>
+<html data-ng-app="user.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台登录系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+
+</head>
+
+<body data-type="main" ng-controller="UserListCtrl" ng-init="init()">
+<div class="tpl-content-scope tpl-content-wrapper">
+    <div class="tpl-content-page-title">
+        系统管理
+    </div>
+    <ol class="am-breadcrumb">
+        <li><a href="#" class="am-icon-cog">系统管理</a></li>
+        <li class="am-active">用户管理</li>
+    </ol>
+
+    <div class="row">
+        <div class="tpl-portlet">
+            <div class="am-g">
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-btn-toolbar">
+                        <div class="am-btn-group am-btn-group-xs">
+                            <button type="button" class="am-btn am-btn-default am-round am-btn-xs"><span class="am-icon-plus"></span> 新增用户</button>
+                            <button type="button" class="am-btn am-btn-default"><span class="am-icon-lock"></span> 冻结用户</button>
+                            <button type="button" class="am-btn am-btn-default am-round am-btn-xs " ><span class="am-icon-trash-o"></span> 删除用户</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-form-group">
+                        <select data-am-selected="{btnSize: 'sm'}">
+                            <option value="option1">所有类别</option>
+                            <option value="option2">管理员</option>
+                            <option value="option3">普通用户</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u-md-3">
+                    <div class="am-input-group am-input-group-sm">
+                        <input type="text" class="am-form-field">
+                        <span class="am-input-group-btn">
+                          <button class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="am-g">
+                    <form class="am-form">
+                        <table class="am-table am-table-bordered am-table-radius am-table-hover">
+                            <thead>
+                            <tr class="am-primary">
+                                <th><input type="checkbox" class="tpl-table-fz-check"></th>
+                                <th>序号</th>
+                                <th>用户名</th>
+                                <th>昵称</th>
+                                <th>类型</th>
+                                <th>创建日期</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <tr ng-repeat="user in users track by $index">
+                                <td><input type="checkbox"></td>
+                                <td>{{$index+1}}</td>
+                                <td><a href="#">{{user.userName}}</a></td>
+                                <td class="am-hide-sm-only">{{user.nickname}}</td>
+                                <td>{{user.type==1?'管理员':'普通用户'}}</td>
+                                <td class="am-hide-sm-only">{{user.createTime}}</td>
+                                <td>
+                                    <div class="am-btn-toolbar">
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-lock"></span> 冻结</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </form>
+            </div>
+            <div class="am-g">
+                <div ng-include="'../../../common/paginator.html'"></div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/amazeui.min.js"></script>
+    <script src="../../../assets/js/app.js"></script>
+    <script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="application/javascript" src="user-app.js"></script>
+    <script type="application/javascript" src="user-controller.js"></script>
+    <script type="application/javascript" src="user-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-services.js"></script>
+</body>
+
+</html>

@@ -37,6 +37,11 @@ public class Menu extends PagedEntity {
     private String url;
 
     /**
+     * 图标
+     */
+    private String icon;
+
+    /**
      * 菜单描述
      */
     private String description;
@@ -82,6 +87,14 @@ public class Menu extends PagedEntity {
     private List<Menu> children;
 
     public Menu() {
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public Menu(Long userId) {

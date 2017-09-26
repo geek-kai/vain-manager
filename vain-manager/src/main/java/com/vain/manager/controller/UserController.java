@@ -1,5 +1,7 @@
 package com.vain.manager.controller;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.vain.manager.cache.PermissionCache;
 import com.vain.manager.common.controller.AbstractBaseController;
 import com.vain.manager.common.entity.Response;
 import com.vain.manager.common.exception.ErrorRCodeException;
@@ -16,11 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
  * @author vain
- * @Date
  * @Description 账号信息操作controller
  * @date 2017/8/31 11:54
  */
@@ -36,10 +38,9 @@ public class UserController extends AbstractBaseController<User> {
      *
      * @return
      */
-    public
     @RequestMapping("/getNews/{type}")
     @ResponseBody
-    Response<BNews> getNews(@PathVariable("type") int type) throws Exception {
+    public Response<BNews> getNews(@PathVariable("type") int type) throws Exception {
         List<BNews> news = type == 1 ? ReptileUtils.getNowNews() : ReptileUtils.getTodayNews();
         Response<BNews> response = new Response<>();
         response.setCode(SysConstants.Code.SUCCESS_CODE);
@@ -48,14 +49,20 @@ public class UserController extends AbstractBaseController<User> {
         return response;
     }
 
-    /**
-     * @author vain
-     * @Descritpion
-     * @Date 23:04 2017/9/23
-     */
+
+    @RequestMapping(value = "/getPagedList", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<User> getPagedList(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        return null;
+        PageList<User> users = userService.getPagedList(entity);
+        if (users.isEmpty())
+            throw new ErrorRCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+        Response<User> response = new Response<>();
+        response.setDataList(users);
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        response.setTotalSize(users.getPaginator().getTotalCount());
+        return response;
     }
 
     @Override
@@ -109,6 +116,25 @@ public class UserController extends AbstractBaseController<User> {
         data.setId(UserSession.getUserId());
         data.setType(UserSession.getUserType());
         response.setData(data);
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
+    }
+
+    /**
+     * 用户注销 移除缓存
+     *
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @ResponseBody
+    public Response logout(HttpSession session) {
+        session.removeAttribute(PermissionCache.SESSION_KEY_PERMISSION_CACHE);//移除权限缓存
+        DefaultAccountSubject subject = new DefaultAccountSubject();
+        subject.logout();
+        Response response = new Response<>();
+        response.setData("");
         response.setCode(SysConstants.Code.SUCCESS_CODE);
         response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
