@@ -1,7 +1,7 @@
 <div class="page_bar" ng-if="paginator.totalPage > 0">
     <a class="wl" ng-click="jumpPage(1)">首页</a>
     <a class="wl" ng-click="jumpPage(paginator.curPage - 1<=0?1:(paginator.curPage - 1))" >上一页</a>
-    <a ng-class="paginator.curPage == $index + paginator.showStartPage ? 'active' : ''" ng-repeat="showPage in paginator.PageArray" ng-click="jumpPage(showPage)">{{showPage}}</a>
+    <a style="display: inline-block;" ng-class="paginator.curPage == $index + paginator.showStartPage ? 'active' : ''" ng-repeat="showPage in paginator.PageArray" ng-click="jumpPage(showPage)">{{showPage}}</a>
     <a class="wl" ng-click="jumpPage(paginator.curPage + 1>=paginator.totalPage?paginator.totalPage:(paginator.curPage+1))">下一页</a>
     <a class="wl" ng-click="jumpPage(paginator.totalPage)">末页</a>
     <span class="t_mrl">共{{paginator.totalPage?paginator.totalPage:0}}页</span>到第<input type="number" min="1" max="{{paginator.totalPage}}" ng-model="paginator.inputPage">&nbsp;页&nbsp;
