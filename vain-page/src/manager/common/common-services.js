@@ -105,9 +105,11 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     top = top < 0 ? 0 : top;
                 }*/
                 var windowWidth = $(window.document).width();
-                var windowHeight = $(window.document).height(); //嵌入网页的高度
+                var windowHeight = $(window.document).height() - $(window.parent.document).scrollTop(); //嵌入网页的高度
                 var elemWidth = elem.width();
                 var elemHeight = elem.height();
+                console.log($(window.parent.document).scrollTop());
+                console.log(windowHeight);
                 var top = (windowHeight - elemHeight)/2;
                 var left = (windowWidth - elemWidth)/2;
                 elem.css("left", left);
