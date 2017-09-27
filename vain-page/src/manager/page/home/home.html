@@ -17,7 +17,7 @@
     <link rel="stylesheet" href="../../assets/css/app.css">
 </head>
 
-<body style="height: 100%;overflow: inherit;" ng-controller="HomeCtrl" ng-init="init()">
+<body style="overflow: inherit;" ng-controller="HomeCtrl" ng-init="init()">
 <!--头部导航栏-->
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
@@ -93,8 +93,7 @@
         </div>
     </div>
 
-    <iframe ng-src="{{menuUrl}}" name="Main_iframe" frameborder="0" scrolling="no" onload="resize();" id="Main_iframe"
-            allowfullscreen></iframe>
+    <iframe ng-src="{{menuUrl}}" name="Main_iframe" frameborder="0" scrolling="no" onload="resize();" id="Main_iframe" allowfullscreen></iframe>
 </div>
 
 
@@ -116,10 +115,12 @@
     /* 通过jQuery来获取iframe的大小并动态设置*/
     function resize() {
         var height = Main_iframe.document.body.scrollHeight;
-        /*  var content = $("#Main_iframe").contents().find(".cont");
-         if (content) {
-         height = content.outerHeight(true);
-         }*/
+        var content = $("#Main_iframe").contents().find(".tpl-content-scope");
+        if (content) {
+            height = content.outerHeight(true);
+        }
+        //取不同分辨率下浏览器的大小 动态设置最小高度
+        $("#Main_iframe").css("min-height",$(window.document).height()-$(".am-topbar").height()-30); //浏览器大小减去导航栏高度 减去 margin
         $("#Main_iframe").css("height", height);
         $("body").scrollTop(0);
     }

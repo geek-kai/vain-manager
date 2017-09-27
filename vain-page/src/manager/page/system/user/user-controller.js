@@ -2,19 +2,21 @@
  * 系统管理用户中心的controller
  */
 angular.module("user.controllers", []).controller(
-    "UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpService", "commonUtils",
-        function ($cookieStore, appConstant, $cookies, $scope, userHttpService, commonUtils) {
+    "UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpService", "commonUtils","msgModal",
+        function ($cookieStore, appConstant, $cookies, $scope, userHttpService, commonUtils,msgModal) {
             $scope.init = function () {
                 $scope.paginator = null;
-                userHttpService.getPagedList({}, function (data) {
+               /* userHttpService.getPagedList({}, function (data) {
                     if (data.code == 200) {
                         $scope.users = data.dataList;
                     }
-                });
+                });*/
+                msgModal.alertMsg("测试*************");
                 $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
                 }
+                $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
                 $scope.jumpPage();
             };
 
