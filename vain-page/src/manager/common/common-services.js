@@ -65,7 +65,10 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             },
             /*存储查询参数*/
             storeQueryParam: function (queryParam) {
-                window.document.location.href = "#" + encodeURI(JSON.stringify(queryParam));
+                //window.document.location.href).split("#")[0];
+                console.log(window.location.href);
+               // window.location.href = "#" + encodeURI(JSON.stringify(queryParam));
+                console.log(window.document.location.href);
             },
             /*传入元素在屏幕居中 接收参数为jQuery对象*/
             centerElem: function (elem) {

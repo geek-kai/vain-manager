@@ -11,8 +11,8 @@ angular.module("user.controllers", []).controller(
                         $scope.users = data.dataList;
                     }
                 });*/
-                msgModal.alertMsg("测试*************");
-                $scope.queryParam = commonUtils.initQueryParam();
+               msgModal.alertMsg("测试*************");
+               $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
                 }
