@@ -2064,11 +2064,16 @@ ul.tpl-dropdown-content li > a.tpl-dropdown-content-message:last-child {
     display: inline-block;
 }
 
+.table_no_data {
+    text-align: center;
+    color: #dd514c;
+}
+
 /*************弹窗***************/
 .cover {
     height: 100%;
     display: none;
-    background-color: #000;
+    background-color: #ffffff;
     left: 0;
     position: fixed;
     top: 0;
@@ -2097,4 +2102,10 @@ ul.tpl-dropdown-content li > a.tpl-dropdown-content-message:last-child {
 .cover_title {
     text-align: center;
     margin-bottom: 40px;
+}
+
+.form_div {
+    display: block;
+    position: absolute;
+    background: #ffffff;
 }

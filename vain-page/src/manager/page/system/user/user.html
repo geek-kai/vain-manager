@@ -88,6 +88,7 @@
                                         <div class="am-btn-group am-btn-group-xs">
                                             <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                             <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-user-secret"></span> 分配角色</button>
                                             <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-lock"></span> 冻结</button>
                                             <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                                         </div>
@@ -99,12 +100,24 @@
                         </table>
                     </form>
             </div>
+            <!--分页div-->
             <div class="am-g">
                 <div ng-include="'../../../common/paginator.html'"></div>
             </div>
         </div>
     </div>
     </div>
+
+    <!-- 遮罩层 -->
+    <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
+
+
+    <!--样式-->
+    <form class="am-form">
+        <div class="form_div cover_alert" id="updateDiv" ng-show="modifyWindow">
+        <div style="background-color: red;width: 200px;height:300px;"></div>
+        </div>
+    </form>
 
     <script src="../../../assets/js/jquery.min.js"></script>
     <script src="../../../assets/js/amazeui.min.js"></script>

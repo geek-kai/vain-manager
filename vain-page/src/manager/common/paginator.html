@@ -7,3 +7,4 @@
     <span class="t_mrl">共{{paginator.totalPage?paginator.totalPage:0}}页</span>到第<input type="number" min="1" max="{{paginator.totalPage}}" ng-model="paginator.inputPage">&nbsp;页&nbsp;
     <input type="button" value="跳转" class="pageBtn" ng-click="(paginator.inputPage&&paginator.inputPage>=1&&paginator.inputPage<=paginator.totalPage)?jumpPage(paginator.inputPage):msgModal.alertMsg('页码输入错误！')">
 </div>
+<div ng-cloak class="table_no_data" ng-show="paginator.totalPage <= 0">对不起，没有符合条件的数据！</div>

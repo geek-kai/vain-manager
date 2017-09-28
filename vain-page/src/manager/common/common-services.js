@@ -7,7 +7,9 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
         BASE_URL: "http://127.0.0.1/vain/manager/api",
         COOKIE_ROOT_PATH: "/",
         QUERY_PARAM_PAGE_SIZE: 10,
-        QUERY_PARAM_SPECIAL_PAGE_SIZE: 5
+        QUERY_PARAM_SPECIAL_PAGE_SIZE: 5,
+        SERVER_INTERNET_ERROR: '网络异常',
+        SERVER_NOT_FOUND: '访问资源不存在'
     })
     /*公用帮助类*/
     .factory("commonUtils", [function () {
@@ -66,18 +68,18 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             /*存储查询参数*/
             storeQueryParam: function (queryParam) {
                 //window.document.location.href).split("#")[0];
-                console.log(window.location.href);
+                // console.log(window.location.href);
                 // window.location.href = "#" + encodeURI(JSON.stringify(queryParam));
-                console.log(window.document.location.href);
+                // console.log(window.document.location.href);
             },
             /*传入元素在屏幕居中 接收参数为jQuery对象*/
             centerElem: function (elem) {
-                var widowWidth = $(window.parent).width();
+                var windowWidth = $(window.parent).width();
                 var windowHeight = $(window.parent).height();
                 var toolbarHeight = 75;//导航栏高度
                 var elemWidth = elem.width();
                 var elemHeight = elem.height();
-                var left = (widowWidth - elemWidth) / 2;
+                var left = (windowWidth - elemWidth) / 2;
                 var top = (windowHeight - elemHeight) / 2;
                 //距离底部最低
                 var bottomLest = top;
@@ -103,6 +105,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     left = left < 0 ? 0 : left;
                     top = top < 0 ? 0 : top;
                 }
+                console.log(left + " " + top);
                 elem.css("left", left);
                 elem.css("top", top);
             },
@@ -117,6 +120,14 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     return result[1];
                 }
                 return "";
+            },
+            /*展示遮罩层*/
+            showCover: function () {
+                $('.cover', window.parent.document).show();
+            },
+            /*隐藏遮罩层*/
+            hideCover: function () {
+                $('.cover', window.parent.document).hide();
             }
 
         };
@@ -158,8 +169,8 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     + '<h3>' + msg + '</h3>'
                     + '</div>'
                     + '<div class="am-modal-footer">'
-                    + '<span class="am-modal-btn" ng-click="ok()">'+(okBtn ? okBtn : "确定")+'</span>'
-                    + '<span class="am-modal-btn" ng-click="close()">'+(cancelBtn ? cancelBtn : "取消")+'</span>'
+                    + '<span class="am-modal-btn" ng-click="ok()">' + (okBtn ? okBtn : "确定") + '</span>'
+                    + '<span class="am-modal-btn" ng-click="close()">' + (cancelBtn ? cancelBtn : "取消") + '</span>'
                     + '</div>'
                     + '</div>'
                     + '</div>',

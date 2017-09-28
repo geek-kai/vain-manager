@@ -6,6 +6,8 @@ angular.module("user.controllers", []).controller(
         function ($cookieStore, appConstant, $cookies, $scope, userHttpService, commonUtils, msgModal) {
             $scope.init = function () {
                 $scope.paginator = null;
+
+                $scope.showDiv();
                 $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
@@ -13,6 +15,15 @@ angular.module("user.controllers", []).controller(
                 $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
                 $scope.jumpPage();
             };
+
+
+            $scope.showDiv = function () {
+                commonUtils.showCover();
+                $scope.coverShow = 1;
+                $scope.modifyWindow = 1;
+                commonUtils.centerElem($("#updateDiv"));
+            };
+
 
             $scope.jumpPage = function (page, query) {
                 if (page !== undefined) {
