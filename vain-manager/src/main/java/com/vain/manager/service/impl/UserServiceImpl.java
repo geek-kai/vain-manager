@@ -49,10 +49,34 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
         return null;
     }
 
+    /**
+     * 重置密码
+     *
+     * @param entity
+     * @return
+     */
+    @Override
+    public int resetPwd(User entity) {
+        String salt = StrUtil.generateUUID();
+        entity.setSalt(salt);
+        entity.setPasswd(MD5Util.getMD5Encrypt(entity.getNewpasswd() + salt));
+        return userDao.resetPwd(entity);
+    }
+
+    /**
+     * 锁定 / 解锁 账号
+     * @param entity
+     * @return
+     */
+    @Override
+    public int lock(User entity) {
+        return userDao.lock(entity);
+    }
+
     @Override
     public PageList<User> getPagedList(User entity) throws ErrorRCodeException {
         entity.initPageParam();
-        return userDao.getPagedList(entity,entity.getCurPage(),entity.getPageSize());
+        return userDao.getPagedList(entity, entity.getCurPage(), entity.getPageSize());
     }
 
     @Override

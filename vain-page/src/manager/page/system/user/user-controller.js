@@ -7,7 +7,7 @@ angular.module("user.controllers", []).controller(
             $scope.init = function () {
                 $scope.paginator = null;
 
-                $scope.showDiv();
+                //$scope.showDiv();
                 $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};

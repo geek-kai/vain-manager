@@ -41,7 +41,7 @@
     <select id="getPagedList" resultType="com.vain.manager.entity.User"
             parameterType="com.vain.manager.entity.User">
         select
-          <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>
         from t_user
         <where>
             <if test="type != null and type != 0">
@@ -130,16 +130,24 @@
         </where>
     </update>
 
-    <update id="forgetPassword" parameterType="com.vain.manager.entity.User">
+    <update id="resetPwd" parameterType="com.vain.manager.entity.User">
         update t_user
         <set>
             <if test="passwd != null and passwd != ''">
-                passwd=#{passwd},
+                passwd = #{passwd},
+            </if>
+            <if test="salt != null and salt != ''">
+                salt = #{salt},
             </if>
             modifyTime=now()
         </set>
         <where>
-            phone=#{phone}
+            id = #{id}
         </where>
     </update>
+
+    <update id="lock" parameterType="com.vain.manager.entity.User">
+        UPDATE t_user SET state = !state,modifyTime = now() WHERE id = #{id}
+    </update>
+
 </mapper>

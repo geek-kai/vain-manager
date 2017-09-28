@@ -83,4 +83,24 @@ public class UserDao extends AbstractBaseDao<User> {
     public int delete(User entity) {
         return this.sqlSession.update("com.vain.manager.entity.User.delete", entity);
     }
+
+    /**
+     * 重置密码
+     *
+     * @param entity
+     * @return
+     */
+    public int resetPwd(User entity) {
+        return this.sqlSession.update("com.vain.manager.entity.User.resetPwd", entity);
+    }
+
+    /**
+     * 锁定 / 解锁 账号
+     *
+     * @param entity
+     * @return
+     */
+    public int lock(User entity) {
+        return this.sqlSession.update("com.vain.manager.entity.User.lock", entity);
+    }
 }

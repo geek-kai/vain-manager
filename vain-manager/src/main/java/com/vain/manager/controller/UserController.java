@@ -139,4 +139,44 @@ public class UserController extends AbstractBaseController<User> {
         response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
+
+    /**
+     * 重置用户密码
+     *
+     * @param entity
+     * @return
+     * @throws ErrorRCodeException
+     */
+    @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
+    @ResponseBody
+    public Response resetPwd(User entity) throws ErrorRCodeException {
+        if (entity == null || entity.getNewpasswd() == null)
+            throw new ErrorRCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        userService.resetPwd(entity);
+        Response response = new Response<>();
+        response.setData("");
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
+    }
+
+
+    /**
+     * 锁定 / 解锁 账号
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "lock", method = RequestMethod.POST)
+    @ResponseBody
+    public Response lockUser(User entity) throws ErrorRCodeException {
+        if (entity == null || entity.getId() == null)
+            throw new ErrorRCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        userService.lock(entity);
+        Response response = new Response<>();
+        response.setData("");
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
+    }
 }
