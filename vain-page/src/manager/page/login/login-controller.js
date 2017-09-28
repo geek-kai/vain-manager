@@ -7,7 +7,7 @@ angular.module("login.controllers", []).controller(
         function ($cookieStore, appConstant, $cookies, $scope, loginHttpService) {
             $scope.init = function () {
                 var height = $(window.document).height();
-                $(".myapp-login-logo-text").css("padding-top", height > 1200 ? '35%' : "50px"); //根据分辨率来选择登录框距离大小
+                $(".myapp-login-logo-text").css("padding-top", height > 1000 ? '30%' : "50px"); //根据分辨率来选择登录框距离大小
                 $(window.document.body).css("height", height); //初始化的时候讲浏览器大小动态设置给登录的body的大小
                 $scope.loginError = 0;
                 if ($cookieStore.get("vain-user")) {

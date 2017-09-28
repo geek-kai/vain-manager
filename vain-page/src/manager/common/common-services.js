@@ -67,14 +67,14 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             storeQueryParam: function (queryParam) {
                 //window.document.location.href).split("#")[0];
                 console.log(window.location.href);
-               // window.location.href = "#" + encodeURI(JSON.stringify(queryParam));
+                // window.location.href = "#" + encodeURI(JSON.stringify(queryParam));
                 console.log(window.document.location.href);
             },
             /*传入元素在屏幕居中 接收参数为jQuery对象*/
             centerElem: function (elem) {
-                /*var widowWidth = $(window.parent).width();
+                var widowWidth = $(window.parent).width();
                 var windowHeight = $(window.parent).height();
-                var toolbarHeight = $(".am-topbar").height();//导航栏高度
+                var toolbarHeight = 75;//导航栏高度
                 var elemWidth = elem.width();
                 var elemHeight = elem.height();
                 var left = (widowWidth - elemWidth) / 2;
@@ -82,11 +82,10 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                 //距离底部最低
                 var bottomLest = top;
                 if (window.parent !== window) {
-                    var childWinWidth = $(window.document).width();
+                    var childWinWidth = $(window.document).width(); //窗体大小宽度
                     var childWinHeight = $(window.document).height();
-                    var menuWidth = $('.tpl-left-nav').width();//菜单栏的宽度
-                    left = left - (widowWidth - childWinWidth + menuWidth) / 2;
-
+                    var menuWidth = 0;// 菜单栏是z-index 浮在界面上 所以取0
+                    left = (childWinWidth - elemWidth - menuWidth) / 2;
                     // 减去主页面顶部导航栏的高度
                     top = top - toolbarHeight;
 
@@ -103,17 +102,21 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     }
                     left = left < 0 ? 0 : left;
                     top = top < 0 ? 0 : top;
-                }*/
-                var windowWidth = $(window.document).width();
-                var windowHeight = $(window.document).height() - $(window.parent.document).scrollTop(); //嵌入网页的高度
-                var elemWidth = elem.width();
-                var elemHeight = elem.height();
-                console.log($(window.parent.document).scrollTop());
-                console.log(windowHeight);
-                var top = (windowHeight - elemHeight)/2;
-                var left = (windowWidth - elemWidth)/2;
+                }
                 elem.css("left", left);
                 elem.css("top", top);
+            },
+            /*获取url拼接参数*/
+            getUrlParameter: function (property, url) {
+                var parseUrl = url;
+                if (parseUrl == null) {
+                    parseUrl = String(window.location.href);
+                }
+                var result = new RegExp("[\?\&]{1}" + property + "=([^\&#]{1,})").exec(parseUrl);
+                if (result) {
+                    return result[1];
+                }
+                return "";
             }
 
         };
@@ -131,6 +134,32 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     + '</div>'
                     + '<div class="am-modal-footer">'
                     + '<span class="am-modal-btn" ng-click="close()">确定</span>'
+                    + '</div>'
+                    + '</div>'
+                    + '</div>',
+                    controller: "ModalInstanceCtrl"
+                });
+                return t;
+            },
+            /*延时弹窗*/
+            alertMsgDelay: function (msg, delay) {
+                var msgModal = this;
+                setTimeout(function () {
+                    msgModal.alertMsg(msg);
+                }, delay ? delay : 300)
+            },
+            /*选择弹窗按钮*/
+            confirmMsg: function (msg, subMsg, okBtn, cancelBtn) {
+                var t = $modal.open({
+                    template: '<div class="cover" style="display:block;"></div>'
+                    + '<div id="coverAlert" class="cover_alert" style="display:block;" ng-init="init()">'
+                    + '<div class="am-modal-hd cover_title">提示：</div>'
+                    + '<div class="am-modal-bd">'
+                    + '<h3>' + msg + '</h3>'
+                    + '</div>'
+                    + '<div class="am-modal-footer">'
+                    + '<span class="am-modal-btn" ng-click="ok()">'+(okBtn ? okBtn : "确定")+'</span>'
+                    + '<span class="am-modal-btn" ng-click="close()">'+(cancelBtn ? cancelBtn : "取消")+'</span>'
                     + '</div>'
                     + '</div>'
                     + '</div>',
