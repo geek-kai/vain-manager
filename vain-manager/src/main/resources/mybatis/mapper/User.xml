@@ -8,7 +8,7 @@
        id,type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
     </sql>
 
-    <sql id="NorMal_Column_List">
+    <sql id="Normal_Column_List">
         id,type,userName,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
     </sql>
 
@@ -45,7 +45,7 @@
     <select id="getPagedList" resultType="com.vain.manager.entity.User"
             parameterType="com.vain.manager.entity.User">
         select
-        <include refid="NorMal_Column_List"/>
+        <include refid="Normal_Column_List"/>
         from t_user
         <where>
             <if test="type != null and type != 0">

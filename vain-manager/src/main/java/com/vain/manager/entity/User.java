@@ -3,10 +3,11 @@ package com.vain.manager.entity;
 import com.vain.manager.common.entity.PagedEntity;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 /**
+ * @author vain
  * @description: 用户信息实体类
- * @author  vain
  * @date 2017/8/31 11:57
  */
 public class User extends PagedEntity {
@@ -109,8 +110,21 @@ public class User extends PagedEntity {
      */
     private String roleName;
 
+    /**
+     * 批量处理的数据id集合
+     */
+    private List<Long> ids;
+
     public User() {
 
+    }
+
+    public List<Long> getIds() {
+        return ids;
+    }
+
+    public void setIds(List<Long> ids) {
+        this.ids = ids;
     }
 
     public String getRoleName() {

@@ -81,9 +81,25 @@ public class UserController extends AbstractBaseController<User> {
         return null;
     }
 
+    /**
+     * 添加新账号
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<User> add(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        return null;
+        if (entity == null || entity.getPasswd() == null || entity.getUserName() == null || entity.getType() == 0)
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        userService.add(entity);
+        Response<User> response = new Response<>();
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
     }
 
     @Override
@@ -91,9 +107,25 @@ public class UserController extends AbstractBaseController<User> {
         return null;
     }
 
+    /**
+     * 删除账号 （更新标识符）
+     * @param entity
+     *            参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "delete",method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<User> delete(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        return null;
+        if(entity==null||entity.getId()==null)
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE,SysConstants.Code.PARAM_ERROR_MSG);
+        userService.delete(entity);
+        Response<User> response = new Response<>();
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
     }
 
     /**

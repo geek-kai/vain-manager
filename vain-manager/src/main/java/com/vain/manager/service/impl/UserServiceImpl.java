@@ -5,6 +5,7 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.dao.UserDao;
+import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.entity.User;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.util.MD5Util;
@@ -12,6 +13,7 @@ import com.vain.manager.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.UUID;
 
@@ -98,9 +100,20 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
         return null;
     }
 
+    /**
+     * 添加账号
+     *
+     * @param entity 参数实体
+     * @throws ErrorCodeException
+     */
     @Override
     public void add(User entity) throws ErrorCodeException {
-
+        entity.setSalt(UUID.randomUUID().toString());
+        entity.setPasswd(MD5Util.getMD5Str(entity.getPasswd() + entity.getSalt()));
+        entity.setState(SysConstants.AccountConstant.STATUS_UN_LOCKED);
+        entity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+        entity.setDeleted(SysConstants.DeletedStatus.STATUS_UN_DELETED);
+        userDao.insert(entity);
     }
 
     @Override
@@ -108,8 +121,15 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
 
     }
 
+    /**
+     * 删除账号
+     *
+     * @param entity 参数实体
+     * @throws ErrorCodeException
+     */
     @Override
     public void delete(User entity) throws ErrorCodeException {
-
+        entity.setDeleted(SysConstants.DeletedStatus.STATUS_DELETED);
+        userDao.delete(entity);
     }
 }
