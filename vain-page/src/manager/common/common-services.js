@@ -9,10 +9,14 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
         QUERY_PARAM_PAGE_SIZE: 10,
         QUERY_PARAM_SPECIAL_PAGE_SIZE: 5,
         SERVER_INTERNET_ERROR: '网络异常',
-        SERVER_NOT_FOUND: '访问资源不存在'
+        SERVER_NOT_FOUND: '访问资源不存在',
+        SERVER_REQUEST_FAIL: '请求失败',
+        OPERATION_SUCCESS: '操作成功',
+        PARAM_ERROR: '参数错误',
+        UNKNOWN_ERROR: '未知错误'
     })
     /*公用帮助类*/
-    .factory("commonUtils", [function () {
+    .factory("commonUtils", ["appConstant", function (appConstant) {
         return {
             /*初始化分页参数*/
             initPaginator: function (totalSize, curPage, pageSize) {
@@ -76,7 +80,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             centerElem: function (elem) {
                 var windowWidth = $(window.parent).width();
                 var windowHeight = $(window.parent).height();
-                var toolbarHeight = 75;//导航栏高度
+                var toolbarHeight = 80;//导航栏高度
                 var elemWidth = elem.width();
                 var elemHeight = elem.height();
                 var left = (windowWidth - elemWidth) / 2;
@@ -84,7 +88,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                 //距离底部最低
                 var bottomLest = top;
                 if (window.parent !== window) {
-                    var childWinWidth = $(window.document).width(); //窗体大小宽度
+                    var childWinWidth = $(window.document).width(); //浏览器窗体页面大小宽度
                     var childWinHeight = $(window.document).height();
                     var menuWidth = 0;// 菜单栏是z-index 浮在界面上 所以取0
                     left = (childWinWidth - elemWidth - menuWidth) / 2;
@@ -105,7 +109,6 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     left = left < 0 ? 0 : left;
                     top = top < 0 ? 0 : top;
                 }
-                console.log(left + " " + top);
                 elem.css("left", left);
                 elem.css("top", top);
             },
@@ -128,6 +131,22 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             /*隐藏遮罩层*/
             hideCover: function () {
                 $('.cover', window.parent.document).hide();
+            },
+            /*将错误码转换为对应的错误信息*/
+            convertResult: function (code) {
+                switch (code) {
+                    case 200:
+                        return appConstant.OPERATION_SUCCESS;
+                    case 404:
+                        return appConstant.SERVER_NOT_FOUND;
+                    case 500:
+                        return appConstant.SERVER_INTERNET_ERROR;
+                    case 1001:
+                        return appConstant.PARAM_ERROR;
+                    default:
+                        return appConstant.UNKNOWN_ERROR;
+                }
+
             }
 
         };

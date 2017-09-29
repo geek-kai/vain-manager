@@ -87,10 +87,12 @@
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
                                             <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
                                             <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-user-secret"></span> 分配角色</button>
-                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-lock"></span> 冻结</button>
-                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);">
+                                                <span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}
+                                            </button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ><span class="am-icon-trash-o"></span> 删除</button>
                                         </div>
                                     </div>
                                 </td>
@@ -113,11 +115,44 @@
 
 
     <!--样式-->
-    <form class="am-form">
-        <div class="form_div cover_alert" id="updateDiv" ng-show="modifyWindow">
-        <div style="background-color: red;width: 200px;height:300px;"></div>
+    <div class="form_div cover_alert" id="updateDiv" ng-show="resetPwdWindow" style="width: 550px;height:350px;">
+        <div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:</p></div>
+            <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
+                    <label for="password" class="am-u-sm-2 am-form-label">新密码</label>
+                    <div class="am-u-sm-10">
+                        <input type="password" id="password" name="password" class="am-form-field" placeholder="设置新密码" ng-maxlength="16" ng-minlength="6"
+                               ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/" ng-model="resetPassword" required>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-2 tips">
+                        <span ng-show="pwdForm.password.$error.required">请输入密码</span>
+                        <span ng-show="pwdForm.password.$error.pattern&&!pwdForm.password.$error.maxlength&&!pwdForm.password.$error.minlength">请输入数字和字母组成的密码</span>
+                        <span ng-show="pwdForm.password.$error.maxlength">输入长度为6-16个字符</span>
+                        <span ng-show="pwdForm.password.$error.minlength">输入长度为6-16个字符</span>
+                        <span ng-show="resetNewPassword!=null&&(resetNewPassword!=resetPassword)">二次密码不一致</span>
+                    </div>
+
+                    <div style="padding-top: 70px;">
+                        <label for="newPassword" class="am-u-sm-2 am-form-label">新密码</label>
+                        <div class="am-u-sm-10" >
+                            <input type="password" id="newPassword" name="newPassword" ng-model="resetNewPassword" class="am-form-field" placeholder="再次输入">
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="am-form-group" style="padding-top: 20px;">
+                    <div class="am-u-sm-10 am-u-sm-offset-2">
+                        <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
+    </div>
 
     <script src="../../../assets/js/jquery.min.js"></script>
     <script src="../../../assets/js/amazeui.min.js"></script>

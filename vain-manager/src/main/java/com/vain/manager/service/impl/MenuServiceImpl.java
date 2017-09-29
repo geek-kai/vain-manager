@@ -1,7 +1,7 @@
 package com.vain.manager.service.impl;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.dao.MenuDao;
@@ -23,7 +23,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     private MenuDao menuDao;
 
     @Override
-    public List<Menu> getUserMenuByUser(User user) throws ErrorRCodeException {
+    public List<Menu> getUserMenuByUser(User user) throws ErrorCodeException {
         return null;
     }
 
@@ -47,12 +47,12 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     }
 
     @Override
-    public PageList<Menu> getPagedList(Menu entity) throws ErrorRCodeException {
+    public PageList<Menu> getPagedList(Menu entity) throws ErrorCodeException {
         return null;
     }
 
     @Override
-    public List<Menu> getList(Menu entity) throws ErrorRCodeException {
+    public List<Menu> getList(Menu entity) throws ErrorCodeException {
         return null;
     }
 
@@ -62,10 +62,10 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
      * @param entity      参数实体
      * @param isHierarchy 是否返回层级结构 父子
      * @return
-     * @throws ErrorRCodeException
+     * @throws ErrorCodeException
      */
     @Override
-    public List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorRCodeException {
+    public List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorCodeException {
         List<Menu> menus = menuDao.getList(entity); //所有菜单集合
         List<Menu> containsChildMenus = menuDao.getList(entity); //所有菜单集合 分层级 父子结构
         if (menus.size() > 0) {
@@ -81,13 +81,13 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
             }
             logger.info("初始化的总菜单个数为：" + menus.size());
         } else {
-            throw new ErrorRCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+            throw new ErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
         }
         return containsChildMenus;
     }
 
     @Override
-    public List<Menu> getMyMenus(Menu entity) throws ErrorRCodeException {
+    public List<Menu> getMyMenus(Menu entity) throws ErrorCodeException {
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //用户的自己菜单集合  采用set不允许重复
         List<Menu> returnMenus = new ArrayList<>(); //返回的菜单列表 不重复 带有层级结构
         /*
@@ -129,7 +129,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
 
         //菜单集合为空 就返回相应的code 和 msg
         if (returnMenus.isEmpty())
-            throw new ErrorRCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+            throw new ErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
         /*
          * 遍历菜单下子菜单 即二级菜单 并按照id进行排序
          */
@@ -155,22 +155,22 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     }
 
     @Override
-    public Menu get(Menu entity) throws ErrorRCodeException {
+    public Menu get(Menu entity) throws ErrorCodeException {
         return null;
     }
 
     @Override
-    public void add(Menu entity) throws ErrorRCodeException {
+    public void add(Menu entity) throws ErrorCodeException {
 
     }
 
     @Override
-    public void modify(Menu entity) throws ErrorRCodeException {
+    public void modify(Menu entity) throws ErrorCodeException {
 
     }
 
     @Override
-    public void delete(Menu entity) throws ErrorRCodeException {
+    public void delete(Menu entity) throws ErrorCodeException {
 
     }
 

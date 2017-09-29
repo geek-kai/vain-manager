@@ -1,7 +1,6 @@
 package com.vain.manager.shiro.realm;
 
-import com.vain.manager.common.exception.ErrorRCodeException;
-import com.vain.manager.constant.SysConstants;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.entity.User;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.authenticator.SubjectInfo;
@@ -10,8 +9,6 @@ import com.vain.manager.shiro.exception.AuthenticationException;
 import com.vain.manager.shiro.token.AccountToken;
 import com.vain.manager.shiro.token.Token;
 import com.vain.manager.util.StrUtil;
-import org.apache.poi.ss.formula.functions.T;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,11 +45,6 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
         try {
             dbUser = userService.login(user);
             if (dbUser != null) {
-                if (dbUser.getState() == SysConstants.Code.ACCOUNT_IS_LOCKED_CODE) {
-                    logger.error("login failure，this account is locked");
-                    // 登录失败，账户被禁用 后期可根据state来扩展
-                    throw new AuthenticationException(String.valueOf(SysConstants.Code.ACCOUNT_IS_EXISTS_CODE), "this account is locked");
-                }
                 userSubjectInfo = new UserSubjectInfo();
                 // 账号Id
                 userSubjectInfo.setUserId(dbUser.getId());
@@ -60,15 +52,11 @@ public class SimpleAuthenticateRealm implements AuthenticateRealm {
                 userSubjectInfo.setUserName(dbUser.getUserName());
                 userSubjectInfo.setNickName(dbUser.getNickname());
                 userSubjectInfo.setUserType(dbUser.getType());
-            } else {
-                logger.error("login failure，account does not exist");
-                throw new AuthenticationException(SysConstants.Code.ACCOUNT_IS_NOT_EXISTS_MSG);// 登录失败，账号不存在
             }
-        } catch (ErrorRCodeException e) {
+        } catch (ErrorCodeException e) {
             logger.error("login failure", e);
-            throw new AuthenticationException(String.valueOf(e.getCode()), "occur ErrorRCodeException");
+            throw new AuthenticationException(String.valueOf(e.getCode()), e.getMsg());
         }
-
         return userSubjectInfo;
     }
 

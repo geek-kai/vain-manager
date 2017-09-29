@@ -1,6 +1,6 @@
 package com.vain.manager.service;
 
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.BaseService;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.User;
@@ -15,7 +15,7 @@ import java.util.List;
 public interface IMenuService extends BaseService<Menu> {
 
 
-    List<Menu> getUserMenuByUser(User user) throws ErrorRCodeException;
+    List<Menu> getUserMenuByUser(User user) throws ErrorCodeException;
 
     HashSet<Menu> getMenusByUserId(Long userId, Integer userType);
 
@@ -26,9 +26,9 @@ public interface IMenuService extends BaseService<Menu> {
      * @param isHierarchy 是否返回层级结构 父子
      * @return
      */
-    List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorRCodeException;
+    List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorCodeException;
 
 
-    List<Menu> getMyMenus(Menu entity) throws ErrorRCodeException;
+    List<Menu> getMyMenus(Menu entity) throws ErrorCodeException;
 
 }

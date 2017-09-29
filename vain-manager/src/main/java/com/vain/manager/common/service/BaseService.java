@@ -2,7 +2,7 @@ package com.vain.manager.common.service;
 
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.common.entity.Entity;
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 
 
 import java.util.List;
@@ -19,7 +19,7 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-     PageList<T> getPagedList(T entity) throws ErrorRCodeException;
+     PageList<T> getPagedList(T entity) throws ErrorCodeException;
 
     /**
      * 获取所有数据
@@ -28,7 +28,7 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-     List<T> getList(T entity) throws ErrorRCodeException;
+     List<T> getList(T entity) throws ErrorCodeException;
 
     /**
      * 获取单条数据详情
@@ -37,7 +37,7 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-     T get(T entity) throws ErrorRCodeException;
+     T get(T entity) throws ErrorCodeException;
 
     /**
      * 新增数据
@@ -46,7 +46,7 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-     void add(T entity) throws ErrorRCodeException;
+     void add(T entity) throws ErrorCodeException;
 
     /**
      * 修改数据
@@ -55,7 +55,7 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-    void modify(T entity) throws ErrorRCodeException;
+    void modify(T entity) throws ErrorCodeException;
 
     /**
      * 删除数据
@@ -64,5 +64,5 @@ public interface BaseService<T extends Entity> {
      *            参数实体
      * @return
      */
-     void delete(T entity) throws ErrorRCodeException;
+     void delete(T entity) throws ErrorCodeException;
 }

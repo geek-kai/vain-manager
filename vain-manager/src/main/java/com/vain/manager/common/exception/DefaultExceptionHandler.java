@@ -29,9 +29,9 @@ public class DefaultExceptionHandler {
 
         Response<Entity> response = new Response<>();
 
-        if (e instanceof ErrorRCodeException) {
-            response.setCode(((ErrorRCodeException) e).getCode());
-            response.setMsg(((ErrorRCodeException) e).getMsg());
+        if (e instanceof ErrorCodeException) {
+            response.setCode(((ErrorCodeException) e).getCode());
+            response.setMsg(((ErrorCodeException) e).getMsg());
         } else if (e instanceof UnauthorizedException) {
             logger.error(e.getMessage(), e);
             response.setCode(SysConstants.Code.FORBIDDEN_CODE);

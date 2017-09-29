@@ -102,6 +102,12 @@ public class SysConstants {
         public static final int DATA_ALREADY_RELATION_CODE = 1005;
         public static final String DATA_ALREADY_RELATION_MSG = "有关联数据不能删除";
 
+        /**
+         * 操作失败
+         */
+        public static final int DATA_MODIFY_EORROR_CODE = 1006;
+        public static final String DATA_MODIFY_EORROR_MSG = "操作失败";
+
         //账号错误码 11
         /**
          * 验证码错误或已过期

@@ -3,7 +3,7 @@ package com.vain.manager.controller;
 import com.vain.manager.cache.PermissionCache;
 import com.vain.manager.common.controller.AbstractBaseController;
 import com.vain.manager.common.entity.Response;
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.service.IMenuService;
@@ -36,7 +36,7 @@ public class MenuController extends AbstractBaseController<Menu> {
      */
     @RequestMapping(value = "/getMyMenus", method = RequestMethod.POST)
     @ResponseBody
-    public Response<Menu> getMyMenu(@RequestBody Menu entity, HttpServletRequest request) throws ErrorRCodeException {
+    public Response<Menu> getMyMenu(@RequestBody Menu entity, HttpServletRequest request) throws ErrorCodeException {
         PermissionCache cache = getPermissionCacheFromSession(request);
         Response<Menu> response = cache.getMenus(); //获取session中的缓存menu
         if (!StrUtil.isEmpty(entity.getMenukey())) {

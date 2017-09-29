@@ -16,15 +16,6 @@ angular.module("user.controllers", []).controller(
                 $scope.jumpPage();
             };
 
-
-            $scope.showDiv = function () {
-                commonUtils.showCover();
-                $scope.coverShow = 1;
-                $scope.modifyWindow = 1;
-                commonUtils.centerElem($("#updateDiv"));
-            };
-
-
             $scope.jumpPage = function (page, query) {
                 if (page !== undefined) {
                     $scope.queryParam.curPage = page;
@@ -62,5 +53,33 @@ angular.module("user.controllers", []).controller(
                 })
             };
 
+            /*锁定用户*/
+            $scope.lock = function (user) {
+                userHttpService.lock(user, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    $scope.init();
+                })
+            };
+
+            /*重置密码的div*/
+            $scope.showResetPwdDiv = function (user) {
+                commonUtils.showCover();
+                $scope.coverShow = 1;
+                $scope.resetPwdWindow = 1;
+                commonUtils.centerElem($("#updateDiv"));
+                $scope.resetPwdUser = user;
+            };
+
+            /*重置密码*/
+            $scope.resetPwd = function () {
+                if (new RegExp("^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$").test($scope.resetPassword)) {
+                    $scope.resetPwdUser.newpasswd = $scope.resetPassword;
+                    userHttpService.resetPwd($scope.resetPwdUser, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        commonUtils.hideCover();
+                        $scope.resetPwdWindow = 0;
+                    })
+                }
+            }
 
         }]);

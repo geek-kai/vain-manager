@@ -1,7 +1,7 @@
 package com.vain.manager.service;
 
 
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.BaseService;
 import com.vain.manager.entity.User;
 
@@ -18,7 +18,7 @@ public interface IUserService extends BaseService<User> {
      * @param entity
      * @return
      */
-    User login(User entity) throws ErrorRCodeException;
+    User login(User entity) throws ErrorCodeException;
 
     /**
      * 重置密码

@@ -4,12 +4,13 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.cache.PermissionCache;
 import com.vain.manager.common.controller.AbstractBaseController;
 import com.vain.manager.common.entity.Response;
-import com.vain.manager.common.exception.ErrorRCodeException;
+import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.BNews;
 import com.vain.manager.entity.User;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.authenticator.DefaultAccountSubject;
+import com.vain.manager.shiro.exception.AuthenticationException;
 import com.vain.manager.shiro.session.UserSession;
 import com.vain.manager.shiro.token.AccountToken;
 import com.vain.manager.util.ReptileUtils;
@@ -56,7 +57,7 @@ public class UserController extends AbstractBaseController<User> {
     public Response<User> getPagedList(@RequestBody User entity, HttpServletRequest request) throws Exception {
         PageList<User> users = userService.getPagedList(entity);
         if (users.isEmpty())
-            throw new ErrorRCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+            throw new ErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
         Response<User> response = new Response<>();
         response.setDataList(users);
         response.setCode(SysConstants.Code.SUCCESS_CODE);
@@ -103,13 +104,24 @@ public class UserController extends AbstractBaseController<User> {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public Response<User> login(@RequestBody User entity) throws ErrorRCodeException {
+    public Response<User> login(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getUserName() == null || entity.getPasswd() == null)
-            throw new ErrorRCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         Response<User> response = new Response<>();
         AccountToken token = new AccountToken(entity.getUserName(), entity.getPasswd());
         DefaultAccountSubject accountSubject = new DefaultAccountSubject();
-        accountSubject.login(token);
+        try {
+            accountSubject.login(token);
+        } catch (AuthenticationException authenticationException) {
+            if (authenticationException.getMessage() != null) {
+                response.setCode(Integer.parseInt(authenticationException.getMsgCode()));
+                response.setMsg(authenticationException.getMessage());
+            } else {
+                response.setCode(SysConstants.Code.ACCOUNT_OR_PASSWORD_ERROR_CODE);
+                response.setMsg(SysConstants.Code.ACCOUNT_OR_PASSWORD_ERROR_MSG);
+            }
+            return response;
+        }
         User data = new User();
         data.setUserName(UserSession.getUserName());
         data.setNickname(UserSession.getNickName());
@@ -145,16 +157,15 @@ public class UserController extends AbstractBaseController<User> {
      *
      * @param entity
      * @return
-     * @throws ErrorRCodeException
+     * @throws ErrorCodeException
      */
     @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
     @ResponseBody
-    public Response resetPwd(User entity) throws ErrorRCodeException {
+    public Response resetPwd(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getNewpasswd() == null)
-            throw new ErrorRCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
-        userService.resetPwd(entity);
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         Response response = new Response<>();
-        response.setData("");
+        response.setData(userService.resetPwd(entity));
         response.setCode(SysConstants.Code.SUCCESS_CODE);
         response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
@@ -169,12 +180,12 @@ public class UserController extends AbstractBaseController<User> {
      */
     @RequestMapping(value = "lock", method = RequestMethod.POST)
     @ResponseBody
-    public Response lockUser(User entity) throws ErrorRCodeException {
+    public Response lockUser(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getId() == null)
-            throw new ErrorRCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         userService.lock(entity);
         Response response = new Response<>();
-        response.setData("");
+        response.setData(userService.lock(entity));
         response.setCode(SysConstants.Code.SUCCESS_CODE);
         response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;

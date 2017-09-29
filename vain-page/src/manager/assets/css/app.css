@@ -2109,3 +2109,11 @@ ul.tpl-dropdown-content li > a.tpl-dropdown-content-message:last-child {
     position: absolute;
     background: #ffffff;
 }
+
+/************tips***************/
+.tips span {
+    color: #dd514c;
+    font-size: 14px;
+    font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei",
+    "Hiragino Sans GB", "Hiragino Sans GB W3", FontAwesome, sans-serif;
+}
