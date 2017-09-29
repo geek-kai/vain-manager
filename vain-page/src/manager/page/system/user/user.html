@@ -113,11 +113,11 @@
     <!-- 遮罩层 -->
     <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
 
-
-    <!--样式-->
+    <!--重置密码的div-->
     <div class="form_div cover_alert" id="updateDiv" ng-show="resetPwdWindow" style="width: 550px;height:350px;">
         <div>
-            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:</p></div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+
             <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
                 <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
                     <label for="password" class="am-u-sm-2 am-form-label">新密码</label>
@@ -146,7 +146,7 @@
                 </div>
 
                 <div class="am-form-group" style="padding-top: 20px;">
-                    <div class="am-u-sm-10 am-u-sm-offset-2">
+                    <div class="am-u-sm-10 am-u-sm-offset-4">
                         <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
                     </div>
                 </div>

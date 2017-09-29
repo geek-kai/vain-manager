@@ -35,14 +35,12 @@ angular.module("user.controllers", []).controller(
                 }
                 userHttpService.getPagedList(curQueryParam, function (data) {
                     if (data.code == 200) {
-                        // $scope.noData = false;
                         commonUtils.storeQueryParam(curQueryParam);
                         $scope.users = data.dataList;
                         $scope.paginator = commonUtils.initPaginator(data.totalSize, curQueryParam.curPage, curQueryParam.pageSize);
                     } else if (data.code == 404) {
                         if (curQueryParam.curPage == 1) {
                             commonUtils.storeQueryParam(curQueryParam);
-                            //   $scope.noData = true;
                             $scope.datas = null;
                             $scope.paginator = null;
                             return;
@@ -55,6 +53,7 @@ angular.module("user.controllers", []).controller(
 
             /*锁定用户*/
             $scope.lock = function (user) {
+                user.state = user.state == 0 ? 1 : 0;
                 userHttpService.lock(user, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.init();
@@ -76,10 +75,16 @@ angular.module("user.controllers", []).controller(
                     $scope.resetPwdUser.newpasswd = $scope.resetPassword;
                     userHttpService.resetPwd($scope.resetPwdUser, function (data) {
                         msgModal.alertMsg(commonUtils.convertResult(data.code));
-                        commonUtils.hideCover();
-                        $scope.resetPwdWindow = 0;
+                        $scope.close();
                     })
                 }
-            }
+            };
+
+            /*关闭重置密码的弹窗*/
+            $scope.close = function () {
+                commonUtils.hideCover();
+                $scope.resetPwdWindow = 0;
+                $scope.coverShow = 0;
+            };
 
         }]);

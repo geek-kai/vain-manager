@@ -2104,6 +2104,13 @@ ul.tpl-dropdown-content li > a.tpl-dropdown-content-message:last-child {
     margin-bottom: 40px;
 }
 
+.cover_close {
+    float: right;
+    margin-right: 5%;
+    margin-top: 1%;
+    color: #697882;
+}
+
 .form_div {
     display: block;
     position: absolute;

@@ -150,9 +150,9 @@
         </where>
     </update>
 
-    <!--锁定用户 对状态去反无效 直接sql有效 用if转换下-->
+    <!--锁定用户-->
     <update id="lock" parameterType="com.vain.manager.entity.User">
-        UPDATE t_user SET state = IF(state=0,1,0),modifyTime = now() WHERE id = #{id}
+        UPDATE t_user SET state =#{state},modifyTime = now() WHERE id = #{id}
     </update>
 
 </mapper>
