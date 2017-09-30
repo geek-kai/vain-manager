@@ -5,18 +5,18 @@
 <mapper namespace="com.vain.manager.entity.User">
 
     <sql id="Base_Column_List">
-       id,type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
+       id,type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
     </sql>
 
     <sql id="Normal_Column_List">
-        id,type,userName,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
+        id,type,userName,nickname,phone,email,head,sex,birthday,state,attr1,attr2,attr3,attr4,attr5,deleted,createTime,modifyTime
     </sql>
 
     <insert id="insert" parameterType="com.vain.manager.entity.User" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO t_user
-    (type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,address,state,attr1,attr2,attr3,attr4,attr5,deleted,createtime,modifyTime)
+    (type,userName,passwd,salt,nickname,phone,email,head,sex,birthday,state,attr1,attr2,attr3,attr4,attr5,deleted,createtime,modifyTime)
     VALUES
-    (#{type},#{userName},#{passwd},#{salt},#{nickname},#{phone},#{email},#{head},#{sex},#{birthday},#{address},#{state},#{attr1},#{attr2},#{attr3},#{attr4},#{attr5},#{deleted},now(),now())
+    (#{type},#{userName},#{passwd},#{salt},#{nickname},#{phone},#{email},#{head},#{sex},#{birthday},#{state},#{attr1},#{attr2},#{attr3},#{attr4},#{attr5},#{deleted},now(),now())
     </insert>
 
     <!--登录-->

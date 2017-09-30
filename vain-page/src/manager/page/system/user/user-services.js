@@ -12,6 +12,10 @@ angular.module("user.services", ["ngResource", "common.services"])
             resetPwd: {
                 method: "post",
                 url: appConstant.BASE_URL + "/user/resetPwd"
+            },
+            add: {
+                method: "post",
+                url: appConstant.BASE_URL + "/user/add"
             }
         })
     }

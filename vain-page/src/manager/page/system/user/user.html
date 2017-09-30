@@ -116,11 +116,11 @@
     <!--重置密码的div-->
     <div class="form_div cover_alert" id="pwdDiv" ng-show="resetPwdWindow" style="width: 550px;height:350px;">
         <div>
-            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(1);"></i></p></div>
 
             <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
-                    <label for="password" class="am-u-sm-2 am-form-label">新密码</label>
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null && (resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
+                    <label for="password" class="am-u-sm-2 am-form-label">新密码:</label>
                     <div class="am-u-sm-10">
                         <input type="password" id="password" name="password" class="am-form-field" placeholder="设置新密码" ng-maxlength="16" ng-minlength="6"
                                ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/" ng-model="resetPassword" required>
@@ -136,7 +136,7 @@
                     </div>
 
                     <div style="padding-top: 70px;">
-                        <label for="newPassword" class="am-u-sm-2 am-form-label">新密码</label>
+                        <label for="newPassword" class="am-u-sm-2 am-form-label">新密码:</label>
                         <div class="am-u-sm-10" >
                             <input type="password" id="newPassword" name="newPassword" ng-model="resetNewPassword" class="am-form-field" placeholder="再次输入">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
@@ -147,7 +147,7 @@
 
                 <div class="am-form-group" style="padding-top: 20px;">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
+                        <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
                     </div>
                 </div>
             </form>
@@ -158,14 +158,14 @@
     <!--添加信息的div-->
     <div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width: 550px;height:450px;">
         <div>
-            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(2);"></i></p></div>
 
-            <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
+            <form class="am-form am-form-horizontal" name="accountForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'am-form-success':'am-form-error'" style="margin: 20px;">
                     <div>
-                        <label for="accountName" class="am-u-sm-3 am-form-label">用户账号：</label>
+                        <label for="userName" class="am-u-sm-3 am-form-label">用户账号：</label>
                         <div class="am-u-sm-9" >
-                            <input type="password" id="accountName" name="accountName" ng-model="resetNewPassword" class="am-form-field" placeholder="用户账号">
+                            <input type="text" id="userName" name="userName" ng-model="addUser.userName" class="am-form-field" placeholder="用户账号">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
@@ -173,26 +173,25 @@
                     <div style="padding-top: 60px;">
                         <label for="accountPassword" class="am-u-sm-3 am-form-label">用户密码：</label>
                         <div class="am-u-sm-9">
-                            <input type="password" id="accountPassword" name="password" class="am-form-field" placeholder="用户密码" ng-maxlength="16" ng-minlength="6"
-                                   ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/" ng-model="resetPassword" required>
+                            <input type="password" id="accountPassword" name="accountPassword" class="am-form-field" placeholder="用户密码" ng-maxlength="16" ng-minlength="6"
+                                   ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/" ng-model="addUser.passwd" required>
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
-                    <div class="am-u-sm-12 am-u am-u-sm-offset-2 tips">
-                        <span ng-show="pwdForm.accountPassword.$error.required">请输入密码</span>
-                        <span ng-show="pwdForm.accountPassword.$error.pattern&&!pwdForm.password.$error.maxlength&&!pwdForm.password.$error.minlength">请输入数字和字母组成的密码</span>
-                        <span ng-show="pwdForm.accountPassword.$error.maxlength">输入长度为6-16个字符</span>
-                        <span ng-show="pwdForm.accountPassword.$error.minlength">输入长度为6-16个字符</span>
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                        <span ng-show="accountForm.accountPassword.$error.required">请输入密码</span>
+                        <span ng-show="accountForm.accountPassword.$error.pattern&&!accountForm.password.$error.maxlength&&!accountForm.password.$error.minlength">请输入数字和字母组成的密码</span>
+                        <span ng-show="accountForm.accountPassword.$error.maxlength">输入长度为6-16个字符</span>
+                        <span ng-show="accountForm.accountPassword.$error.minlength">输入长度为6-16个字符</span>
                     </div>
 
                     <div style="padding-top: 60px;">
                         <label class="am-u-sm-3 am-form-label">用户类型：</label>
-                        <div class="am-u-sm-9" >
-                            <select data-am-selected="{btnSize: 'sm'}">
-                                <option value="option1">所有类别</option>
-                                <option value="option2">管理员</option>
-                                <option value="option3">普通用户</option>
+                        <div class="am-u-sm-9">
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="addUser.type">
+                                <option value="">所有类别</option>
+                                <option value="{{type.value}}"  ng-repeat="type in userType">{{type.key}}</option>
                             </select>
                         </div>
                     </div>
@@ -201,7 +200,7 @@
 
                 <div class="am-form-group" style="padding-top: 20px;">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="" ng-disabled="resetNewPassword!=null&&(resetNewPassword==resetPassword)?'':'disabled'">添加账号</button>
+                        <button type="submit" class="am-btn am-btn-default" ng-click="add();" ng-disabled="ddUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
                     </div>
                 </div>
             </form>

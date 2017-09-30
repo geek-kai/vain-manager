@@ -79,18 +79,38 @@ angular.module("user.controllers", []).controller(
             };
 
             /*关闭重置密码的弹窗*/
-            $scope.close = function () {
+            $scope.close = function (type) {
                 commonUtils.hideCover();
-                $scope.resetPwdWindow = 0;
+                if (type == 1)
+                    $scope.resetPwdWindow = 0;
+                if (type == 2)
+                    $scope.modifyWindow = 0;
                 $scope.coverShow = 0;
             };
 
-            /*添加账号*/
+            /*显示添加账号div*/
             $scope.addAccount = function () {
-              commonUtils.showCover();
-              $scope.coverShow = 1;
-              $scope.modifyWindow = 1;
-              commonUtils.centerElem($("#modifyDiv"));
+                commonUtils.showCover();
+                $scope.coverShow = 1;
+                $scope.modifyWindow = 1;
+                commonUtils.centerElem($("#modifyDiv"));
             };
+
+            /*添加账号*/
+            $scope.add = function () {
+                userHttpService.add($scope.addUser, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    $scope.close();
+                })
+            };
+
+            /*系统用户类型 可扩展*/
+            $scope.userType = [{
+                key: '管理员',
+                value: 1
+            }, {
+                key: '普通用户',
+                value: 2
+            }]
 
         }]);
