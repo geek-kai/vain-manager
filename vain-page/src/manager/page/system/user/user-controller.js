@@ -6,8 +6,6 @@ angular.module("user.controllers", []).controller(
         function ($cookieStore, appConstant, $cookies, $scope, userHttpService, commonUtils, msgModal) {
             $scope.init = function () {
                 $scope.paginator = null;
-
-                //$scope.showDiv();
                 $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
@@ -65,7 +63,7 @@ angular.module("user.controllers", []).controller(
                 commonUtils.showCover();
                 $scope.coverShow = 1;
                 $scope.resetPwdWindow = 1;
-                commonUtils.centerElem($("#updateDiv"));
+                commonUtils.centerElem($("#pwdDiv"));
                 $scope.resetPwdUser = user;
             };
 
@@ -85,6 +83,14 @@ angular.module("user.controllers", []).controller(
                 commonUtils.hideCover();
                 $scope.resetPwdWindow = 0;
                 $scope.coverShow = 0;
+            };
+
+            /*添加账号*/
+            $scope.addAccount = function () {
+              commonUtils.showCover();
+              $scope.coverShow = 1;
+              $scope.modifyWindow = 1;
+              commonUtils.centerElem($("#modifyDiv"));
             };
 
         }]);
