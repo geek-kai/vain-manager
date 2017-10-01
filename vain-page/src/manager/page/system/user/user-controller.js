@@ -104,6 +104,58 @@ angular.module("user.controllers", []).controller(
                 })
             };
 
+            /*删除账号*/
+            $scope.delete = function (id) {
+                userHttpService.delete({id: id}, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    $scope.init();
+                })
+            };
+
+            /*checkbox点击添加到选择数组中*/
+            $scope.batchId = function (data) {
+                if (typeof $scope.ids == "undefined")
+                    $scope.ids = [];
+                if (typeof data.checkState == "undefined") {
+                    data.checkState = true;
+                    $scope.ids.push(data.id);
+                    return;
+                } else {
+                    data.checkState = !data.checkState; //状态取反
+                }
+                if (!isNaN(data.id)) {
+                    if ($scope.ids.indexOf(data.id) == -1) {
+                        $scope.ids.push(data.id);
+                    } else {
+                        commonUtils.removeItemFromArray($scope.ids, data.id);
+                    }
+                }
+            };
+
+            /*批量删除账号*/
+            $scope.deleteBatch = function () {
+                if (commonUtils.isArray($scope.ids)) {
+                    userHttpService.delete({ids: $scope.ids}, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        if (data.code == 200)
+                            $scope.ids = [];
+                        $scope.init();
+                    })
+                }
+            };
+
+            /*批量删锁定账号*/
+            $scope.lockBatch = function () {
+                if (commonUtils.isArray($scope.ids)) {
+                    userHttpService.lock({ids: $scope.ids, state: 1}, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        if (data.code == 200)
+                            $scope.ids = [];
+                        $scope.init();
+                    })
+                }
+            };
+
             /*系统用户类型 可扩展*/
             $scope.userType = [{
                 key: '管理员',

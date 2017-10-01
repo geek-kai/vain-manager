@@ -16,6 +16,10 @@ angular.module("user.services", ["ngResource", "common.services"])
             add: {
                 method: "post",
                 url: appConstant.BASE_URL + "/user/add"
+            },
+            delete: {
+                method: 'post',
+                url: appConstant.BASE_URL + "/user/delete"
             }
         })
     }

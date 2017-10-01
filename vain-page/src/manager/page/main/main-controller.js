@@ -6,7 +6,7 @@ angular.module("main.controllers", []).controller(
         function ($cookieStore, appConstant, $cookies, $scope, mainHttpService) {
             $scope.init = function () {
                 //抓取百度新闻实时热点
-                $scope.getNew(1);
+              //  $scope.getNew(1);
             };
             $scope.getNew = function (type) {
                 //抓取百度新闻今日热点

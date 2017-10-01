@@ -147,6 +147,19 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                         return appConstant.UNKNOWN_ERROR;
                 }
 
+            },
+            /*判断是否为非空数组*/
+            isArray: function (object) {
+                return object && typeof (object) == 'object' && object.constructor == Array && object.length > 0
+            },
+            /*删除数组未知坐标元素*/
+            removeItemFromArray: function (array, item) {
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i] == item) {
+                        array.splice(i,1);
+                        break;
+                    }
+                }
             }
 
         };

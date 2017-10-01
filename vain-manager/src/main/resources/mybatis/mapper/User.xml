@@ -59,7 +59,7 @@
             </if>
             and deleted=0
         </where>
-        order by modifyTime desc,createTime desc
+        order by createTime
     </select>
 
 
@@ -130,7 +130,17 @@
             modifyTime=now()
         </set>
         <where>
-            id=#{id}
+            <choose>
+                <when test="ids != null">
+                    id IN
+                    <foreach collection="ids" item="id" separator="," open="(" close=")">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    id=#{id}
+                </otherwise>
+            </choose>
         </where>
     </update>
 
@@ -152,7 +162,20 @@
 
     <!--锁定用户-->
     <update id="lock" parameterType="com.vain.manager.entity.User">
-        UPDATE t_user SET state =#{state},modifyTime = now() WHERE id = #{id}
+        UPDATE t_user SET state =#{state},modifyTime = now()
+        <where>
+            <choose>
+                <when test="ids != null">
+                    id IN
+                    <foreach collection="ids" item="id" separator="," open="(" close=")">
+                        #{id}
+                    </foreach>
+                </when>
+                <otherwise>
+                    id=#{id}
+                </otherwise>
+            </choose>
+        </where>
     </update>
 
 </mapper>

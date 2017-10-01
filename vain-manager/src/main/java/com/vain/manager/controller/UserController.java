@@ -109,18 +109,18 @@ public class UserController extends AbstractBaseController<User> {
 
     /**
      * 删除账号 （更新标识符）
-     * @param entity
-     *            参数实体
+     *
+     * @param entity  参数实体
      * @param request
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "delete",method = RequestMethod.POST)
+    @RequestMapping(value = "delete", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public Response<User> delete(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        if(entity==null||entity.getId()==null)
-            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE,SysConstants.Code.PARAM_ERROR_MSG);
+        if (entity == null || (entity.getId() == null && entity.getIds() == null))
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         userService.delete(entity);
         Response<User> response = new Response<>();
         response.setCode(SysConstants.Code.SUCCESS_CODE);
@@ -213,7 +213,7 @@ public class UserController extends AbstractBaseController<User> {
     @RequestMapping(value = "lock", method = RequestMethod.POST)
     @ResponseBody
     public Response lockUser(@RequestBody User entity) throws ErrorCodeException {
-        if (entity == null || entity.getId() == null)
+        if (entity == null || (entity.getId() == null && entity.getIds() == null))
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         userService.lock(entity);
         Response response = new Response<>();
