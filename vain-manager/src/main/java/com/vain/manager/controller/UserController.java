@@ -89,7 +89,7 @@ public class UserController extends AbstractBaseController<User> {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "add", method = RequestMethod.POST)
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public Response<User> add(@RequestBody User entity, HttpServletRequest request) throws Exception {
@@ -115,7 +115,7 @@ public class UserController extends AbstractBaseController<User> {
      * @return
      * @throws Exception
      */
-    @RequestMapping(value = "delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     @ResponseBody
     @Override
     public Response<User> delete(@RequestBody User entity, HttpServletRequest request) throws Exception {
@@ -191,7 +191,7 @@ public class UserController extends AbstractBaseController<User> {
      * @return
      * @throws ErrorCodeException
      */
-    @RequestMapping(value = "resetPwd", method = RequestMethod.POST)
+    @RequestMapping(value = "/resetPwd", method = RequestMethod.POST)
     @ResponseBody
     public Response resetPwd(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getNewpasswd() == null)
@@ -210,7 +210,7 @@ public class UserController extends AbstractBaseController<User> {
      * @param entity
      * @return
      */
-    @RequestMapping(value = "lock", method = RequestMethod.POST)
+    @RequestMapping(value = "/lock", method = RequestMethod.POST)
     @ResponseBody
     public Response lockUser(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || (entity.getId() == null && entity.getIds() == null))

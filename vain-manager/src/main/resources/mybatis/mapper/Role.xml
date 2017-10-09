@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.Role">
+
+    <sql id="Base_Column_List">
+        id,name,description,roleKey,createTime,modifyTime,deleted
+    </sql>
+
+    <insert id="insert" parameterType="com.vain.manager.entity.Role" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO t_role
+    (name,description,roleKey,createTime,deleted)
+    VALUES
+    (#{name},#{description},#{roleKey},now(),#{deleted})
+    </insert>
+
+    <select id="get" resultType="com.vain.manager.entity.Role"
+            parameterType="com.vain.manager.entity.Role">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM t_role
+        <where>
+            <if test="id !=null">
+                and id = #{id}
+            </if>
+            and deleted=0
+        </where>
+    </select>
+
+    <select id="getPagedList" resultType="com.vain.manager.entity.Role"
+            parameterType="com.vain.manager.entity.Role">
+        select
+        <include refid="Base_Column_List"/>
+        from t_role
+        <where>
+            <if test="id!=null">
+                and id != #{id}
+            </if>
+            and deleted=0
+        </where>
+        order by createTime
+    </select>
+
+
+    <update id="update" parameterType="com.vain.manager.entity.Role">
+        update t_role
+        <set>
+            <if test="name != null and name !=''">
+                name = #{name},
+            </if>
+            <if test="description != null and description != ''">
+                description = #{description},
+            </if>
+            <if test="deleted != null and deleted != ''">
+                deleted = #{deleted},
+            </if>
+            <if test="roleKey!=null and roleKey!=''">
+                roleKey = #{roleKey}
+            </if>
+                modifyTime=now()
+        </set>
+        <where>
+            id=#{id}
+        </where>
+    </update>
+</mapper>

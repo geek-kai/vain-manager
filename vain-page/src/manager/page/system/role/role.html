@@ -34,32 +34,12 @@
                     <div class="am-btn-toolbar">
                         <div class="am-btn-group am-btn-group-xs">
                             <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addAccount();"><span class="am-icon-plus"></span> 新增角色</button>
-                            <button type="button" class="am-btn am-btn-default" ng-click="lockBatch();"><span class="am-icon-lock"></span> 冻结用户</button>
-                            <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteBatch();"  ><span class="am-icon-trash-o"></span> 删除用户</button>
+                            <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteRole();"  ><span class="am-icon-trash-o"></span> 删除角色</button>
                         </div>
                     </div>
                 </div>
-
-                <div class="am-u-sm-12 am-u-md-4">
-                    <div class="am-form-group">
-                        <select data-am-selected="{btnSize: 'sm'}">
-                            <option value="option1">所有类别</option>
-                            <option value="option2">管理员</option>
-                            <option value="option3">普通用户</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="am-u-sm-12 am-u-md-4">
-                    <div class="am-input-group am-input-group-sm">
-                        <input type="text" class="am-form-field">
-                        <span class="am-input-group-btn">
-                          <button class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
-                        </span>
-                    </div>
-                </div>
-
             </div>
+
             <div class="am-g">
                     <form class="am-form">
                         <table class="am-table am-table-bordered am-table-radius am-table-hover">
@@ -67,7 +47,7 @@
                             <tr class="am-primary">
                                 <th><input type="checkbox" class="tpl-table-fz-check"></th>
                                 <th>序号</th>
-                                <th>用户名</th>
+                                <th>角色名</th>
                                 <th>昵称</th>
                                 <th>类型</th>
                                 <th>创建日期</th>
