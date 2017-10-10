@@ -28,7 +28,7 @@
         </where>
     </select>
 
-    <select id="getPagedList" resultType="com.vain.manager.entity.Role"
+    <select id="getList" resultType="com.vain.manager.entity.Role"
             parameterType="com.vain.manager.entity.Role">
         select
         <include refid="Base_Column_List"/>

@@ -48,21 +48,21 @@
                                 <th><input type="checkbox" class="tpl-table-fz-check"></th>
                                 <th>序号</th>
                                 <th>角色名</th>
-                                <th>昵称</th>
-                                <th>类型</th>
+                                <th>roleKey</th>
+                                <th>描述</th>
                                 <th>创建日期</th>
                                 <th>操作</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr ng-repeat="user in users track by $index">
+                            <tr ng-repeat="role in roles track by $index">
                                 <td><input type="checkbox" ng-click="batchId(user)" ng-checked="user.checkState"></td>
                                 <td>{{$index+1}}</td>
-                                <td><a href="#">{{user.userName}}</a></td>
-                                <td class="am-hide-sm-only">{{user.nickname}}</td>
-                                <td>{{user.type==1?'管理员':'普通用户'}}</td>
-                                <td class="am-hide-sm-only">{{user.createTime}}</td>
+                                <td><a href="#">{{role.name}}</a></td>
+                                <td class="am-hide-sm-only">{{role.roleKey}}</td>
+                                <td>{{role.description}}</td>
+                                <td class="am-hide-sm-only">{{role.createTime}}</td>
                                 <td>
                                     <div class="am-btn-toolbar">
                                         <div class="am-btn-group am-btn-group-xs">
