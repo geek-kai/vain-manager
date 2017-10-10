@@ -6,6 +6,7 @@ import com.vain.manager.common.entity.Response;
 import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.Menu;
+import com.vain.manager.entity.Role;
 import com.vain.manager.service.IMenuService;
 import com.vain.manager.shiro.session.UserSession;
 import com.vain.manager.util.StrUtil;
@@ -56,6 +57,23 @@ public class MenuController extends AbstractBaseController<Menu> {
             response.setMsg(SysConstants.Code.SUCCESS_MSG);
             return response;
         }
+        return response;
+    }
+
+    /**
+     * 根据role角色id获取角色权限
+     *
+     * @param entity
+     * @return
+     * @throws ErrorCodeException
+     */
+    @RequestMapping(value = "/getMenusByRoleId", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<Menu> getMenusByRoleId(@RequestBody Role entity) throws ErrorCodeException {
+        Response<Menu> response = new Response<>();
+        response.setDataList(menuService.getMenusByRoleId(entity));
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 

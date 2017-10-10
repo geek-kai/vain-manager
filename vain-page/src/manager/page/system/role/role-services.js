@@ -4,6 +4,10 @@ angular.module("role.services", ["ngResource", "common.services"])
             getList: {
                 method: "post",
                 url: appConstant.BASE_URL + "/role/getList"
+            },
+            getMenusByRoleId: {
+                method: "post",
+                url: appConstant.BASE_URL + "/menu/getMenusByRoleId"
             }
         })
     }]);

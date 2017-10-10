@@ -6,6 +6,7 @@ import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.dao.MenuDao;
 import com.vain.manager.entity.Menu;
+import com.vain.manager.entity.Role;
 import com.vain.manager.entity.User;
 import com.vain.manager.service.IMenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -154,6 +155,31 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
         return returnMenus;
     }
 
+    /**
+     * 根据role的id获取对应角色的所有权限列表
+     *
+     * @param entity
+     * @return
+     */
+    @Override
+    public List<Menu> getMenusByRoleId(Role entity) throws ErrorCodeException {
+        Menu menu = new Menu();
+        menu.setRoleId(entity.getId());
+        List<Menu> returnMenus = new ArrayList<>();
+        List<Menu> menus = menuDao.getMenusByRoleId(menu);
+        if (!menus.isEmpty()) {
+            for (Menu data : menus) {
+                if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
+                    returnMenus.add(data);
+                    fillMenuListChildren(menus, data);
+                }
+            }
+        } else {
+            throwErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+        }
+        return returnMenus;
+    }
+
     @Override
     public Menu get(Menu entity) throws ErrorCodeException {
         return null;
@@ -175,7 +201,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     }
 
     /**
-     * 获取所有的菜单数据集合,子级菜单的数据查询的递归操作 fillMenuChildren:通过上级的菜单id，匹配其子级的菜单的parentId进行查询
+     * 获取所有的菜单数据集合,采用递归操作,将子级菜单的分级的 fillMenuChildren:通过上级的菜单id，匹配其子级的菜单的parentId进行查询
      *
      * @param menu 上级菜单实体参数（菜单id）
      */

@@ -3,6 +3,7 @@ package com.vain.manager.service;
 import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.BaseService;
 import com.vain.manager.entity.Menu;
+import com.vain.manager.entity.Role;
 import com.vain.manager.entity.User;
 
 import java.util.HashSet;
@@ -31,4 +32,11 @@ public interface IMenuService extends BaseService<Menu> {
 
     List<Menu> getMyMenus(Menu entity) throws ErrorCodeException;
 
+    /**
+     * 通过角色id获取角色所有的菜单权限
+     *
+     * @param entity
+     * @return
+     */
+    List<Menu> getMenusByRoleId(Role entity) throws ErrorCodeException;
 }
