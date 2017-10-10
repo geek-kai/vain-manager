@@ -24,6 +24,7 @@
         </div>
         <ol class="am-breadcrumb">
             <li><a href="#" class="am-icon-cog">系统管理</a></li>
+            <li class="am-active">角色管理</li>
             <li class="am-active">权限分配</li>
         </ol>
 
@@ -31,19 +32,35 @@
             <div class="tpl-portlet">
                 <table class="am-table am-table-bordered am-table-centered">
                     <tr>
-                        <th>Savings for holiday!</th>
-                        <th>Month</th>
-                        <th>Savings</th>
+                        <th>一级菜单</th>
+                        <th>二级菜单</th>
+                        <th>三级菜单</th>
                     </tr>
-                    <tr>
-                        <td rowspan="2" class="am-text-middle">$50</td>
-                        <td>January</td>
-                        <td>$100</td>
-                    </tr>
-                    <tr>
-                        <td>February</td>
-                        <td>$80</td>
-                    </tr>
+                    <tbody ng-repeat="menu in menus track by $index">
+                        <tr ng-repeat="child in menu.children track by $index" >
+                            <td rowspan="{{menu.children.length}}" class="am-text-middle" ng-if="$index==0">
+                                <label>
+                                    <i>{{menu.hasPermission}}</i>
+                                    <input type="checkbox" ng-model="menu.hasPermission" ng-click="grantMenus(menu);">
+                                    <span>{{menu.name}}</span>
+                                </label>
+                            </td>
+                            <td>
+                                <label>
+                                    <i>{{child.hasPermission}}</i>
+                                    <input type="checkbox" ng-model="child.hasPermission" ng-click="grantMenus(child);">
+                                    <span>{{child.name}}</span>
+                                </label>
+                            </td>
+                            <td>
+                                <label ng-repeat="grandChild in child.children track by $index">
+                                    <i>{{grandChild.hasPermission}}</i>
+                                    <input type="checkbox" ng-model="grandChild.hasPermission" ng-click="grantMenus(grandChild);">
+                                    <span>{{grandChild.name}}</span>
+                                </label>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>
