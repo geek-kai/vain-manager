@@ -77,6 +77,23 @@ public class MenuController extends AbstractBaseController<Menu> {
         return response;
     }
 
+    /**
+     * 获取所有的菜单列表
+     *
+     * @param entity
+     * @return
+     * @throws ErrorCodeException
+     */
+    @RequestMapping(value = "/getMenuList", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<Menu> getMenuList(@RequestBody Menu entity) throws ErrorCodeException {
+        Response<Menu> response = new Response<>();
+        response.setDataList(menuService.getList(entity, true));
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
+    }
+
     @Override
     public Response<Menu> getPagedList(@RequestBody Menu entity, HttpServletRequest request) throws Exception {
         return null;

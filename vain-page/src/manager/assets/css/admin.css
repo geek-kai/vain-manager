@@ -340,6 +340,7 @@ gallery.html css
     margin-top: 12px;
     font-weight: 500;
 }
+
 .checkboxs i {
     width: 14px;
     height: 14px;
@@ -351,8 +352,28 @@ gallery.html css
     margin-left: -42px;
     margin-top: -3px;
 }
+
 .checkboxs i.active {
     background: white url(../../image/checkbox_on.png) no-repeat center center;
     border: 1px solid #61b6e9;
 }
 
+/******************菜单*********************/
+.arrow-b td b {
+    padding-left: 75px;
+    font-weight: normal;
+    font-style: normal;
+    box-sizing: border-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    text-align: left;
+    float: left;
+    cursor: pointer;
+    background: url(../../image/arrow_off.png) no-repeat 20px center;
+}
+
+.arrow-b b.active {
+    background: white url(../../image/arrow_on.png) no-repeat center center;
+}

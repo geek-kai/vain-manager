@@ -68,7 +68,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     @Override
     public List<Menu> getList(Menu entity, boolean isHierarchy) throws ErrorCodeException {
         List<Menu> menus = menuDao.getList(entity); //所有菜单集合
-        List<Menu> containsChildMenus = menuDao.getList(entity); //所有菜单集合 分层级 父子结构
+        List<Menu> containsChildMenus = new ArrayList<>(); //所有菜单集合 分层级 父子结构
         if (menus.size() > 0) {
             if (isHierarchy) {
                 for (Menu data : menus) {
