@@ -43,10 +43,11 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="menu in menus track by $index" class="arrow-b">
+                        <tr ng-repeat="menu in menus track by $index" class="arrow" ng-show="menu.isShow"
+                            ng-class="menu.type==1?'arrow_One':(menu.type==2?'arrow_Two':'arrow_Three')">
                             <td>
-                                <b>
-                                {{menu.name}}
+                                <b ng-click="toggleChildren(menu);" ng-class="menu.type==3?'arrow_none':(menu.isShowChildren?'':'active')">
+                                    {{menu.name}}
                                 </b>
                             </td>
                             <td>{{menu.type==1?'目录':(menu.type==2?'菜单':'按钮')}}</td>
