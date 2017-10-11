@@ -73,6 +73,22 @@ public class RoleController extends AbstractBaseController<Role> {
         return response;
     }
 
+    /**
+     * 根据角色id分配菜单权限
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "/assignRoleMenu", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<Role> assignRoleMenu(@RequestBody Role entity) {
+        Response<Role> response = new Response<>();
+        roleService.assignRoleMenu(entity);
+        response.setCode(SysConstants.Code.SUCCESS_CODE);
+        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        return response;
+    }
+
     @Override
     public Response<Role> add(@RequestBody Role entity, HttpServletRequest request) throws Exception {
         return null;

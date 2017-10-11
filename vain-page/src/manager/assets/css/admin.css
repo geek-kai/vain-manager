@@ -4,7 +4,6 @@
 
 html,
 body {
-
 }
 
 ul {
@@ -321,7 +320,7 @@ gallery.html css
     margin: 0 auto;
 }
 
-/**********************************/
+/****************登录页面*****************/
 .login-am-center .divPwd {
     background: url(../../image/alert.png) no-repeat 22px center;
 }
@@ -332,3 +331,28 @@ gallery.html css
     font-size: 14px;
     font-family: '微软雅黑', 'Microsoft Yahei', 'Hiragino Sans GB', 'tahoma', 'arial', '宋体';
 }
+
+/*******************角色-菜单***************/
+.checkboxs {
+    height: 16px;
+    position: relative;
+    cursor: pointer;
+    margin-top: 12px;
+    font-weight: 500;
+}
+.checkboxs i {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #666;
+    background: white;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -42px;
+    margin-top: -3px;
+}
+.checkboxs i.active {
+    background: white url(../../image/checkbox_on.png) no-repeat center center;
+    border: 1px solid #61b6e9;
+}
+

@@ -27,15 +27,14 @@ angular.module("role.controllers", [])
 
             /*分配权限*/
             $scope.grantMenu = function (id) {
-                window.location.href = "role-detail.html?id=" + id;
+                window.location.href = "role-menu.html?id=" + id;
             };
         }])
     /**角色权限列表**/
-    .controller("RoleGrantCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils",
-        function (appConstant, $scope, roleHttpServices, commonUtils) {
+    .controller("RoleGrantCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils", "msgModal",
+        function (appConstant, $scope, roleHttpServices, commonUtils, msgModal) {
             $scope.init = function () {
                 roleHttpServices.getMenusByRoleId({id: commonUtils.getUrlParameter("id")}, function (data) {
-                    console.log(data);
                     if (data.code == 200) {
                         $scope.menus = data.dataList;
                     }
@@ -49,7 +48,7 @@ angular.module("role.controllers", [])
                     for (var i = 0; i < menu.children.length; i++) {
                         menu.children[i].hasPermission = menu.hasPermission;
                         if (menu.children[i].children && menu.children[i].children.length > 0) {
-                            for (var j = 0; j < menu.children[i].children[j]; j++) {
+                            for (var j = 0; j < menu.children[i].children[j].length; j++) {
                                 menu.children[i].children[j].hasPermission = menu.children[i].hasPermission;
                             }
                         }
@@ -74,5 +73,24 @@ angular.module("role.controllers", [])
                         }
                     }
                 }
+            };
+
+            /*更新权限菜单*/
+            $scope.save = function () {
+                var id = commonUtils.getUrlParameter("id");
+                if (id) {
+                    roleHttpServices.assignRoleMenu({id: id, menus: $scope.menus}, function (data) {
+                        if (data.code == 200) {
+                            history.go(-1);
+                        } else {
+                            msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        }
+                    });
+                }
+            };
+
+            /*返回*/
+            $scope.cancel = function () {
+                history.go(-1);
             };
         }]);

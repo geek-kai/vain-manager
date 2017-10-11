@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.RoleMenu">
+
+    <sql id="Base_Column_List">
+        id,roleId,menuId,createTime,modifyTime
+    </sql>
+
+    <!--角色分配权限菜单-->
+    <insert id="assignRoleMenu" parameterType="List">
+        INSERT INTO
+        t_role_menu (roleId,menuId,createTime)
+        VALUES
+        <foreach collection="list" item="data" separator=",">
+            (#{data.roleId},#{data.menuId},now())
+        </foreach>
+    </insert>
+
+    <!--删除角色菜单权限-->
+    <delete id="delete" parameterType="com.vain.manager.entity.RoleMenu">
+        DELETE FROM t_role_menu WHERE roleId = #{roleId}
+    </delete>
+</mapper>
