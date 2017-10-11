@@ -40,7 +40,7 @@ public class MenuController extends AbstractBaseController<Menu> {
     public Response<Menu> getMyMenu(@RequestBody Menu entity, HttpServletRequest request) throws ErrorCodeException {
         PermissionCache cache = getPermissionCacheFromSession(request);
         Response<Menu> response = cache.getMenus(); //获取session中的缓存menu
-        if (!StrUtil.isEmpty(entity.getMenukey())) {
+        if (!StrUtil.isEmpty(entity.getMenuKey())) {
             logger.info("菜单操作权限列表");
         } else {
             if (response != null) {

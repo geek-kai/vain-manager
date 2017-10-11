@@ -27,8 +27,8 @@ public class AuthorizationServiceImpl implements IAuthorizationService {
         HashSet<Menu> menus = menuService.getMenusByUserId(subjectInfo.getUserId(), subjectInfo.getUserType());
         if (menus != null) {
             for (Menu data : menus) {
-                if (!StrUtil.isEmpty(data.getMenukey()))
-                    keys.add(data.getMenukey());
+                if (!StrUtil.isEmpty(data.getMenuKey()))
+                    keys.add(data.getMenuKey());
             }
         }
         context.setPermissions(keys);

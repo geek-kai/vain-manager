@@ -24,7 +24,7 @@ public class Menu extends PagedEntity {
     /**
      * 菜单的key
      */
-    private String menukey;
+    private String menuKey;
 
     /**
      * 类型 1：目录  2：菜单  3：按钮
@@ -117,12 +117,12 @@ public class Menu extends PagedEntity {
         this.parentId = parentId;
     }
 
-    public String getMenukey() {
-        return menukey;
+    public String getMenuKey() {
+        return menuKey;
     }
 
-    public void setMenukey(String menukey) {
-        this.menukey = menukey;
+    public void setMenuKey(String menuKey) {
+        this.menuKey = menuKey;
     }
 
     public Integer getType() {
