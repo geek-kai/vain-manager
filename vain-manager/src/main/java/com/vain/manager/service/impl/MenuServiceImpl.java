@@ -206,7 +206,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
      * @param menu 上级菜单实体参数（菜单id）
      */
     private void fillMenuListChildren(List<Menu> menus, Menu menu) {
-        List<Menu> childrenList = new ArrayList<Menu>();
+        List<Menu> childrenList = new ArrayList<>();
         /*
          * 遍历所有菜单集合 得到条件为父菜单id等于菜单parentId的所有子菜单 放入childrenList中，再将list集合set进父菜单的children里
          */

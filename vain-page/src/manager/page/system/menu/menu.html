@@ -43,10 +43,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ng-repeat="menu in menus track by $index" class="arrow" ng-show="menu.isShow"
+                        <tr ng-repeat="menu in menus track by $index" class="arrow" ng-show="menu.isShow && menu.isShowChildren"
                             ng-class="menu.type==1?'arrow_One':(menu.type==2?'arrow_Two':'arrow_Three')">
                             <td>
-                                <b ng-click="toggleChildren(menu);" ng-class="menu.type==3?'arrow_none':(menu.isShowChildren?'':'active')">
+                                <b ng-click="toggleChildren(menu);" ng-class="menu.type==3?'arrow_none':(menu.arrowState?'':'active')">
                                     {{menu.name}}
                                 </b>
                             </td>
