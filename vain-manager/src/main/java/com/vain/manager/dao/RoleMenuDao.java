@@ -49,7 +49,7 @@ public class RoleMenuDao extends AbstractBaseDao<RoleMenu> {
      *
      * @param list
      */
-    public void assignRoleMenu(List<RoleMenu> list) {
-        this.sqlSession.insert("com.vain.manager.entity.RoleMenu.assignRoleMenu", list);
+    public int assignRoleMenu(List<RoleMenu> list) {
+        return this.sqlSession.insert("com.vain.manager.entity.RoleMenu.assignRoleMenu", list);
     }
 }

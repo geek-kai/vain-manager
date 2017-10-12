@@ -44,9 +44,7 @@ public class UserController extends AbstractBaseController<User> {
     public Response<BNews> getNews(@PathVariable("type") int type) throws Exception {
         List<BNews> news = type == 1 ? ReptileUtils.getNowNews() : ReptileUtils.getTodayNews();
         Response<BNews> response = new Response<>();
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
-        response.setData(news);
+        response.setDataList(news);
         return response;
     }
 
@@ -60,9 +58,6 @@ public class UserController extends AbstractBaseController<User> {
             throw new ErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
         Response<User> response = new Response<>();
         response.setDataList(users);
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
-        response.setTotalSize(users.getPaginator().getTotalCount());
         return response;
     }
 
@@ -95,10 +90,8 @@ public class UserController extends AbstractBaseController<User> {
     public Response<User> add(@RequestBody User entity, HttpServletRequest request) throws Exception {
         if (entity == null || entity.getPasswd() == null || entity.getUserName() == null || entity.getType() == 0)
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
-        userService.add(entity);
         Response<User> response = new Response<>();
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        response.setData(userService.add(entity));
         return response;
     }
 
@@ -121,10 +114,8 @@ public class UserController extends AbstractBaseController<User> {
     public Response<User> delete(@RequestBody User entity, HttpServletRequest request) throws Exception {
         if (entity == null || (entity.getId() == null && entity.getIds() == null))
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
-        userService.delete(entity);
         Response<User> response = new Response<>();
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        response.setData(userService.delete(entity));
         return response;
     }
 
@@ -160,8 +151,6 @@ public class UserController extends AbstractBaseController<User> {
         data.setId(UserSession.getUserId());
         data.setType(UserSession.getUserType());
         response.setData(data);
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 
@@ -198,8 +187,6 @@ public class UserController extends AbstractBaseController<User> {
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
         Response response = new Response<>();
         response.setData(userService.resetPwd(entity));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 
@@ -218,8 +205,6 @@ public class UserController extends AbstractBaseController<User> {
         userService.lock(entity);
         Response response = new Response<>();
         response.setData(userService.lock(entity));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 }

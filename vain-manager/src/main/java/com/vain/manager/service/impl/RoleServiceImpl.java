@@ -45,18 +45,18 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
     }
 
     @Override
-    public void add(Role entity) throws ErrorCodeException {
-        roleDao.insert(entity);
+    public int add(Role entity) throws ErrorCodeException {
+        return roleDao.insert(entity);
     }
 
     @Override
-    public void modify(Role entity) throws ErrorCodeException {
-        roleDao.update(entity);
+    public int modify(Role entity) throws ErrorCodeException {
+        return roleDao.update(entity);
     }
 
     @Override
-    public void delete(Role entity) throws ErrorCodeException {
-        roleDao.delete(entity);
+    public int delete(Role entity) throws ErrorCodeException {
+        return roleDao.delete(entity);
     }
 
     /**
@@ -65,7 +65,7 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
      * @param role
      */
     @Override
-    public void assignRoleMenu(Role role) {
+    public int assignRoleMenu(Role role) {
         roleMenuDao.delete(new RoleMenu(role.getId()));//删除
         List<Menu> menus = role.getMenus();
         List<RoleMenu> roleMenus = new ArrayList<>();
@@ -73,7 +73,8 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
             assignRoleMenu(menu, role, roleMenus);
         }
         if (!roleMenus.isEmpty())
-            roleMenuDao.assignRoleMenu(roleMenus); //批量插入
+            return roleMenuDao.assignRoleMenu(roleMenus); //批量插入
+        return 0;
     }
 
     //递归遍历menu  不受菜单层级限制

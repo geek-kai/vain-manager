@@ -12,7 +12,7 @@ angular.module("main.controllers", []).controller(
                 //抓取百度新闻今日热点
                 mainHttpService.getNews({type: Number(type)}, function (data) {
                     if (data.code == 200) {
-                        $scope.news = (data.data.length > 10 ? data.data.slice(0, 9) : data.data);
+                        $scope.news = (data.dataList.length > 10 ? data.dataList.slice(0, 9) : data.dataList);
 
                     }
                 })

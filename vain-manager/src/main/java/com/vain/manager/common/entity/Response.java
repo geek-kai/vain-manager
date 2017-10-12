@@ -1,5 +1,8 @@
 package com.vain.manager.common.entity;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.vain.manager.constant.SysConstants;
+
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -72,10 +75,6 @@ public class Response<T extends Entity> {
         return data;
     }
 
-    public void setData(Object data) {
-        this.data = data;
-    }
-
     public Timestamp getLastModifyTime() {
         return lastModifyTime;
     }
@@ -88,8 +87,43 @@ public class Response<T extends Entity> {
         return dataList;
     }
 
+    public void setData(Object data) {
+        this.data = data;
+        if (data == null) {
+            this.code = SysConstants.Code.NOT_FOUND_CODE;
+            this.msg = SysConstants.Code.NOT_FOUND_MSG;
+        } else {
+            this.code = SysConstants.Code.SUCCESS_CODE;
+            this.msg = SysConstants.Code.SUCCESS_MSG;
+        }
+        if (data instanceof Integer) {
+            if ((int) data == 0) {  //数据库影响的行数为0 没修改数据
+                this.code = SysConstants.Code.DATA_MODIFY_EORROR_CODE;
+                this.msg = SysConstants.Code.DATA_MODIFY_EORROR_MSG;
+            } else if ((int) data > 1) {
+                this.code = SysConstants.Code.SUCCESS_CODE;
+                this.msg = SysConstants.Code.SUCCESS_MSG;
+            }
+        }
+    }
+
+    /**
+     * 抽取公用code
+     *
+     * @param dataList
+     */
     public void setDataList(List<T> dataList) {
         this.dataList = dataList;
+        if (dataList == null || dataList.isEmpty()) {
+            this.code = SysConstants.Code.NOT_FOUND_CODE;
+            this.msg = SysConstants.Code.NOT_FOUND_MSG;
+        } else {
+            this.code = SysConstants.Code.SUCCESS_CODE;
+            this.msg = SysConstants.Code.SUCCESS_MSG;
+        }
+        if (dataList instanceof PageList) {
+            this.totalSize = ((PageList) dataList).getPaginator().getTotalCount();
+        }
     }
 
 }

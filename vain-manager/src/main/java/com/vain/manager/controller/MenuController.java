@@ -53,8 +53,6 @@ public class MenuController extends AbstractBaseController<Menu> {
             entity.setType(UserSession.getUserType());
             response = new Response<>();
             response.setDataList(menuService.getMyMenus(entity));
-            response.setCode(SysConstants.Code.SUCCESS_CODE);
-            response.setMsg(SysConstants.Code.SUCCESS_MSG);
             return response;
         }
         return response;
@@ -72,8 +70,6 @@ public class MenuController extends AbstractBaseController<Menu> {
     public Response<Menu> getMenusByRoleId(@RequestBody Role entity) throws ErrorCodeException {
         Response<Menu> response = new Response<>();
         response.setDataList(menuService.getMenusByRoleId(entity));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 
@@ -89,8 +85,6 @@ public class MenuController extends AbstractBaseController<Menu> {
     public Response<Menu> getMenuList(@RequestBody Menu entity) throws ErrorCodeException {
         Response<Menu> response = new Response<>();
         response.setDataList(menuService.getList(entity, true));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 

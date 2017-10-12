@@ -107,18 +107,18 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
      * @throws ErrorCodeException
      */
     @Override
-    public void add(User entity) throws ErrorCodeException {
+    public int add(User entity) throws ErrorCodeException {
         entity.setSalt(UUID.randomUUID().toString());
         entity.setPasswd(MD5Util.getMD5Str(entity.getPasswd() + entity.getSalt()));
         entity.setState(SysConstants.AccountConstant.STATUS_UN_LOCKED);
         entity.setCreateTime(new Timestamp(System.currentTimeMillis()));
         entity.setDeleted(SysConstants.DeletedStatus.STATUS_UN_DELETED);
-        userDao.insert(entity);
+        return userDao.insert(entity);
     }
 
     @Override
-    public void modify(User entity) throws ErrorCodeException {
-
+    public int modify(User entity) throws ErrorCodeException {
+        return 0;
     }
 
     /**
@@ -128,8 +128,8 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
      * @throws ErrorCodeException
      */
     @Override
-    public void delete(User entity) throws ErrorCodeException {
+    public int delete(User entity) throws ErrorCodeException {
         entity.setDeleted(SysConstants.DeletedStatus.STATUS_DELETED);
-        userDao.delete(entity);
+        return userDao.delete(entity);
     }
 }

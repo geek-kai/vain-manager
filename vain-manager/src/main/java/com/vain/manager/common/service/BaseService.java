@@ -6,63 +6,58 @@ import com.vain.manager.common.exception.ErrorCodeException;
 
 
 import java.util.List;
+
 /**
- * @description:  service的公共接口
- * @author  vain
+ * @author vain
+ * @description: service的公共接口
  * @date 2017/8/31 11:49
  */
 public interface BaseService<T extends Entity> {
     /**
      * 获取分页数据
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-     PageList<T> getPagedList(T entity) throws ErrorCodeException;
+    PageList<T> getPagedList(T entity) throws ErrorCodeException;
 
     /**
      * 获取所有数据
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-     List<T> getList(T entity) throws ErrorCodeException;
+    List<T> getList(T entity) throws ErrorCodeException;
 
     /**
      * 获取单条数据详情
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-     T get(T entity) throws ErrorCodeException;
+    T get(T entity) throws ErrorCodeException;
 
     /**
      * 新增数据
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-     void add(T entity) throws ErrorCodeException;
+    int add(T entity) throws ErrorCodeException;
 
     /**
      * 修改数据
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-    void modify(T entity) throws ErrorCodeException;
+    int modify(T entity) throws ErrorCodeException;
 
     /**
      * 删除数据
-     * 
-     * @param entity
-     *            参数实体
+     *
+     * @param entity 参数实体
      * @return
      */
-     void delete(T entity) throws ErrorCodeException;
+    int delete(T entity) throws ErrorCodeException;
 }

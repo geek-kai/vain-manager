@@ -15,5 +15,5 @@ public interface IRoleService extends BaseService<Role> {
      *
      * @param entity
      */
-    void assignRoleMenu(Role entity);
+    int assignRoleMenu(Role entity);
 }

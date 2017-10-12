@@ -186,18 +186,18 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     }
 
     @Override
-    public void add(Menu entity) throws ErrorCodeException {
-
+    public int add(Menu entity) throws ErrorCodeException {
+        return 0;
     }
 
     @Override
-    public void modify(Menu entity) throws ErrorCodeException {
-
+    public int modify(Menu entity) throws ErrorCodeException {
+        return 0;
     }
 
     @Override
-    public void delete(Menu entity) throws ErrorCodeException {
-
+    public int delete(Menu entity) throws ErrorCodeException {
+        return 0;
     }
 
     /**

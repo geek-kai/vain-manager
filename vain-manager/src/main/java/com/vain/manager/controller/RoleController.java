@@ -42,8 +42,6 @@ public class RoleController extends AbstractBaseController<Role> {
     public Response<Role> getList(@RequestBody Role entity, HttpServletRequest request) throws Exception {
         Response<Role> response = new Response<>();
         response.setDataList(roleService.getList(entity));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 
@@ -68,8 +66,6 @@ public class RoleController extends AbstractBaseController<Role> {
         entity.setId(id);
         Response<Role> response = new Response<>();
         response.setData(roleService.get(entity));
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
         return response;
     }
 
@@ -83,9 +79,7 @@ public class RoleController extends AbstractBaseController<Role> {
     @ResponseBody
     public Response<Role> assignRoleMenu(@RequestBody Role entity) {
         Response<Role> response = new Response<>();
-        roleService.assignRoleMenu(entity);
-        response.setCode(SysConstants.Code.SUCCESS_CODE);
-        response.setMsg(SysConstants.Code.SUCCESS_MSG);
+        response.setData(roleService.assignRoleMenu(entity));
         return response;
     }
 
