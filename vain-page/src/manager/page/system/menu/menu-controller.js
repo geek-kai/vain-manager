@@ -8,13 +8,12 @@ angular.module("menu.controllers", [])
                         if (commonUtils.isArray(data.dataList)) {
                             $scope.menus = [];
                             $scope.converterMenus(data.dataList);
-                            console.log($scope.menus);
                         }
                     }
                 });
             };
 
-            /*将菜单数据转换*/
+            /*将菜单数据转换(最末级菜单不显示)*/
             $scope.converterMenus = function (dataList) {
                 for (var i = 0; i < dataList.length; i++) {
                     dataList[i].isShow = true;
@@ -40,17 +39,19 @@ angular.module("menu.controllers", [])
                             menu.children[i].isShowChildren = !menu.children[i].isShowChildren;
                             menu.children[i].isShow = menu.isShow;
                         }
-                        $scope.fillMenuChildren(menu.children[i], menu.isShowChildren);
+                        $scope.fillMenuChildren(menu.children[i], menu.isShow);
                     }
                 }
             };
 
-            $scope.fillMenuChildren = function (children, isShowChildren) {
+            $scope.fillMenuChildren = function (children, isShow) {
                 var grandChildren = children.children;
                 if (grandChildren) {
                     for (var b = 0; b < grandChildren.length; b++) {
-                        grandChildren[b].isShow = !isShowChildren;
+                        grandChildren[b].isShow = !isShow;
+                        //   grandChildren[b].isShowChildren = !grandChildren[b].isShowChildren;
                         $scope.fillMenuChildren(grandChildren[b]);
+                        console.log(grandChildren[b]);
                     }
                 }
             }
