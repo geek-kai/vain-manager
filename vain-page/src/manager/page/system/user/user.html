@@ -9,7 +9,6 @@
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="renderer" content="webkit">
-    <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <link rel="icon" type="image/png" href="../../../image/favicon.png">
     <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="../../../assets/css/admin.css">
@@ -51,15 +50,15 @@
                     </div>
 
                     <div class="am-u-sm-12 am-u-md-4">
-                        <div class="am-input-group am-input-group-sm">
-                            <input type="text" class="am-form-field">
-                            <span class="am-input-group-btn">
-                              <button class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
-                            </span>
+                        <div class="am-form-group">
+                              <input type="text" class="form-search" placeholder="搜索...">
+                              <span class="am-input-group-btn form-search-span">
+                                <button class="am-btn am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
+                              </span>
                         </div>
                     </div>
 
-                </div>
+            </div>
                 <div class="am-g">
                         <form class="am-form">
                             <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
@@ -89,6 +88,7 @@
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-user-secret"></span> 分配角色</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grant(user);"><span class="am-icon-wrench"></span> 分配权限</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);">
                                                     <span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}
                                                 </button>

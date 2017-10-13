@@ -156,6 +156,11 @@ angular.module("user.controllers", []).controller(
                 }
             };
 
+            /*给用户赋值权限*/
+            $scope.grant = function () {
+
+            };
+
             /*系统用户类型 可扩展*/
             $scope.userType = [{
                 key: '管理员',

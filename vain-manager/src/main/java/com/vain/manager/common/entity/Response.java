@@ -108,7 +108,7 @@ public class Response<T extends Entity> {
     }
 
     /**
-     * 抽取公用code
+     * 抽取公用code 如果需要自己设置code 可在设置data之后再set code和msg
      *
      * @param dataList
      */

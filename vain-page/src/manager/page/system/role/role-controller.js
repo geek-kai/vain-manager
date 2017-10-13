@@ -43,12 +43,13 @@ angular.module("role.controllers", [])
 
             /*赋予或取消权限*/
             $scope.grantMenus = function (menu) {
-                //如果选择的是一级菜单 那么遍历二级菜单将二级菜单状态一致 在遍历三级菜单 将状态一致（直接选一二级菜单时候）
-                if (menu.children && menu.children.length > 0) {
+                //如果选择的是一级菜单 那么遍历二级菜单将二级菜单状态一致
+                if (commonUtils.isArray(menu.children)) {
                     for (var i = 0; i < menu.children.length; i++) {
                         menu.children[i].hasPermission = menu.hasPermission;
-                        if (menu.children[i].children && menu.children[i].children.length > 0) {
-                            for (var j = 0; j < menu.children[i].children[j].length; j++) {
+                        if (menu.children[i].children) {
+                            //在遍历三级菜单 将状态一致（直接选一二级菜单时候）
+                            for (var j = 0; j < menu.children[i].children.length; j++) {
                                 menu.children[i].children[j].hasPermission = menu.children[i].hasPermission;
                             }
                         }
