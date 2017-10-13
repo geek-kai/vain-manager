@@ -207,4 +207,18 @@ public class UserController extends AbstractBaseController<User> {
         response.setData(userService.lock(entity));
         return response;
     }
+
+    /**
+     * 分配用户权限
+     *
+     * @param entity
+     * @return
+     */
+    @RequestMapping(value = "/assignUserMenu", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<User> assignUserMenu(@RequestBody User entity) {
+        Response<User> response = new Response<>();
+        response.setData(userService.assignUserMenu(entity));
+        return response;
+    }
 }

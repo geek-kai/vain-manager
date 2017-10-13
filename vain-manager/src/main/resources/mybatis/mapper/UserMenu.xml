@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.UserMenu">
+
+    <!--分配用户权限菜单-->
+    <insert id="assignUserMenu" parameterType="List">
+        INSERT INTO
+        t_user_menu (userId,menuId,createTime)
+        VALUES
+        <foreach collection="list" item="data" separator=",">
+            (#{data.userId},#{data.menuId},now())
+        </foreach>
+    </insert>
+
+    <!--删除用户菜单权限-->
+    <delete id="delete" parameterType="com.vain.manager.entity.UserMenu">
+        DELETE FROM t_user_menu WHERE userId = #{userId}
+    </delete>
+</mapper>

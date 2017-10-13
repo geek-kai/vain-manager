@@ -29,7 +29,7 @@ angular.module("user.services", ["ngResource", "common.services"])
             /*赋予用户权限*/
             assignUserMenu: {
                 method: "post",
-                url: appConstant.BASE_URL + "/menu/assignUserMenu"
+                url: appConstant.BASE_URL + "/user/assignUserMenu"
             }
         })
     }

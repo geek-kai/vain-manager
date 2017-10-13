@@ -115,8 +115,21 @@ public class User extends PagedEntity {
      */
     private List<Long> ids;
 
+    /**
+     * 拥有权限集合
+     */
+    private List<Menu> menus;
+
     public User() {
 
+    }
+
+    public List<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(List<Menu> menus) {
+        this.menus = menus;
     }
 
     public List<Long> getIds() {

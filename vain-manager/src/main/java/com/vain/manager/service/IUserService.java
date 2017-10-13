@@ -35,4 +35,11 @@ public interface IUserService extends BaseService<User> {
      * @return
      */
     int lock(User entity);
+
+    /**
+     * 分配用户菜单权限
+     *
+     * @param entity
+     */
+    int assignUserMenu(User entity);
 }

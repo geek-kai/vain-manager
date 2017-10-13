@@ -126,4 +126,8 @@ public class Response<T extends Entity> {
         }
     }
 
+    public Response() {
+        this.code = SysConstants.Code.SUCCESS_CODE;
+        this.msg = SysConstants.Code.SUCCESS_MSG;
+    }
 }

@@ -5,8 +5,11 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.dao.UserDao;
+import com.vain.manager.dao.UserMenuDao;
+import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.entity.User;
+import com.vain.manager.entity.UserMenu;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.util.MD5Util;
 import com.vain.manager.util.StrUtil;
@@ -14,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +32,8 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private UserMenuDao userMenuDao;
 
     @Override
     public User login(User entity) throws ErrorCodeException {
@@ -82,6 +88,55 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
     @Override
     public int lock(User entity) {
         return userDao.lock(entity);
+    }
+
+    /**
+     * 分配用户权限
+     * 先删除原来的权限列表 在添加新的权限列表
+     *
+     * @param entity
+     */
+    @Override
+    public int assignUserMenu(User entity) {
+        UserMenu userMenu = new UserMenu();
+        List<UserMenu> userMenus = new ArrayList<>();
+        userMenu.setUserId(entity.getId());
+        userMenuDao.delete(userMenu);
+        List<Menu> menus = entity.getMenus();
+        for (Menu menu : menus) {
+            assignPermission(menu, entity, userMenus);
+        }
+        if (userMenus.size() > 0) {
+            return userMenuDao.assignUserMenu(userMenus);
+        }
+        return 0;
+    }
+
+    /**
+     * 分配用户菜单权限递归的方法
+     *
+     * @param menu，传入遍历的单个菜单数据
+     * @param user，用户id
+     */
+    public void assignPermission(Menu menu, User user, List<UserMenu> userMenus) {
+        if (menu.getHasPermission() != null && menu.getHasPermission()) {
+            /*
+             * 添加，修改为同一方法，修改进来，默认选中 根据menuId和roleId重新添加
+             */
+            UserMenu userMenu = new UserMenu();
+            userMenu.setMenuId(menu.getId());
+            userMenu.setUserId(user.getId());
+            userMenus.add(userMenu);
+            /*
+             * 再次进行递归 第3级判断
+             */
+            if (menu.getChildren() != null && menu.getChildren().size() > 0) {
+                List<Menu> menuChilds = menu.getChildren();
+                for (Menu menuChild : menuChilds) {
+                    assignPermission(menuChild, user, userMenus);
+                }
+            }
+        }
     }
 
     @Override
