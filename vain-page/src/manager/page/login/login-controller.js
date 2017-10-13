@@ -3,8 +3,8 @@
  */
 angular.module("login.controllers", []).controller(
     "LoginCtrl",
-    ["$cookieStore", "appConstant", "$cookies", "$scope", "loginHttpService",
-        function ($cookieStore, appConstant, $cookies, $scope, loginHttpService) {
+    ["$cookieStore", "appConstant", "$cookies", "$scope", "loginHttpServices",
+        function ($cookieStore, appConstant, $cookies, $scope, loginHttpServices) {
             $scope.init = function () {
                 var height = $(window.document).height();
                 $(".myapp-login-logo-text").css("padding-top", height > 1000 ? '30%' : "50px"); //根据分辨率来选择登录框距离大小
@@ -30,7 +30,7 @@ angular.module("login.controllers", []).controller(
                     return;
                 }
                 $scope.formSubmitting = true;
-                loginHttpService.login($scope.user, function (data) {
+                loginHttpServices.login($scope.user, function (data) {
                     $scope.formSubmitting = false;
                     if (data.code == 200) {
                         $cookies.putObject("vain-user", data.data, {

@@ -1,9 +1,9 @@
 /**
  * 系统管理用户中心的controller
  */
-angular.module("user.controllers", []).controller(
-    "UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpService", "commonUtils", "msgModal",
-        function ($cookieStore, appConstant, $cookies, $scope, userHttpService, commonUtils, msgModal) {
+angular.module("user.controllers", [])
+    .controller("UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpServices", "commonUtils", "msgModal",
+        function ($cookieStore, appConstant, $cookies, $scope, userHttpServices, commonUtils, msgModal) {
             $scope.init = function () {
                 $scope.paginator = null;
                 $scope.queryParam = commonUtils.initQueryParam();
@@ -31,7 +31,7 @@ angular.module("user.controllers", []).controller(
                         curQueryParam.curPage = $scope.queryParam.curPage;
                     }
                 }
-                userHttpService.getPagedList(curQueryParam, function (data) {
+                userHttpServices.getPagedList(curQueryParam, function (data) {
                     if (data.code == 200) {
                         commonUtils.storeQueryParam(curQueryParam);
                         $scope.users = data.dataList;
@@ -52,7 +52,7 @@ angular.module("user.controllers", []).controller(
             /*锁定用户*/
             $scope.lock = function (user) {
                 user.state = user.state == 0 ? 1 : 0;
-                userHttpService.lock(user, function (data) {
+                userHttpServices.lock(user, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.init();
                 })
@@ -71,7 +71,7 @@ angular.module("user.controllers", []).controller(
             $scope.resetPwd = function () {
                 if (new RegExp("^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$").test($scope.resetPassword)) {
                     $scope.resetPwdUser.newpasswd = $scope.resetPassword;
-                    userHttpService.resetPwd($scope.resetPwdUser, function (data) {
+                    userHttpServices.resetPwd($scope.resetPwdUser, function (data) {
                         msgModal.alertMsg(commonUtils.convertResult(data.code));
                         $scope.close();
                     })
@@ -98,7 +98,7 @@ angular.module("user.controllers", []).controller(
 
             /*添加账号*/
             $scope.add = function () {
-                userHttpService.add($scope.addUser, function (data) {
+                userHttpServices.add($scope.addUser, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.close();
                 })
@@ -106,7 +106,7 @@ angular.module("user.controllers", []).controller(
 
             /*删除账号*/
             $scope.delete = function (id) {
-                userHttpService.delete({id: id}, function (data) {
+                userHttpServices.delete({id: id}, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.init();
                 })
@@ -135,7 +135,7 @@ angular.module("user.controllers", []).controller(
             /*批量删除账号*/
             $scope.deleteBatch = function () {
                 if (commonUtils.isArray($scope.ids)) {
-                    userHttpService.delete({ids: $scope.ids}, function (data) {
+                    userHttpServices.delete({ids: $scope.ids}, function (data) {
                         msgModal.alertMsg(commonUtils.convertResult(data.code));
                         if (data.code == 200)
                             $scope.ids = [];
@@ -147,7 +147,7 @@ angular.module("user.controllers", []).controller(
             /*批量删锁定账号*/
             $scope.lockBatch = function () {
                 if (commonUtils.isArray($scope.ids)) {
-                    userHttpService.lock({ids: $scope.ids, state: 1}, function (data) {
+                    userHttpServices.lock({ids: $scope.ids, state: 1}, function (data) {
                         msgModal.alertMsg(commonUtils.convertResult(data.code));
                         if (data.code == 200)
                             $scope.ids = [];
@@ -157,8 +157,8 @@ angular.module("user.controllers", []).controller(
             };
 
             /*给用户赋值权限*/
-            $scope.grant = function () {
-
+            $scope.grant = function (user) {
+                window.location.href = "user-menu.html?id=" + user.id;
             };
 
             /*系统用户类型 可扩展*/
@@ -170,4 +170,69 @@ angular.module("user.controllers", []).controller(
                 value: 2
             }]
 
+        }])
+    /**用户权限列表**/
+    .controller("UserGrantCtrl", ["appConstant", "$scope", "userHttpServices", "commonUtils", "msgModal",
+        function (appConstant, $scope, userHttpServices, commonUtils, msgModal) {
+            $scope.init = function () {
+                userHttpServices.getMenusByUserId({id: commonUtils.getUrlParameter("id")}, function (data) {
+                    if (data.code == 200) {
+                        $scope.menus = data.dataList;
+                    }
+                });
+            };
+
+            /*赋予或取消权限*/
+            $scope.grantMenus = function (menu) {
+                //如果选择的是一级菜单 那么遍历二级菜单将二级菜单状态一致
+                if (commonUtils.isArray(menu.children)) {
+                    for (var i = 0; i < menu.children.length; i++) {
+                        menu.children[i].hasPermission = menu.hasPermission;
+                        if (menu.children[i].children) {
+                            //在遍历三级菜单 将状态一致（直接选一二级菜单时候）
+                            for (var j = 0; j < menu.children[i].children.length; j++) {
+                                menu.children[i].children[j].hasPermission = menu.children[i].hasPermission;
+                            }
+                        }
+                    }
+                }
+
+                //如果选中的是三级菜单 那么三级菜单所属一二级菜单全部需要设置为选中（一有都有）
+                if (menu.hasPermission) {
+                    for (var i = 0; i < $scope.menus.length; i++) {
+                        var child = $scope.menus[i].children;
+                        if ($scope.menus[i].id == menu.parentId) {
+                            $scope.menus[i].hasPermission = menu.hasPermission;
+                        } else {
+                            if (child && child.length > 0) {
+                                for (var j = 0; j < child.length; j++) {
+                                    if (child[j].id == menu.parentId) {
+                                        child[j].hasPermission = menu.hasPermission;
+                                        $scope.menus[i].hasPermission = child[j].hasPermission
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            /*更新权限菜单*/
+            $scope.save = function () {
+                var id = commonUtils.getUrlParameter("id");
+                if (id) {
+                    userHttpServices.assignUserMenu({id: id, menus: $scope.menus}, function (data) {
+                        if (data.code == 200) {
+                            history.go(-1);
+                        } else {
+                            msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        }
+                    });
+                }
+            };
+
+            /*返回*/
+            $scope.cancel = function () {
+                history.go(-1);
+            };
         }]);

@@ -1,5 +1,5 @@
 angular.module("main.services",["ngResource","common.services"])
-    .factory("mainHttpService",["$resource","appConstant",function ($resource,appConstant) {
+    .factory("mainHttpServices",["$resource","appConstant",function ($resource,appConstant) {
         return $resource("",{},{
             getNews:{
                 method:"get",

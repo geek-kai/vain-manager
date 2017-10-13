@@ -16,7 +16,7 @@ import java.util.List;
 public interface IMenuService extends BaseService<Menu> {
 
 
-    List<Menu> getUserMenuByUser(User user) throws ErrorCodeException;
+    List<Menu> getMenusByUser(User user) throws ErrorCodeException;
 
     HashSet<Menu> getMenusByUserId(Long userId, Integer userType);
 

@@ -23,23 +23,49 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     @Autowired
     private MenuDao menuDao;
 
+    /**
+     * 仅获取用户菜单集合
+     *
+     * @param user 用户id
+     * @return 带层级结构的菜单列表
+     * @throws ErrorCodeException
+     */
     @Override
-    public List<Menu> getUserMenuByUser(User user) throws ErrorCodeException {
-        return null;
+    public List<Menu> getMenusByUser(User user) throws ErrorCodeException {
+        Menu menu = new Menu();
+        menu.setUserId(user.getId());
+        List<Menu> menus = menuDao.getMenusByUserId(menu);
+        //递归返回层级结构的菜单列表
+        List<Menu> returnMenus = new ArrayList<>();
+        if (menus.size() > 0) {
+            for (Menu data : menus) {
+                if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
+                    returnMenus.add(data);
+                    fillMenuListChildren(menus, data);
+                }
+            }
+        } else {
+            throwErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+        }
+
+        return returnMenus;
     }
 
     @Override
     public HashSet<Menu> getMenusByUserId(Long userId, Integer userType) {
-        HashSet<Menu> userOwnedMenus = new HashSet<>();
+        HashSet<Menu> userOwnedMenus = new HashSet<>(); //去重 不包含重复元素菜单
         Menu menu = new Menu(userId);
         if (userType == SysConstants.AccountConstant.ACCOUNT_TYPE_USER) {
+            //用户所属角色菜单集合
             List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
             if (menusByUserRoles.size() > 0)
                 userOwnedMenus.addAll(menusByUserRoles);
+            //用户个人菜单集合
             List<Menu> userAllMenus = menuDao.getUserAllMenus(menu);
             if (userAllMenus.size() > 0)
                 userOwnedMenus.addAll(userAllMenus);
         } else {
+            //管理员权限菜单集合
             List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
             if (menusByUserRoles.size() > 0)
                 userOwnedMenus.addAll(menusByUserRoles);
@@ -87,6 +113,13 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
         return containsChildMenus;
     }
 
+    /**
+     * 获取自己菜单集合
+     *
+     * @param entity
+     * @return
+     * @throws ErrorCodeException
+     */
     @Override
     public List<Menu> getMyMenus(Menu entity) throws ErrorCodeException {
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //用户的自己菜单集合  采用set不允许重复
