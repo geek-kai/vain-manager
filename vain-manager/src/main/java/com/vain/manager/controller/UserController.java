@@ -49,6 +49,14 @@ public class UserController extends AbstractBaseController<User> {
     }
 
 
+    /**
+     * 获取账号列表 （超级管理员不在此列） 分页
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/getPagedList", method = RequestMethod.POST)
     @ResponseBody
     @Override
@@ -95,9 +103,23 @@ public class UserController extends AbstractBaseController<User> {
         return response;
     }
 
+    /**
+     * 修改账号部分信息
+     * @param entity
+     *            参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<User> modify(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        return null;
+        if (entity == null || entity.getId() == null)
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        Response<User> response = new Response<>();
+        response.setData(userService.modify(entity));
+        return response;
     }
 
     /**

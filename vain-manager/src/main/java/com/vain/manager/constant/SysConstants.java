@@ -167,10 +167,10 @@ public class SysConstants {
         public static final int STATUS_LOCKED = 1;
 
         /**
-         * 账户类型 1：管理员 2：普通用户
+         * 账户类型 1：超级管理员 2：超级管理员赋予权限的管理组用户
          */
-        public static final int ACCOUNT_TYPE_ADMIN = 1;
-        public static final int ACCOUNT_TYPE_USER = 2;
+        public static final int ACCOUNT_TYPE_SUPERADMIN = 1;
+        public static final int ACCOUNT_TYPE_ADMIN = 2;
     }
 
     /**

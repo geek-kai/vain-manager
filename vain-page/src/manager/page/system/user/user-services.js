@@ -21,6 +21,10 @@ angular.module("user.services", ["ngResource", "common.services"])
                 method: 'post',
                 url: appConstant.BASE_URL + "/user/delete"
             },
+            modify: {
+                method: 'post',
+                url: appConstant.BASE_URL + "/user/modify"
+            },
             /*通过角色id获取角色菜单权限（分层次 带hasPermission）*/
             getMenusByUserId: {
                 method: "post",

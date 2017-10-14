@@ -27,44 +27,39 @@
         FROM t_user
         <where>
             <if test="id !=null">
-                and id = #{id}
+                AND id = #{id}
             </if>
             <if test="userName !=null and userName != ''">
-                and userName = #{userName}
+                AND userName = #{userName}
             </if>
             <if test="phone !=null and phone != ''">
-                and phone = #{phone}
+                AND phone = #{phone}
             </if>
             <if test="email !=null and email != ''">
-                and email = #{email}
+                AND email = #{email}
             </if>
-            and deleted=0
+            AND deleted=0
         </where>
     </select>
 
     <select id="getPagedList" resultType="com.vain.manager.entity.User"
             parameterType="com.vain.manager.entity.User">
-        select
-        <include refid="Normal_Column_List"/>
-        from t_user
-        <where>
-            <if test="type != null and type != 0">
-                and type = #{type}
-            </if>
-            <if test="userName != null and userName != ''">
-                and userName like '%${userName}%'
-            </if>
-            <if test="id!=null">
-                and id != #{id}
-            </if>
-            and deleted=0
-        </where>
-        order by createTime
+        SELECT
+        <include refid="Normal_Column_List"/>,
+        (SELECT name FROM t_role WHERE id = (SELECT roleId FROM t_user_role WHERE t_user.id = t_user_role.userId)) AS roleName
+        FROM t_user WHERE deleted = 0 AND type != 1
+        <if test="type != null and type != 0">
+            AND type = #{type}
+        </if>
+        <if test="userName != null and userName != ''">
+            AND userName LIKE '%${userName}%'
+        </if>
+        ORDER BY createTime
     </select>
 
 
     <update id="update" parameterType="com.vain.manager.entity.User">
-        update t_user
+        UPDATE t_user
         <set>
             <if test="nickname != null and nickname !=''">
                 nickname=#{nickname},
@@ -93,9 +88,6 @@
             <if test="birthday != null and birthday != ''">
                 birthday = #{birthday},
             </if>
-            <if test="address != null and address !=''">
-                address=#{address},
-            </if>
             <if test="state != null and state != ''">
                 state = #{state},
             </if>
@@ -122,7 +114,7 @@
     </update>
 
     <update id="delete" parameterType="com.vain.manager.entity.User">
-        update t_user
+        UPDATE t_user
         <set>
             <if test="deleted!=null">
                 deleted = #{deleted},
@@ -145,7 +137,7 @@
     </update>
 
     <update id="resetPwd" parameterType="com.vain.manager.entity.User">
-        update t_user
+        UPDATE t_user
         <set>
             <if test="passwd != null and passwd != ''">
                 passwd = #{passwd},

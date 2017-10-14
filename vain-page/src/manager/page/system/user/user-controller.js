@@ -81,10 +81,14 @@ angular.module("user.controllers", [])
             /*关闭重置密码的弹窗*/
             $scope.close = function (type) {
                 commonUtils.hideCover();
-                if (type == 1)
-                    $scope.resetPwdWindow = 0;
-                if (type == 2)
-                    $scope.modifyWindow = 0;
+                switch (type) {
+                    case 1:
+                        $scope.resetPwdWindow = 0;
+                    case 2:
+                        $scope.addWindow = 0;
+                    case 3:
+                        $scope.modifyWindow = 0;
+                }
                 $scope.coverShow = 0;
             };
 
@@ -92,8 +96,17 @@ angular.module("user.controllers", [])
             $scope.addAccount = function () {
                 commonUtils.showCover();
                 $scope.coverShow = 1;
+                $scope.addWindow = 1;
+                commonUtils.centerElem($("#addDiv"));
+            };
+
+            /*修改信息*/
+            $scope.showModify = function (user) {
+                commonUtils.showCover();
+                $scope.converShow = 1;
                 $scope.modifyWindow = 1;
                 commonUtils.centerElem($("#modifyDiv"));
+                $scope.modifyUser = user;
             };
 
             /*添加账号*/
@@ -101,12 +114,21 @@ angular.module("user.controllers", [])
                 userHttpServices.add($scope.addUser, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.close();
+                    $scope.init();
                 })
             };
 
             /*删除账号*/
             $scope.delete = function (id) {
                 userHttpServices.delete({id: id}, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    $scope.init();
+                })
+            };
+
+            /*修改用户信息*/
+            $scope.modify = function () {
+                userHttpServices.modify($scope.modifyUser, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
                     $scope.init();
                 })
@@ -161,13 +183,18 @@ angular.module("user.controllers", [])
                 window.location.href = "user-menu.html?id=" + user.id;
             };
 
+            /*查询*/
+            $scope.search = function () {
+                $scope.jumpPage(1, true);
+            };
+
             /*系统用户类型 可扩展*/
             $scope.userType = [{
-                key: '管理员',
-                value: 1
+                key: '管理组',
+                value: 2
             }, {
                 key: '普通用户',
-                value: 2
+                value: 3
             }]
 
         }])

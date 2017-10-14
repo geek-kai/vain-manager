@@ -55,7 +55,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     public HashSet<Menu> getMenusByUserId(Long userId, Integer userType) {
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //去重 不包含重复元素菜单
         Menu menu = new Menu(userId);
-        if (userType == SysConstants.AccountConstant.ACCOUNT_TYPE_USER) {
+        if (userType == SysConstants.AccountConstant.ACCOUNT_TYPE_ADMIN) {
             //用户所属角色菜单集合
             List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
             if (menusByUserRoles.size() > 0)
@@ -125,10 +125,27 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //用户的自己菜单集合  采用set不允许重复
         List<Menu> returnMenus = new ArrayList<>(); //返回的菜单列表 不重复 带有层级结构
         /*
-         * 普通的用户登录
+          超级管理员登录 默认拥有所有菜单全部权限
          */
-        if (entity.getType() == SysConstants.AccountConstant.ACCOUNT_TYPE_USER) {
-            logger.info("--------------普通用户登录-------------");
+        if (entity.getType() == SysConstants.AccountConstant.ACCOUNT_TYPE_SUPERADMIN) {
+            logger.info("--------------超级管理员登录-------------");
+            List<Menu> adminMenus = menuDao.getMenusByRoleKey(SysConstants.RoleConstant.SUPER_ADMINISTRATOR); //获取管理员的所有权限
+            if (!adminMenus.isEmpty())
+                userOwnedMenus.addAll(adminMenus);
+            List<Menu> menus = new ArrayList<>(adminMenus);
+            if (!menus.isEmpty()) {
+                for (Menu data : menus) {
+                    if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
+                        returnMenus.add(data);
+                        fillMenuListChildren(menus, data);
+                    }
+                }
+            }
+        } else {
+            /*
+             超级管理员赋值的管理组 获取角色和个人权限集合
+             */
+            logger.info("--------------管理组登录-------------");
             List<Menu> menusByUserAllRoles = menuDao.getMenusByUserRoles(entity); //角色权限集合
             if (!menusByUserAllRoles.isEmpty())
                 userOwnedMenus.addAll(menusByUserAllRoles);
@@ -140,23 +157,6 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
                 if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
                     returnMenus.add(data);
                     fillMenuListChildren(menus, data);
-                }
-            }
-        /*
-         * 管理员登录
-         */
-        } else {
-            logger.info("--------------管理员登录-------------");
-            List<Menu> adminMenus = menuDao.getMenusByRoleKey(SysConstants.RoleConstant.SUPER_ADMINISTRATOR); //获取管理员的所有权限
-            if (!adminMenus.isEmpty())
-                userOwnedMenus.addAll(adminMenus);
-            List<Menu> menus = new ArrayList<>(adminMenus);
-            if (!menus.isEmpty()) {
-                for (Menu data : menus) {
-                    if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
-                        returnMenus.add(data);
-                        fillMenuListChildren(menus, data);
-                    }
                 }
             }
         }

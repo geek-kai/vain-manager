@@ -13,7 +13,7 @@ import java.util.List;
 public class User extends PagedEntity {
 
     /**
-     * 用户类型 1-管理员2-普通用户
+     * 用户类型 1-超级管理员2-管理组3-普通用户
      */
     private int type;
     /**

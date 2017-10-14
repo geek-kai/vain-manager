@@ -171,9 +171,16 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
         return userDao.insert(entity);
     }
 
+    /**
+     * 修改账号信息
+     *
+     * @param entity 参数实体
+     * @return
+     * @throws ErrorCodeException
+     */
     @Override
     public int modify(User entity) throws ErrorCodeException {
-        return 0;
+        return userDao.update(entity);
     }
 
     /**
