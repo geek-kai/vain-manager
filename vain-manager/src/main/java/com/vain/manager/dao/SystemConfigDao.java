@@ -14,7 +14,7 @@ import java.util.List;
  * @date 2017/8/31 11:56
  */
 @Repository
-public class SysConfigDao extends AbstractBaseDao<SystemConfig> {
+public class SystemConfigDao extends AbstractBaseDao<SystemConfig> {
 
     @Override
     public PageList<SystemConfig> getPagedList(SystemConfig entity, int curPage, int pageSize) {

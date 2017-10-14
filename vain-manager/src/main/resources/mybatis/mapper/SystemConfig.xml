@@ -6,7 +6,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 
 	<!-- 复制操作 -->
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.vain.manager.entity.SystemConfig">
-		INSERT INTO t_sys_config
+		INSERT INTO t_system_config
 		(name, code, value, valueType, type, description,visible,createTime,modifyTime)
 		VALUES(#{name}, #{code}, #{value}, #{valueType},#{type}, #{description},#{visible},now(),now())
 	</insert>
@@ -14,21 +14,17 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!-- 获取分页列表 -->
 	<select id="getPageList" resultType="com.vain.manager.entity.SystemConfig"
 		parameterType="com.vain.manager.entity.SystemConfig">
-		select *
-		from t_sys_config
-		<where>
-			<if test="name != null"> and name like '%${name}%' </if>
-			<if test="type != null"> and type = #{type} </if>
-			and visible = 1
-		</where>
-		order by type asc
+		SELECT * FROM t_system_config WHERE visible = 1
+		<if test="name != null"> and name like '%${name}%' </if>
+		<if test="type != null"> and type = #{type} </if>
+		ORDER BY TYPE ASC
 	</select>
 
 	<!-- 获取列表 -->
 	<select id="getList" resultType="com.vain.manager.entity.SystemConfig"
 		parameterType="com.vain.manager.entity.SystemConfig">
 		select *
-		from t_sys_config
+		from t_system_config
 		<where>
 			<if test="type != null">
 				and type = #{type}
@@ -42,7 +38,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="getVersionList" resultType="com.vain.manager.entity.SystemConfig"
 			parameterType="com.vain.manager.entity.SystemConfig">
 		select name,description,code,value,modifyTime
-		from t_sys_config
+		from t_system_config
 		<where>
 			<if test="type != null">
 				and type = #{type}
@@ -58,7 +54,7 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<!--code重复校验-->
 	<select id="isExistCode" resultType="com.vain.manager.entity.SystemConfig"
 			parameterType="com.vain.manager.entity.SystemConfig">
-		select * from t_sys_config
+		select * from t_system_config
 		<where>
 			<if test="code != null"> and code = #{code} </if>
 			and visible = 1
@@ -69,13 +65,13 @@ PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
 	<select id="get" resultType="com.vain.manager.entity.SystemConfig"
 			parameterType="com.vain.manager.entity.SystemConfig">
 		select *
-		from t_sys_config
+		from t_system_config
 		where id = #{id}
 	</select>
 
 	<!-- 修改 -->
 	<update id="update" parameterType="com.vain.manager.entity.SystemConfig">
-		update t_sys_config
+		update t_system_config
 		<set>
 			<if test="name != null">
 				name=#{name},

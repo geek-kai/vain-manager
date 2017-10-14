@@ -1,0 +1,157 @@
+<!doctype html>
+<html data-ng-app="role.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+
+</head>
+
+<body ng-controller="RoleListCtrl" ng-init="init()">
+    <div class="tpl-content-scope tpl-content-wrapper">
+        <div class="tpl-content-page-title">
+            账号管理
+        </div>
+        <ol class="am-breadcrumb">
+            <li><a href="#" class="am-icon-user">账号管理</a></li>
+            <li class="am-active">角色管理</li>
+        </ol>
+
+        <div class="row">
+            <div class="tpl-portlet">
+                <div class="am-g am-margin-vertical-sm">
+                    <div class="am-u-sm-12 am-u-md-12">
+                        <div class="am-btn-toolbar">
+                            <div class="am-btn-group am-btn-group-xs">
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addRole();"><span class="am-icon-plus"></span> 新增角色</button>
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteRole();"  ><span class="am-icon-trash-o"></span> 删除角色</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g">
+                        <form class="am-form">
+                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
+                                <thead>
+                                <tr class="am-primary">
+                                    <th><input type="checkbox" class="tpl-table-fz-check"></th>
+                                    <th>序号</th>
+                                    <th>角色名</th>
+                                    <th>roleKey</th>
+                                    <th>描述</th>
+                                    <th>创建日期</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr ng-repeat="role in roles track by $index">
+                                    <td><input type="checkbox" ng-click="batchId(user)" ng-checked="user.checkState"></td>
+                                    <td>{{$index+1}}</td>
+                                    <td><a href="#">{{role.name}}</a></td>
+                                    <td class="am-hide-sm-only">{{role.roleKey}}</td>
+                                    <td>{{role.description}}</td>
+                                    <td class="am-hide-sm-only">{{role.createTime}}</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 分配权限</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(role.id);" ><span class="am-icon-trash-o"></span> 删除</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 遮罩层 -->
+    <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
+
+    <!--新增角色的div-->
+    <div class="form_div cover_alert" id="modifyDiv" ng-show="addWindow" style="width: 550px;height:400px;">
+        <div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+
+            <form class="am-form am-form-horizontal" name="roleForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="role.name!=null && role.roleKey!=null && role.description!=null?'am-form-success':'am-form-error'" style="margin: 20px;">
+                    <div>
+                        <label for="roleName" class="am-u-sm-3 am-form-label">角色名称：</label>
+                        <div class="am-u-sm-9" >
+                            <input type="text" id="roleName" name="roleName" ng-model="role.name" class="am-form-field" placeholder="角色名称" required>
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                        <span ng-show="roleForm.roleName.$error.required">请输入角色名称</span>
+                    </div>
+
+                    <div style="padding-top: 6rem;">
+                        <label for="roleKey" class="am-u-sm-3 am-form-label">roleKey：</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="roleKey" name="roleKey" class="am-form-field" placeholder="角色roleKey"
+                                   ng-pattern="/^[A-Za-z]+$/" ng-model="role.roleKey" required>
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                        <span ng-show="roleForm.roleKey.$error.required">请输入roleKey</span>
+                        <span ng-show="roleForm.roleKey.$error.pattern">请输入字母组成的roleKey</span>
+                    </div>
+
+                    <div style="padding-top: 6rem;">
+                        <label class="am-u-sm-3 am-form-label">角色描述：</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="description" name="description" class="am-form-field" placeholder="角色描述" ng-model="role.description" required>
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                        <span ng-show="roleForm.description.$error.required">请输入角色描述</span>
+                    </div>
+                </div>
+
+                <div class="am-form-group am-padding-top-sm">
+                    <div class="am-u-sm-10 am-u-sm-offset-4">
+                        <button type="submit" class="am-btn am-btn-default" ng-click="add();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">添加角色</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/amazeui.min.js"></script>
+    <script src="../../../assets/js/app.js"></script>
+    <script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="application/javascript" src="role-app.js"></script>
+    <script type="application/javascript" src="role-controller.js"></script>
+    <script type="application/javascript" src="role-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-services.js"></script>
+</body>
+
+</html>

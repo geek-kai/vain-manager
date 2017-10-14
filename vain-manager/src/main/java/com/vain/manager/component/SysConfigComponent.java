@@ -1,7 +1,7 @@
 package com.vain.manager.component;
 
 import com.alibaba.fastjson.JSON;
-import com.vain.manager.dao.SysConfigDao;
+import com.vain.manager.dao.SystemConfigDao;
 import com.vain.manager.entity.SystemConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -9,16 +9,17 @@ import org.springframework.web.context.ContextLoader;
 
 import java.util.HashMap;
 import java.util.List;
+
 /**
+ * @author vain
  * @description: 系统配置组件  在系统启动的时候读取系统一些不常修改的配置信息
- * @author  vain
  * @date 2017/8/31 11:52
  */
 @Component
 public class SysConfigComponent {
 
     @Autowired
-    private SysConfigDao sysConfigDao;
+    private SystemConfigDao sysConfigDao;
 
     private final HashMap<String, String> configMapFromDb = new HashMap<String, String>();
 

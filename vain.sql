@@ -38,7 +38,7 @@ CREATE TABLE `t_menu` (
 
 /*Data for the table `t_menu` */
 
-insert  into `t_menu`(`id`,`name`,`parentId`,`menuKey`,`type`,`url`,`icon`,`description`,`deleted`,`createTime`,`modifyTime`) values (110000,'系统管理',0,'system',1,NULL,'am-icon-cng','系统管理',0,'2017-09-23 15:55:16','2017-09-23 15:55:17'),(110100,'用户管理',110000,'system.user',2,'../../page/system/user/user.html',NULL,NULL,0,'2017-09-25 10:35:07','2017-09-25 10:35:09'),(110200,'角色管理',110000,'system.menu',3,'../../page/system/role/role.html',NULL,NULL,0,'2017-09-25 14:05:51','2017-09-25 14:05:51'),(120000,'动态管理',0,'dynamic',1,NULL,NULL,NULL,0,'2017-09-25 15:09:34','2017-09-25 15:09:35'),(120100,'发布动态',120000,'dynamic.send',2,NULL,NULL,NULL,0,'2017-09-25 15:35:35','2017-09-25 15:35:35');
+insert  into `t_menu`(`id`,`name`,`parentId`,`menuKey`,`type`,`url`,`icon`,`description`,`deleted`,`createTime`,`modifyTime`) values (110000,'系统管理',0,'system',1,NULL,'am-icon-cog','系统管理',0,'2017-09-23 15:55:16','2017-09-23 15:55:17'),(110100,'系统配置',110000,'system.config',2,'../../page/system/config/config.html',NULL,NULL,0,'2017-10-14 21:31:30',NULL),(120000,'账号管理',0,'account',1,NULL,'am-icon-user','账号管理',0,'2017-10-14 20:36:34',NULL),(120100,'用户管理',120000,'account.user',2,'../../page/account/user/user.html',NULL,NULL,0,'2017-09-25 10:35:07','2017-09-25 10:35:09'),(120101,'用户添加',120100,'account.user.add',3,NULL,NULL,NULL,0,'2017-10-12 21:18:01','2017-10-12 21:18:04'),(120200,'角色管理',120000,'account.role',2,'../../page/account/role/role.html',NULL,NULL,0,'2017-09-25 14:05:51','2017-09-25 14:05:51'),(120300,'菜单管理',120000,'account.menu',2,'../../page/account/menu/menu.html',NULL,NULL,0,'2017-10-11 19:34:25',NULL),(130000,'动态管理',0,'dynamic',1,NULL,'am-icon-comments-o','动态管理',0,'2017-09-25 15:09:34','2017-09-25 15:09:35'),(130100,'发布动态',130000,'dynamic.send',2,NULL,NULL,NULL,0,'2017-09-25 15:35:35','2017-09-25 15:35:35');
 
 /*Table structure for table `t_role` */
 
@@ -71,17 +71,17 @@ CREATE TABLE `t_role_menu` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='保存角色和菜单的关联关系数据';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='保存角色和菜单的关联关系数据';
 
 /*Data for the table `t_role_menu` */
 
-insert  into `t_role_menu`(`id`,`roleId`,`menuId`,`createTime`,`modifyTime`) values (1,1,110000,'2017-09-23 18:20:36','2017-09-23 18:20:37'),(2,1,110100,'2017-09-25 12:03:13','2017-09-25 12:03:14'),(3,1,110200,'2017-09-25 14:07:08','2017-09-25 14:07:09'),(4,1,120000,'2017-09-25 15:10:05','2017-09-25 15:10:05'),(5,1,120100,'2017-09-25 15:35:46','2017-09-25 15:35:47');
+insert  into `t_role_menu`(`id`,`roleId`,`menuId`,`createTime`,`modifyTime`) values (1,1,110000,'2017-10-14 20:47:47',NULL),(2,1,120000,'2017-10-14 20:47:47',NULL),(3,1,120100,'2017-10-14 20:47:47',NULL),(4,1,120101,'2017-10-14 20:47:47',NULL),(5,1,120200,'2017-10-14 20:47:47',NULL),(6,1,120300,'2017-10-14 20:47:47',NULL),(7,1,130000,'2017-10-14 20:47:47',NULL),(8,1,130100,'2017-10-14 20:47:47',NULL),(9,1,110100,'2017-10-14 21:45:43',NULL);
 
-/*Table structure for table `t_sys_config` */
+/*Table structure for table `t_system_config` */
 
-DROP TABLE IF EXISTS `t_sys_config`;
+DROP TABLE IF EXISTS `t_system_config`;
 
-CREATE TABLE `t_sys_config` (
+CREATE TABLE `t_system_config` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '配置表的起始值设置为100，1-100用于通用配置项',
   `name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '配置项名字',
   `code` varchar(128) COLLATE utf8_bin NOT NULL COMMENT '配置项键',
@@ -93,9 +93,11 @@ CREATE TABLE `t_sys_config` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='系统配置表';
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='系统配置表';
 
-/*Data for the table `t_sys_config` */
+/*Data for the table `t_system_config` */
+
+insert  into `t_system_config`(`id`,`name`,`code`,`value`,`valueType`,`type`,`description`,`visible`,`createTime`,`modifyTime`) values (1,'上传文件访问根url','SYS_FILE_UPLOAD_ROOT_URL','http://192.168.121.1/vain',1,1,'上传文件访问根url','','2017-10-14 17:57:57','2017-10-14 17:57:57'),(2,'上传文件ftp的主机ip','SYS_FILE_UPLOAD_HOST_IP','192.168.121.1',1,1,'上传文件ftp的主机ip','','2017-10-14 17:57:57','2017-10-14 17:57:57'),(3,'上传文件ftp的主机端口','SYS_FILE_UPLOAD_HOST_PORT','22',2,1,'上传文件ftp的主机端口（默认22）','','2017-10-14 17:57:57','2017-10-14 17:57:57'),(4,'上传文件ftp的主机账号','SYS_FILE_UPLOAD_HOST_USER','root',1,1,'上传文件ftp的主机账号','','2017-10-14 17:57:57','2017-10-14 17:57:57'),(5,'上传文件ftp的主机密码','SYS_FILE_UPLOAD_HOST_PASSWD','vian123456',1,1,'上传文件ftp的主机密码','','2017-10-14 17:57:57','2017-10-14 17:57:57'),(6,'上传文件存放目录','SYS_FILE_UPLOAD_ROOT_PATH','/usr/share/nginx/html/vain',1,1,'上传文件存放目录','','2017-10-14 17:57:57','2017-10-14 17:57:57');
 
 /*Table structure for table `t_user` */
 
@@ -123,11 +125,11 @@ CREATE TABLE `t_user` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_user` */
 
-insert  into `t_user`(`id`,`type`,`userName`,`passwd`,`salt`,`nickname`,`head`,`sex`,`birthday`,`state`,`attr1`,`attr2`,`attr3`,`attr4`,`attr5`,`phone`,`email`,`deleted`,`createTime`,`modifyTime`) values (1,1,'admin','a0bca5d6fede811f6238a0eb475e2931','f74518bf-9b68-4f42-a680-eb3abdeaa1d6','管理员',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-09-17 16:42:25','2017-10-01 13:31:12'),(2,1,'小明','d6f175817754c5c0dae2520d0b7effe3','6acf8206-0869-4e50-af61-835ad15c05f3',NULL,NULL,0,NULL,1,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-09-30 21:41:46','2017-10-01 13:31:00');
+insert  into `t_user`(`id`,`type`,`userName`,`passwd`,`salt`,`nickname`,`head`,`sex`,`birthday`,`state`,`attr1`,`attr2`,`attr3`,`attr4`,`attr5`,`phone`,`email`,`deleted`,`createTime`,`modifyTime`) values (1,1,'admin','a0bca5d6fede811f6238a0eb475e2931','f74518bf-9b68-4f42-a680-eb3abdeaa1d6','管理员',NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-09-17 16:42:25','2017-10-13 20:36:08'),(2,2,'小明','d6f175817754c5c0dae2520d0b7effe3','6acf8206-0869-4e50-af61-835ad15c05f3',NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-09-30 21:41:46','2017-10-14 17:12:23'),(3,2,'张三丰','28573cf398dcdfb9085fdc4f5dcb382d','b96fedde-0c1b-424e-bf50-c3a2480d267a',NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-10-14 13:31:05','2017-10-14 16:10:02'),(4,3,'用户A','0102cafa8d3a463e347a379529280472','997b3972-3fa2-4bcd-90e1-a109ac959611',NULL,NULL,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2017-10-14 14:01:46','2017-10-14 15:19:23');
 
 /*Table structure for table `t_user_menu` */
 
@@ -140,11 +142,9 @@ CREATE TABLE `t_user_menu` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='保存用户与菜单的管理关系数据';
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8 COMMENT='保存用户与菜单的管理关系数据';
 
 /*Data for the table `t_user_menu` */
-
-insert  into `t_user_menu`(`id`,`userId`,`menuId`,`createTime`,`modifyTime`) values (1,1,110000,'2017-09-25 11:39:10','2017-09-25 11:39:11');
 
 /*Table structure for table `t_user_role` */
 
@@ -157,11 +157,9 @@ CREATE TABLE `t_user_role` (
   `createTime` datetime NOT NULL,
   `modifyTime` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='保存用户与角色的关联关系数据';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='保存用户与角色的关联关系数据';
 
 /*Data for the table `t_user_role` */
-
-insert  into `t_user_role`(`id`,`userId`,`roleId`,`createTime`,`modifyTime`) values (1,1,1,'2017-09-23 18:20:03','2017-09-23 18:20:04');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

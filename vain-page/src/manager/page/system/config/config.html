@@ -1,10 +1,10 @@
 <!doctype html>
-<html data-ng-app="role.app">
+<html data-ng-app="config.app">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>后台登录系统</title>
+    <title>后台管理系统</title>
     <meta name="description" content="系统管理">
     <meta name="keywords" content="index">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,58 +17,50 @@
 
 </head>
 
-<body ng-controller="RoleListCtrl" ng-init="init()">
+<body ng-controller="ConfigListCtrl" ng-init="init()">
     <div class="tpl-content-scope tpl-content-wrapper">
         <div class="tpl-content-page-title">
             系统管理
         </div>
         <ol class="am-breadcrumb">
             <li><a href="#" class="am-icon-cog">系统管理</a></li>
-            <li class="am-active">角色管理</li>
+            <li class="am-active">系统配置</li>
         </ol>
 
         <div class="row">
             <div class="tpl-portlet">
                 <div class="am-g am-margin-vertical-sm">
-                    <div class="am-u-sm-12 am-u-md-12">
-                        <div class="am-btn-toolbar">
-                            <div class="am-btn-group am-btn-group-xs">
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addRole();"><span class="am-icon-plus"></span> 新增角色</button>
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteRole();"  ><span class="am-icon-trash-o"></span> 删除角色</button>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
                 <div class="am-g">
                         <form class="am-form">
-                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
+                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered ">
                                 <thead>
                                 <tr class="am-primary">
-                                    <th><input type="checkbox" class="tpl-table-fz-check"></th>
-                                    <th>序号</th>
-                                    <th>角色名</th>
-                                    <th>roleKey</th>
-                                    <th>描述</th>
-                                    <th>创建日期</th>
-                                    <th>操作</th>
+                                    <th width="10%">序号</th>
+                                    <th width="100px" class="am-text-truncate">配置名称</th>
+                                    <th width="10%">配置标识</th>
+                                    <th width="10%">配置值</th>
+                                    <th width="15%">描述</th>
+                                    <th width="10%">创建日期</th>
+                                    <th width="40%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
-                                <tr ng-repeat="role in roles track by $index">
-                                    <td><input type="checkbox" ng-click="batchId(user)" ng-checked="user.checkState"></td>
+                                <tr ng-repeat="config in configs track by $index">
                                     <td>{{$index+1}}</td>
-                                    <td><a href="#">{{role.name}}</a></td>
-                                    <td class="am-hide-sm-only">{{role.roleKey}}</td>
-                                    <td>{{role.description}}</td>
-                                    <td class="am-hide-sm-only">{{role.createTime}}</td>
+                                    <td class="am-text-truncate"><a href="#" style="text-overflow: ellipsis;">{{config.name}}</a></td>
+                                    <td class="am-hide-sm-only">{{config.code}}</td>
+                                    <td class="am-hide-sm-only">{{config.value}}</td>
+                                    <td>{{config.description}}</td>
+                                    <td class="am-hide-sm-only">{{config.createTime}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 分配权限</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(role.id);" ><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 复制</button>
                                             </div>
                                         </div>
                                     </td>
@@ -148,9 +140,9 @@
     <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
     <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
     <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script type="application/javascript" src="role-app.js"></script>
-    <script type="application/javascript" src="role-controller.js"></script>
-    <script type="application/javascript" src="role-services.js"></script>
+    <script type="application/javascript" src="config-app.js"></script>
+    <script type="application/javascript" src="config-controller.js"></script>
+    <script type="application/javascript" src="config-services.js"></script>
     <script type="application/javascript" src="../../../common/common-services.js"></script>
 </body>
 

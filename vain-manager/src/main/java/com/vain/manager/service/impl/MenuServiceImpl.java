@@ -125,7 +125,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //用户的自己菜单集合  采用set不允许重复
         List<Menu> returnMenus = new ArrayList<>(); //返回的菜单列表 不重复 带有层级结构
         /*
-          超级管理员登录 默认拥有所有菜单全部权限
+          用户type为1 默认角色为超级管理员 拥有其所有菜单
          */
         if (entity.getType() == SysConstants.AccountConstant.ACCOUNT_TYPE_SUPERADMIN) {
             logger.info("--------------超级管理员登录-------------");
