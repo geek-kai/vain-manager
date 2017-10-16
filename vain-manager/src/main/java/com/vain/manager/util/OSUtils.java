@@ -12,12 +12,12 @@ import java.math.BigDecimal;
  * @description 操作系统信息类 采取jdk来获取
  * 如果要获取详细的信息：如网卡驱动、操作系统详细信息、cpu所属信息、cpu每个核心使用率等信息
  * 可以通过sigar的jar包和其必须的dll文件来实现
- * 获取的服务器信息更加全面和准备
+ * 获取的服务器信息更加全面和准确
  * 下载地址：http://sourceforge.net/projects/sigar/files/latest/download?source=files
  * 相关博客地址：https://my.oschina.net/mkh/blog/312911
  */
 public class OSUtils {
-    private static final int CPUTIME = 500; ///cpu测试时间段
+    private static final int CPUTIME = 50000; ///cpu测试时间段 时间越长 cpu使用百百分比约准确
     private static final int FAULTLENGTH = 10;
 
     public static void main(String[] args) {
@@ -25,7 +25,7 @@ public class OSUtils {
         String osName = System.getProperty("os.name"); // 操作系统名称
         String osArch = System.getProperty("os.arch"); // 操作系统构架
         System.out.println(osName + "  " + osArch);
-        System.out.println("runtime:" + Runtime.getRuntime().maxMemory() / 1024 / 1024 / 1024 + "G");
+        System.out.println("runtime:" + Bit2Gb(Runtime.getRuntime().maxMemory()) + "G");
         OperatingSystemMXBean osMXB = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
         //总的物理内存
         System.out.println("总物理内存" + Bit2Gb(osMXB.getTotalPhysicalMemorySize()) + "G");
@@ -99,9 +99,9 @@ public class OSUtils {
                     continue;
                 }
                 if (s1.length() > 0)
-                    kneltime += Long.valueOf(s1).longValue();
+                    kneltime += Long.valueOf(s1.replace(" ","")).longValue();
                 if (s2.length() > 0)
-                    usertime += Long.valueOf(s2).longValue();
+                    usertime += Long.valueOf(s2.replace(" ","")).longValue();
             }
             returnLong[0] = idletime; //空闲时间
             returnLong[1] = kneltime + usertime; //整体时间
