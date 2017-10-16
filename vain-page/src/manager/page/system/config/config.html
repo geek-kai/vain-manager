@@ -42,8 +42,8 @@
                                     <th width="100px" class="am-text-truncate">配置名称</th>
                                     <th width="10%">配置标识</th>
                                     <th width="10%">配置值</th>
-                                    <th width="15%">描述</th>
-                                    <th width="10%">创建日期</th>
+                                    <!--<th width="15%">描述</th>-->
+                                    <th width="20%">创建日期</th>
                                     <th width="40%">操作</th>
                                 </tr>
                                 </thead>
@@ -54,13 +54,12 @@
                                     <td class="am-text-truncate"><a href="#" style="text-overflow: ellipsis;">{{config.name}}</a></td>
                                     <td class="am-hide-sm-only">{{config.code}}</td>
                                     <td class="am-hide-sm-only">{{config.value}}</td>
-                                    <td>{{config.description}}</td>
+                                    <!--<td>{{config.description}}</td>-->
                                     <td class="am-hide-sm-only">{{config.createTime}}</td>
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 复制</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyConfig(config);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                             </div>
                                         </div>
                                     </td>
@@ -77,55 +76,55 @@
     <!-- 遮罩层 -->
     <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
 
-    <!--新增角色的div-->
-    <div class="form_div cover_alert" id="modifyDiv" ng-show="addWindow" style="width: 550px;height:400px;">
+    <!--修改配置的div-->
+    <div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width: 550px;height:400px;">
         <div>
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
 
-            <form class="am-form am-form-horizontal" name="roleForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="role.name!=null && role.roleKey!=null && role.description!=null?'am-form-success':'am-form-error'" style="margin: 20px;">
+            <form class="am-form am-form-horizontal" name="configForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="config.name!=null && config.code!=null && config.value!=null ?'am-form-success':'am-form-error'" style="margin: 20px;">
                     <div>
-                        <label for="roleName" class="am-u-sm-3 am-form-label">角色名称：</label>
+                        <label for="configName" class="am-u-sm-3 am-form-label">配置名称：</label>
                         <div class="am-u-sm-9" >
-                            <input type="text" id="roleName" name="roleName" ng-model="role.name" class="am-form-field" placeholder="角色名称" required>
+                            <input type="text" id="configName" ng-model="config.name" class="am-form-field" placeholder="配置名称" required>
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
                     <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
-                        <span ng-show="roleForm.roleName.$error.required">请输入角色名称</span>
+                        <span ng-show="configFrom.configName.$error.required">配置标识：</span>
                     </div>
 
                     <div style="padding-top: 6rem;">
-                        <label for="roleKey" class="am-u-sm-3 am-form-label">roleKey：</label>
+                        <label for="configCode" class="am-u-sm-3 am-form-label">配置标识：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="roleKey" name="roleKey" class="am-form-field" placeholder="角色roleKey"
-                                   ng-pattern="/^[A-Za-z]+$/" ng-model="role.roleKey" required>
+                            <input type="text" id="configCode"  class="am-form-field" placeholder="配置标识"
+                                   ng-pattern="/^[A-Za-z]+$/" ng-model="config.code" required>
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
                     <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
-                        <span ng-show="roleForm.roleKey.$error.required">请输入roleKey</span>
-                        <span ng-show="roleForm.roleKey.$error.pattern">请输入字母组成的roleKey</span>
+                        <span ng-show="configFrom.configCode.$error.required">请输入配置标识</span>
+                        <span ng-show="configFrom.configCode.$error.pattern">请输入配置标识</span>
                     </div>
 
                     <div style="padding-top: 6rem;">
-                        <label class="am-u-sm-3 am-form-label">角色描述：</label>
+                        <label class="am-u-sm-3 am-form-label">配置参数：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" id="description" name="description" class="am-form-field" placeholder="角色描述" ng-model="role.description" required>
+                            <input type="text" id="configValue" class="am-form-field" placeholder="配置参数" ng-model="config.value" required>
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
                     <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
-                        <span ng-show="roleForm.description.$error.required">请输入角色描述</span>
+                        <span ng-show="configFrom.configValue.$error.required">请输入配置参数</span>
                     </div>
                 </div>
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="add();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">添加角色</button>
+                        <button type="submit" class="am-btn am-btn-default" ng-click="modify();" ng-disabled="config.name!=null && config.code!=null && config.value!=null?'':'disabled'">修改配置</button>
                     </div>
                 </div>
             </form>

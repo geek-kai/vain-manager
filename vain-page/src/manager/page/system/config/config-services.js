@@ -5,6 +5,10 @@ angular.module("config.services", ["ngResource", "common.services"])
             getPagedList: {
                 method: "post",
                 url: appConstant.BASE_URL + "/systemConfig/getPagedList"
+            },
+            modify: {
+                method: "post",
+                url: appConstant.BASE_URL + "/systemConfig/modify"
             }
         })
     }]);

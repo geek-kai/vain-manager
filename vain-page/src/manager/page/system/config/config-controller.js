@@ -10,5 +10,21 @@ angular.module("config.controllers", [])
                 });
             };
 
+            /*修改配置弹窗*/
+            $scope.modifyConfig = function (config) {
+                $scope.config = config;
+                commonUtils.showCover();
+                $scope.coverShow = 1;
+                $scope.modifyWindow = 1;
+                commonUtils.centerElem($("#modifyDiv"));
+            };
+
+            /*修改*/
+            $scope.modify = function () {
+                configHttpServices.modify($scope.config, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                })
+            };
+
         }]);
 
