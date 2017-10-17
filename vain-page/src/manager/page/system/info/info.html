@@ -1,0 +1,71 @@
+<!doctype html>
+<html data-ng-app="info.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+</head>
+
+<body ng-controller="InfoCtrl" ng-init="init()">
+    <div class="tpl-content-scope tpl-content-wrapper">
+        <div class="tpl-content-page-title">
+            系统管理
+        </div>
+        <ol class="am-breadcrumb">
+            <li><a href="#" class="am-icon-cog">系统管理</a></li>
+            <li class="am-active">系统信息</li>
+        </ol>
+
+        <div class="row">
+            <div class="tpl-portlet">
+                <div class="am-g am-margin-vertical-sm">
+                </div>
+
+                <div class="am-g">
+                    <div class="am-text-left">
+                      <div class="am-padding-xs am-u-sm-offset-1"><strong>服务器系统：</strong>Windows 10</div>
+                      <div class="am-padding-xs am-u-sm-offset-1"><strong>物理内存：</strong>8G</div>
+                      <div class="am-padding-xs am-u-sm-offset-1"><strong>已使用内存：</strong>3.9G</div>
+                      <div class="am-padding-xs am-u-sm-offset-1"><strong>Java版本：</strong>1.8</div>
+                      <div class="am-padding-xs am-u-sm-offset-1">
+                          <div class="am-padding-0 am-u-sm-offset-1 am-u-sm-2 am-fl">
+                            <strong>cpu占用比例：</strong>
+                          </div>
+                          <div class="am-progress" style="width: 300px;">
+                              <div class="am-progress-bar am-active" style="width: 40%">40%</div>
+                          </div>
+                          <button id="np-s" class="am-btn am-btn-primary">$.AMUI.progress.start();</button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/amazeui.min.js"></script>
+    <script src="../../../assets/js/app.js"></script>
+    <script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="application/javascript" src="info-app.js"></script>
+    <script type="application/javascript" src="info-controller.js"></script>
+    <script type="application/javascript" src="info-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-services.js"></script>
+</body>
+
+</html>
