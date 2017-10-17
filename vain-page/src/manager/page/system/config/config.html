@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
     <link rel="stylesheet" href="../../../assets/css/admin.css">
     <link rel="stylesheet" href="../../../assets/css/app.css">
-
 </head>
 
 <body ng-controller="ConfigListCtrl" ng-init="init()">
@@ -30,41 +29,37 @@
         <div class="row">
             <div class="tpl-portlet">
                 <div class="am-g am-margin-vertical-sm">
-
                 </div>
 
-                <div class="am-g">
+                <div class="am-g div_table">
                         <form class="am-form">
-                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered ">
+                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
                                 <thead>
                                 <tr class="am-primary">
-                                    <th width="10%">序号</th>
-                                    <th width="100px" class="am-text-truncate">配置名称</th>
-                                    <th width="10%">配置标识</th>
-                                    <th width="10%">配置值</th>
-                                    <!--<th width="15%">描述</th>-->
-                                    <th width="20%">创建日期</th>
-                                    <th width="40%">操作</th>
+                                    <th width="5%">序号</th>
+                                    <th width="20%">配置名称</th>
+                                    <th width="25%">配置标识</th>
+                                    <th width="15%">配置值</th>
+                                    <th width="20%">描述</th>
+                                    <th width="10%">创建日期</th>
+                                    <th width="10%">操作</th>
                                 </tr>
                                 </thead>
                                 <tbody>
 
                                 <tr ng-repeat="config in configs track by $index">
                                     <td>{{$index+1}}</td>
-                                    <td class="am-text-truncate"><a href="#" style="text-overflow: ellipsis;">{{config.name}}</a></td>
-                                    <td class="am-hide-sm-only">{{config.code}}</td>
-                                    <td class="am-hide-sm-only">{{config.value}}</td>
-                                    <!--<td>{{config.description}}</td>-->
-                                    <td class="am-hide-sm-only">{{config.createTime}}</td>
+                                    <td>{{config.name}}</td>
+                                    <td>{{config.code}}</td>
+                                    <td>{{config.value}}</td>
+                                    <td>{{config.description}}</td>
+                                    <td>{{config.createTime}}</td>
                                     <td>
-                                        <div class="am-btn-toolbar">
-                                            <div class="am-btn-group am-btn-group-xs">
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyConfig(config);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                            </div>
+                                        <div class="am-btn-group am-btn-group-xs">
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyConfig(config);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                         </div>
                                     </td>
                                 </tr>
-
                                 </tbody>
                             </table>
                         </form>
@@ -77,7 +72,7 @@
     <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
 
     <!--修改配置的div-->
-    <div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width: 550px;height:400px;">
+    <div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width: 550px;height:600px;">
         <div>
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
 
@@ -120,6 +115,26 @@
                     <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
                         <span ng-show="configFrom.configValue.$error.required">请输入配置参数</span>
                     </div>
+
+                    <div style="padding-top: 6rem;">
+                        <label class="am-u-sm-3 am-form-label">配置类型：</label>
+                        <div class="am-u-sm-9">
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="config.type">
+                                <option value="" hidden>请选择</option>
+                                <option value="{{type.value}}"  ng-repeat="type in configType">{{type.key}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div style="padding-top: 6rem;">
+                        <label class="am-u-sm-3 am-form-label">配置描述：</label>
+                        <div class="am-u-sm-9">
+                            <textarea  class="am-form-field" placeholder="配置参数" ng-model="config.description" rows="5"></textarea>
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div class="am-form-group am-padding-top-sm">

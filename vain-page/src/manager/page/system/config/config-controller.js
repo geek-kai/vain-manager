@@ -23,8 +23,28 @@ angular.module("config.controllers", [])
             $scope.modify = function () {
                 configHttpServices.modify($scope.config, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    if (data.code == 200)
+                        $scope.close();
                 })
             };
 
+            /*关闭配置弹窗*/
+            $scope.close = function () {
+                commonUtils.hideCover();
+                $scope.coverShow = 0;
+                $scope.modifyWindow = 0;
+            };
+
+
+            $scope.configType = [{
+                key: "String",
+                value: "1"
+            }, {
+                key: "Int",
+                value: "2"
+            }, {
+                key: "String[]",
+                value: "3"
+            }]
         }]);
 

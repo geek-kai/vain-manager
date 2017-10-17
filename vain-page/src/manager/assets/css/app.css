@@ -2135,3 +2135,12 @@ ul.tpl-dropdown-content li > a.tpl-dropdown-content-message:last-child {
 .form-search-span button {
     border-radius: 0 4px 4px 0;
 }
+/**********表格（缩略字符）***********/
+.div_table table{
+    table-layout: fixed;
+}
+.div_table table tbody td {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
