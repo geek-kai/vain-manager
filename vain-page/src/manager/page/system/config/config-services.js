@@ -4,6 +4,7 @@ angular.module("config.services", ["ngResource", "common.services"])
             /*获取配置列表*/
             getPagedList: {
                 method: "post",
+                timeout: 2000,
                 url: appConstant.BASE_URL + "/systemConfig/getPagedList"
             },
             modify: {

@@ -17,55 +17,53 @@
 </head>
 
 <body ng-controller="InfoCtrl" ng-init="init()">
-    <div class="tpl-content-scope tpl-content-wrapper">
-        <div class="tpl-content-page-title">
-            系统管理
-        </div>
-        <ol class="am-breadcrumb">
-            <li><a href="#" class="am-icon-cog">系统管理</a></li>
-            <li class="am-active">系统信息</li>
-        </ol>
+<div class="tpl-content-scope tpl-content-wrapper">
+    <div class="tpl-content-page-title">
+        系统管理
+    </div>
+    <ol class="am-breadcrumb">
+        <li><a href="#" class="am-icon-cog">系统管理</a></li>
+        <li class="am-active">系统信息</li>
+    </ol>
 
-        <div class="row">
-            <div class="tpl-portlet">
-                <div class="am-g am-margin-vertical-sm">
-                </div>
+    <div class="row">
+        <div class="tpl-portlet">
+            <div class="am-g am-margin-vertical-sm">
+            </div>
 
-                <div class="am-g">
-                    <div class="am-text-left">
-                      <div class="am-padding-xs am-u-sm-offset-1"><strong>服务器系统：</strong>Windows 10</div>
-                      <div class="am-padding-xs am-u-sm-offset-1"><strong>物理内存：</strong>8G</div>
-                      <div class="am-padding-xs am-u-sm-offset-1"><strong>已使用内存：</strong>3.9G</div>
-                      <div class="am-padding-xs am-u-sm-offset-1"><strong>Java版本：</strong>1.8</div>
-                      <div class="am-padding-xs am-u-sm-offset-1">
-                          <div class="am-padding-0 am-u-sm-offset-1 am-u-sm-2 am-fl">
+            <div class="am-g">
+                <div class="am-text-left">
+                    <div class="am-padding-xs am-u-sm-offset-1" ng-repeat="(key,value) in infos track by $index">
+                        <strong>{{key}}&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;</strong>{{value}}
+                    </div>
+                    <div class="am-padding-xs am-u-sm-offset-1">
+                        <div class="am-padding-0 am-u-sm-offset-1 am-fl am-margin-right-lg" style="width:auto;">
                             <strong>cpu占用比例：</strong>
-                          </div>
-                          <div class="am-progress" style="width: 300px;">
-                              <div class="am-progress-bar am-active" style="width: 40%">40%</div>
-                          </div>
-                          <button id="np-s" class="am-btn am-btn-primary">$.AMUI.progress.start();</button>
-                      </div>
+                            <span class="am-icon-cog am-animation-spin am-animation-reverse"></span>
+                        </div>
+                        <div class="am-progress config_progress">
+                            <div class="am-progress-bar am-active"  ng-style="{'width': cpu}">{{cpu}}</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-
-    <script src="../../../assets/js/jquery.min.js"></script>
-    <script src="../../../assets/js/amazeui.min.js"></script>
-    <script src="../../../assets/js/app.js"></script>
-    <script type="application/javascript" src="../../../lib/angular/angular.js"></script>
-    <script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
-    <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
-    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
-    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-    <script type="application/javascript" src="info-app.js"></script>
-    <script type="application/javascript" src="info-controller.js"></script>
-    <script type="application/javascript" src="info-services.js"></script>
-    <script type="application/javascript" src="../../../common/common-services.js"></script>
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/amazeui.min.js"></script>
+<script src="../../../assets/js/app.js"></script>
+<script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+<script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+<script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="application/javascript" src="info-app.js"></script>
+<script type="application/javascript" src="info-controller.js"></script>
+<script type="application/javascript" src="info-services.js"></script>
+<script type="application/javascript" src="../../../common/common-services.js"></script>
 </body>
 
 </html>

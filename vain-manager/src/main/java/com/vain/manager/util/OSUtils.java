@@ -5,6 +5,9 @@ import com.sun.management.OperatingSystemMXBean;
 import java.io.*;
 import java.lang.management.ManagementFactory;
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * @author vain
@@ -17,27 +20,29 @@ import java.math.BigDecimal;
  * 相关博客地址：https://my.oschina.net/mkh/blog/312911
  */
 public class OSUtils {
-    private static final int CPUTIME = 50000; ///cpu测试时间段 时间越长 cpu使用百百分比约准确
+    private static final int CPUTIME = 5000; ///cpu测试时间段 时间越长 cpu使用百百分比约准确
     private static final int FAULTLENGTH = 10;
 
-    public static void main(String[] args) {
-        System.out.println(System.getProperty("os.version")); // 操作系统版本
-        String osName = System.getProperty("os.name"); // 操作系统名称
-        String osArch = System.getProperty("os.arch"); // 操作系统构架
-        System.out.println(osName + "  " + osArch);
-        System.out.println("runtime:" + Bit2Gb(Runtime.getRuntime().maxMemory()) + "G");
+    public static Map<String, String> getInfo() {
         OperatingSystemMXBean osMXB = (OperatingSystemMXBean) ManagementFactory.getOperatingSystemMXBean();
-        //总的物理内存
-        System.out.println("总物理内存" + Bit2Gb(osMXB.getTotalPhysicalMemorySize()) + "G");
-        // 剩余的物理内存
-        System.out.println("剩余物理内存" + Bit2Gb(osMXB.getFreePhysicalMemorySize()) + "G");
-        // 已使用的物理内存
-        System.out.println("已使用内存" + Bit2Gb((osMXB.getTotalPhysicalMemorySize() - osMXB.getFreePhysicalMemorySize())) + "G");
-        System.out.println(getCpuRatioForWindows());
+        Map<String, String> infos = new LinkedHashMap<>();
+        infos.put("服务器系统名称", System.getProperty("os.name"));
+        infos.put("服务器账户名", System.getProperty("user.name"));
+        infos.put("服务器系统版本", System.getProperty("os.version"));
+        infos.put("总物理内存", Bit2Gb(osMXB.getTotalPhysicalMemorySize()) + " G");
+        infos.put("剩余物理内存", Bit2Gb(osMXB.getFreePhysicalMemorySize()) + " G");
+        infos.put("已使用内存", Bit2Gb((osMXB.getTotalPhysicalMemorySize() - osMXB.getFreePhysicalMemorySize())) + " G");
+        infos.put("java版本", System.getProperty("java.version"));
+        infos.put("java路径", System.getProperty("java.home"));
+        infos.put("java字节码版本", System.getProperty("java.class.version"));
+        infos.put("虚拟机名称", System.getProperty("java.vm.name"));
+        infos.put("虚拟机版本号", System.getProperty("java.vm.version"));
+        return infos;
     }
 
+
     // 获得cpu使用率
-    public static String getCpuRatioForWindows() {
+    public static int getCpuRatioForWindows() {
         try {
             String procCmd = System.getenv("windir")
                     + "//system32//wbem//wmic.exe process get Caption,CommandLine,KernelModeTime,ReadOperationCount,ThreadCount,UserModeTime,WriteOperationCount";
@@ -48,13 +53,13 @@ public class OSUtils {
             if (start != null && end != null) {
                 long idletime = end[0] - start[0];
                 long busytime = end[1] - start[1];
-                return "CPU使用率:" + Double.valueOf(100 * (busytime) * 1.0 / (busytime + idletime)).intValue() + "%";
+                return Double.valueOf(100 * (busytime) * 1.0 / (busytime + idletime)).intValue();
             } else {
-                return "CPU使用率:" + 0 + "%";
+                return 0;
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-            return "CPU使用率:" + 0 + "%";
+            return 0;
         }
     }
 
@@ -99,9 +104,9 @@ public class OSUtils {
                     continue;
                 }
                 if (s1.length() > 0)
-                    kneltime += Long.valueOf(s1.replace(" ","")).longValue();
+                    kneltime += Long.valueOf(s1.replace(" ", "")).longValue();
                 if (s2.length() > 0)
-                    usertime += Long.valueOf(s2.replace(" ","")).longValue();
+                    usertime += Long.valueOf(s2.replace(" ", "")).longValue();
             }
             returnLong[0] = idletime; //空闲时间
             returnLong[1] = kneltime + usertime; //整体时间

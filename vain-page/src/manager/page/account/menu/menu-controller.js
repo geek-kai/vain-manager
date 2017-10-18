@@ -49,11 +49,46 @@ angular.module("menu.controllers", [])
                 if (grandChildren) {
                     for (var b = 0; b < grandChildren.length; b++) {
                         grandChildren[b].isShow = !isShow;
-                        //   grandChildren[b].isShowChildren = !grandChildren[b].isShowChildren;
                         $scope.fillMenuChildren(grandChildren[b]);
-                        console.log(grandChildren[b]);
                     }
                 }
-            }
+            };
+
+            /*修改菜单弹窗*/
+            $scope.modifyMenu = function (menu) {
+                $scope.menu = menu;
+                commonUtils.showCover();
+                $scope.coverShow = 1;
+                $scope.modifyWindow = 1;
+                commonUtils.centerElem($("#modifyDiv"));
+            };
+
+            /*修改*/
+            $scope.modify = function () {
+                menuHttpServices.modify($scope.menu, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    if (data.code == 200)
+                        $scope.close();
+                })
+            };
+
+            /*关闭菜单弹窗*/
+            $scope.close = function () {
+                commonUtils.hideCover();
+                $scope.coverShow = 0;
+                $scope.modifyWindow = 0;
+            };
+
+
+            $scope.menuType = [{
+                key: "目录",
+                value: "1"
+            }, {
+                key: "菜单",
+                value: "2"
+            }, {
+                key: "按钮",
+                value: "3"
+            }]
 
         }]);

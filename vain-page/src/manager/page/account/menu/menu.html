@@ -55,7 +55,7 @@
                             <td>{{menu.url}}</td>
                             <td>{{menu.description}}</td>
                             <td>
-                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyMenu(menu);"><span class="am-icon-pencil-square-o"></span> 编辑</button>
                             </td>
                         </tr>
                         </tbody>
@@ -65,6 +65,95 @@
         </div>
     </div>
 </div>
+
+
+<!-- 遮罩层 -->
+<div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
+
+<!--修改配置的div-->
+<div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width: 550px;height:670px;">
+    <div>
+        <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+
+        <form class="am-form am-form-horizontal" name="menuForm" novalidate="novalidate">
+            <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="menu.name!=null && menu.code!=null && menu.value!=null ?'am-form-success':'am-form-error'" style="margin: 20px;">
+                <div>
+                    <label for="menuName" class="am-u-sm-3 am-form-label">菜单名称：</label>
+                    <div class="am-u-sm-9" >
+                        <input type="text" id="menuName" ng-model="menu.name" class="am-form-field" placeholder="菜单名称" required>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                    <span ng-show="menuForm.menuName.$error.required">菜单标识：</span>
+                </div>
+
+                <div style="padding-top: 6rem;">
+                    <label for="menuKey" class="am-u-sm-3 am-form-label">菜单标识：</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" id="menuKey"  class="am-form-field" placeholder="菜单标识"
+                               ng-pattern="/^[A-Za-z]+$/" ng-model="menu.menuKey" required>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                    <span ng-show="menuForm.menuKey.$error.required">请输入配置标识</span>
+                    <span ng-show="menuForm.menuKey.$error.pattern">请输入配置标识</span>
+                </div>
+
+                <div style="padding-top: 6rem;">
+                    <label class="am-u-sm-3 am-form-label">菜单URL：</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" id="menuUrl" class="am-form-field" placeholder="菜单URL" ng-model="menu.url" required>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+                </div>
+
+                <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                    <span ng-show="menuForm.menuUrl.$error.required">请输入菜单URL</span>
+                </div>
+
+                <div style="padding-top: 6rem;">
+                    <label class="am-u-sm-3 am-form-label">菜单类型：</label>
+                    <div class="am-u-sm-9">
+                        <select data-am-selected="{btnSize: 'sm'}" ng-model="menu.type">
+                            <option value="" hidden>请选择</option>
+                            <option value="{{type.value}}"  ng-repeat="type in menuType">{{type.key}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="padding-top: 6rem;">
+                    <label for="menuName" class="am-u-sm-3 am-form-label">菜单图标：</label>
+                    <div class="am-u-sm-9">
+                        <input type="text" id="icon" ng-model="menu.icon" class="am-form-field" placeholder="菜单图标" required>
+                        <i class="{{menu.icon}}" style="right:3.7rem;"></i>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+                </div>
+
+                <div style="padding-top: 6rem;">
+                    <label class="am-u-sm-3 am-form-label">菜单描述：</label>
+                    <div class="am-u-sm-9">
+                        <textarea  class="am-form-field" placeholder="菜单参数" ng-model="menu.description" rows="5"></textarea>
+                        <span class="am-icon-warning" style="right:1.7rem;"></span>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="am-form-group am-padding-top-sm">
+                <div class="am-u-sm-10 am-u-sm-offset-4">
+                    <button type="submit" class="am-btn am-btn-default" ng-click="modify();" ng-disabled="menu.name!=null && menu.code!=null && menu.value!=null?'':'disabled'">修改菜单</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
 
 <script src="../../../assets/js/jquery.min.js"></script>
 <script src="../../../assets/js/amazeui.min.js"></script>

@@ -374,6 +374,7 @@ gallery.html css
     background: url(../../image/arrow_off.png) no-repeat 40px center;
 }
 
+/**checkbox替换**/
 .arrow b.active {
     background: white url(../../image/arrow_on.png) no-repeat 40px center;
 }
@@ -397,3 +398,14 @@ gallery.html css
 .arrow_Three td b {
     padding-left: 9rem;
 }
+
+/****系统配置*****/
+.config_progress {
+    width: 300px;
+    margin-left: 200px;
+}
+
+.config_progress div {
+    width: 0%;
+}
+

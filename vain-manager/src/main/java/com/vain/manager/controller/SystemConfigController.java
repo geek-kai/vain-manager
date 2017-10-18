@@ -7,6 +7,7 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.service.ISystemConfigService;
+import com.vain.manager.util.OSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -95,6 +96,33 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
         response.setData(systemConfigService.modify(entity));
         return response;
     }
+
+    /**
+     * 获取服务器静态信息
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getSystemInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Response getSystemInfo() {
+        Response response = new Response();
+        response.setData(OSUtils.getInfo());
+        return response;
+    }
+
+    /**
+     * 获取服务器动态信息(cpu) 默认检测时长为5s
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getSystemCpuInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Response getSystemCpuInfo() {
+        Response response = new Response();
+        response.setData(OSUtils.getCpuRatioForWindows());
+        return response;
+    }
+
 
     @Override
     public Response<SystemConfig> delete(@RequestBody SystemConfig entity, HttpServletRequest request) throws Exception {
