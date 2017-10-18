@@ -76,7 +76,7 @@
         <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
 
         <form class="am-form am-form-horizontal" name="menuForm" novalidate="novalidate">
-            <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="menu.name!=null && menu.code!=null && menu.value!=null ?'am-form-success':'am-form-error'" style="margin: 20px;">
+            <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="menu.name!=null && menu.menuKey!=null && menu.type!=null ?'am-form-success':'am-form-error'" style="margin: 20px;">
                 <div>
                     <label for="menuName" class="am-u-sm-3 am-form-label">菜单名称：</label>
                     <div class="am-u-sm-9" >
@@ -99,8 +99,8 @@
                 </div>
 
                 <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
-                    <span ng-show="menuForm.menuKey.$error.required">请输入配置标识</span>
-                    <span ng-show="menuForm.menuKey.$error.pattern">请输入配置标识</span>
+                    <span ng-show="menuForm.menuKey.$error.required">请输入菜单标识</span>
+                    <span ng-show="menuForm.menuKey.$error.pattern">请输入菜单标识</span>
                 </div>
 
                 <div style="padding-top: 6rem;">
@@ -147,7 +147,7 @@
 
             <div class="am-form-group am-padding-top-sm">
                 <div class="am-u-sm-10 am-u-sm-offset-4">
-                    <button type="submit" class="am-btn am-btn-default" ng-click="modify();" ng-disabled="menu.name!=null && menu.code!=null && menu.value!=null?'':'disabled'">修改菜单</button>
+                    <button type="submit" class="am-btn am-btn-default" ng-click="modify();" ng-disabled="menu.name!=null && menu.menuKey!=null && menu.type!=null?'':'disabled'">修改菜单</button>
                 </div>
             </div>
         </form>

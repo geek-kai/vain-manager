@@ -128,9 +128,21 @@ public class MenuController extends AbstractBaseController<Menu> {
         return null;
     }
 
+    /**
+     * 修改菜单
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<Menu> modify(@RequestBody Menu entity, HttpServletRequest request) throws Exception {
-        return null;
+        Response<Menu> response = new Response<>();
+        menuService.modify(entity);
+        return response;
     }
 
     @Override

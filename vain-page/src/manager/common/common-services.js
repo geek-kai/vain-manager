@@ -13,7 +13,8 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
         SERVER_REQUEST_FAIL: '请求失败',
         OPERATION_SUCCESS: '操作成功',
         PARAM_ERROR: '参数错误',
-        UNKNOWN_ERROR: '未知错误'
+        UNKNOWN_ERROR: '未知错误',
+        ROLE_DELETE_WARNING: '删除该角色之后，相关账号会有变动'
     })
     /*公用帮助类*/
     .factory("commonUtils", ["appConstant", function (appConstant) {
@@ -156,7 +157,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
             removeItemFromArray: function (array, item) {
                 for (var i = 0; i < array.length; i++) {
                     if (array[i] == item) {
-                        array.splice(i,1);
+                        array.splice(i, 1);
                         break;
                     }
                 }
@@ -192,7 +193,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                 }, delay ? delay : 300)
             },
             /*选择弹窗按钮*/
-            confirmMsg: function (msg, subMsg, okBtn, cancelBtn) {
+            confirmMsg: function (msg, okBtn, cancelBtn) {
                 var t = $modal.open({
                     template: '<div class="cover" style="display:block;"></div>'
                     + '<div id="coverAlert" class="cover_alert" style="display:block;" ng-init="init()">'

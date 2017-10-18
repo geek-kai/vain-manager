@@ -4,6 +4,10 @@ angular.module("menu.services", ["ngResource", "common.services"])
             getMenuList: {
                 method: 'post',
                 url: appConstant.BASE_URL + "/menu/getMenuList"
+            },
+            modify: {
+                method: "post",
+                url: appConstant.BASE_URL + "/menu/modify"
             }
         })
     }]);

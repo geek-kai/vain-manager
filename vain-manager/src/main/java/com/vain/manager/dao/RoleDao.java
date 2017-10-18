@@ -44,6 +44,6 @@ public class RoleDao extends AbstractBaseDao<Role> {
     @Override
     public int delete(Role entity) {
         entity.setDeleted(SysConstants.DeletedStatus.STATUS_DELETED);
-        return update(entity);
+        return this.sqlSession.update("com.vain.manager.entity.Role.delete", entity);
     }
 }

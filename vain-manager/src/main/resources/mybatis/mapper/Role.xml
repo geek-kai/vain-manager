@@ -52,9 +52,6 @@
             <if test="description != null and description != ''">
                 description = #{description},
             </if>
-            <if test="deleted != null and deleted != ''">
-                deleted = #{deleted},
-            </if>
             <if test="roleKey!=null and roleKey!=''">
                 roleKey = #{roleKey}
             </if>
@@ -63,5 +60,9 @@
         <where>
             id=#{id}
         </where>
+    </update>
+
+    <update id="delete" parameterType="com.vain.manager.entity.Role">
+        UPDATE t_role SET deleted = #{deleted} WHERE id = #{id}
     </update>
 </mapper>

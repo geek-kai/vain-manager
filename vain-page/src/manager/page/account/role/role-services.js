@@ -15,6 +15,10 @@ angular.module("role.services", ["ngResource", "common.services"])
             assignRoleMenu: {
                 method: "post",
                 url: appConstant.BASE_URL + "/role/assignRoleMenu"
+            },
+            delete: {
+                method: "post",
+                url: appConstant.BASE_URL + "/role/delete"
             }
         })
     }]);

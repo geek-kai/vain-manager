@@ -225,7 +225,7 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
 
     @Override
     public int modify(Menu entity) throws ErrorCodeException {
-        return 0;
+        return menuDao.update(entity);
     }
 
     @Override

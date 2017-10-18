@@ -93,8 +93,20 @@ public class RoleController extends AbstractBaseController<Role> {
         return null;
     }
 
+    /**
+     * 删除某一角色
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<Role> delete(@RequestBody Role entity, HttpServletRequest request) throws Exception {
-        return null;
+        Response<Role> response = new Response<>();
+        response.setData(roleService.delete(entity));
+        return response;
     }
 }

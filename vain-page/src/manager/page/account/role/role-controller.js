@@ -18,6 +18,16 @@ angular.module("role.controllers", [])
                 commonUtils.centerElem($("#modifyDiv"));
             };
 
+            /*删除角色*/
+            $scope.delete = function (id) {
+                var msg = msgModal.confirmMsg(appConstant.ROLE_DELETE_WARNING);
+                msg.result.then(function () {
+                    roleHttpServices.delete({id: id}, function (data) {
+                        $scope.init();
+                    })
+                })
+            };
+
             /*关闭添加角色div*/
             $scope.close = function () {
                 commonUtils.hideCover();

@@ -35,7 +35,7 @@ public class MenuDao extends AbstractBaseDao<Menu> {
 
     @Override
     public int update(Menu entity) {
-        return 0;
+        return this.sqlSession.update("com.vain.manager.entity.Menu.update", entity);
     }
 
     @Override
