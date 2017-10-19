@@ -59,6 +59,7 @@
                         </div>
                     </div>
 
+
             </div>
                 <div class="am-g">
                         <form class="am-form">
@@ -84,11 +85,11 @@
                                     <td>{{user.roleName}}</td>
                                     <td class="am-hide-sm-only">{{user.createTime}}</td>
                                     <td>
-                                        <div class="am-btn-toolbar">
+                                        <div class="am-btn-toolbar am-margin-left-sm">
                                             <div class="am-btn-group am-btn-group-xs">
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showModify(user);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-user-secret"></span> 分配角色</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger" ng-click="grantRole(user)"><span class="am-icon-user-secret"></span> 分配角色</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grant(user);"><span class="am-icon-wrench"></span> 分配权限</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);">
                                                     <span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}
@@ -121,14 +122,14 @@
 
             <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
                 <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null && (resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
-                    <label for="password" class="am-u-sm-2 am-form-label">新密码:</label>
-                    <div class="am-u-sm-10">
+                    <label for="password" class="am-u-sm-3 am-form-label">新密码:</label>
+                    <div class="am-u-sm-9">
                         <input type="password" id="password" name="password" class="am-form-field" placeholder="设置新密码" ng-maxlength="16" ng-minlength="6"
                                ng-pattern="/^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$/" ng-model="resetPassword" required>
                         <span class="am-icon-warning" style="right:1.7rem;"></span>
                     </div>
 
-                    <div class="am-u-sm-12 am-u am-u-sm-offset-2 tips">
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
                         <span ng-show="pwdForm.password.$error.required">请输入密码</span>
                         <span ng-show="pwdForm.password.$error.pattern&&!pwdForm.password.$error.maxlength&&!pwdForm.password.$error.minlength">请输入数字和字母组成的密码</span>
                         <span ng-show="pwdForm.password.$error.maxlength">输入长度为6-16个字符</span>
@@ -136,9 +137,9 @@
                         <span ng-show="resetNewPassword!=null&&(resetNewPassword!=resetPassword)">二次密码不一致</span>
                     </div>
 
-                    <div style="padding-top: 70px;">
-                        <label for="newPassword" class="am-u-sm-2 am-form-label">新密码:</label>
-                        <div class="am-u-sm-10" >
+                    <div class="am-padding-top-xl">
+                        <label for="newPassword" class="am-u-sm-3 am-form-label">新密码:</label>
+                        <div class="am-u-sm-9" >
                             <input type="password" id="newPassword" name="newPassword" ng-model="resetNewPassword" class="am-form-field" placeholder="再次输入">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
@@ -146,7 +147,7 @@
 
                 </div>
 
-                <div class="am-form-group" style="padding-top: 20px;">
+                <div class="am-form-group am-padding-top-xs">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
                         <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
                     </div>
@@ -249,6 +250,31 @@
                 <div class="am-form-group" style="padding-top: 20px;">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
                         <button type="submit" class="am-btn am-btn-default" ng-click="modify();">修改信息</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!--分配角色的div-->
+    <div class="form_div cover_alert" id="roleDiv" ng-show="roleWindow" style="width: 500px;min-height: 300px;">
+        <div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(4);"></i></p></div>
+
+            <form class="am-form am-form-horizontal" name="roleForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-form-success ">
+                    <div class="am-form-group am-text-center">
+                        <select data-am-selected="{btnSize: 'sm'}" ng-model="role.type" ng-change="search();">
+                            <option value="" hidden>请选择</option>
+                            <option value="0" selected>所有类别</option>
+                            <option value="{{type.value}}"  ng-repeat="type in userType">{{type.key}}</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="am-form-group" style="padding-top: 20px;">
+                    <div class="am-u-sm-10 am-u-sm-offset-4">
+                        <button type="submit" class="am-btn am-btn-default" ng-click="modify();">分配角色</button>
                     </div>
                 </div>
             </form>

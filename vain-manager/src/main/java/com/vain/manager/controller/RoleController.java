@@ -83,14 +83,38 @@ public class RoleController extends AbstractBaseController<Role> {
         return response;
     }
 
+    /**
+     * 添加角色
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<Role> add(@RequestBody Role entity, HttpServletRequest request) throws Exception {
-        return null;
+        Response<Role> response = new Response<>();
+        response.setData(roleService.add(entity));
+        return response;
     }
 
+    /**
+     * 修改角色
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modify", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<Role> modify(@RequestBody Role entity, HttpServletRequest request) throws Exception {
-        return null;
+        Response<Role> response = new Response<>();
+        response.setData(roleService.modify(entity));
+        return response;
     }
 
     /**

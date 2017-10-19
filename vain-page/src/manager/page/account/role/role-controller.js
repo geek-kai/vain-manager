@@ -12,10 +12,17 @@ angular.module("role.controllers", [])
 
             /*打开添加角色div*/
             $scope.addRole = function () {
+                $scope.role = undefined;
                 commonUtils.showCover();
                 $scope.coverShow = 1;
                 $scope.addWindow = 1;
                 commonUtils.centerElem($("#modifyDiv"));
+            };
+
+            /*修改角色div*/
+            $scope.modify = function (role) {
+                $scope.addRole();
+                $scope.role = role;
             };
 
             /*删除角色*/
@@ -23,8 +30,9 @@ angular.module("role.controllers", [])
                 var msg = msgModal.confirmMsg(appConstant.ROLE_DELETE_WARNING);
                 msg.result.then(function () {
                     roleHttpServices.delete({id: id}, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
                         $scope.init();
-                    })
+                    });
                 })
             };
 
@@ -38,6 +46,20 @@ angular.module("role.controllers", [])
             /*分配权限*/
             $scope.grantMenu = function (id) {
                 window.location.href = "role-menu.html?id=" + id;
+            };
+
+            /*新增和修改*/
+            $scope.save = function () {
+                if (typeof ($scope.role.id)) {
+                    roleHttpServices.modify($scope.role, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    });
+                } else {
+                    roleHttpServices.add($scope.role, function (data) {
+                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    });
+                }
+                $scope.close();
             };
         }])
     /**角色权限列表**/

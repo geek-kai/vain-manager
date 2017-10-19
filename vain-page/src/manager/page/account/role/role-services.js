@@ -19,6 +19,14 @@ angular.module("role.services", ["ngResource", "common.services"])
             delete: {
                 method: "post",
                 url: appConstant.BASE_URL + "/role/delete"
+            },
+            add: {
+                method: "post",
+                url: appConstant.BASE_URL + "/role/add"
+            },
+            modify: {
+                method: "post",
+                url: appConstant.BASE_URL + "/role/modify"
             }
         })
     }]);

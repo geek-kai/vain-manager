@@ -53,7 +53,7 @@
                 description = #{description},
             </if>
             <if test="roleKey!=null and roleKey!=''">
-                roleKey = #{roleKey}
+                roleKey = #{roleKey},
             </if>
                 modifyTime=now()
         </set>

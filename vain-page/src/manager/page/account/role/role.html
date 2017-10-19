@@ -64,9 +64,9 @@
                                     <td>{{role.description}}</td>
                                     <td class="am-hide-sm-only">{{role.createTime}}</td>
                                     <td>
-                                        <div class="am-btn-toolbar">
+                                        <div class="am-btn-toolbar am-margin-left-sm">
                                             <div class="am-btn-group am-btn-group-xs">
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modify(role);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 分配权限</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(role.id);" ><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
@@ -108,7 +108,7 @@
                         <label for="roleKey" class="am-u-sm-3 am-form-label">roleKey：</label>
                         <div class="am-u-sm-9">
                             <input type="text" id="roleKey" name="roleKey" class="am-form-field" placeholder="角色roleKey"
-                                   ng-pattern="/^[A-Za-z]+$/" ng-model="role.roleKey" required>
+                                   ng-pattern="/^[A-Z_a-z]+$/" ng-model="role.roleKey" required>
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
@@ -133,7 +133,7 @@
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="add();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">添加角色</button>
+                        <button type="submit" class="am-btn am-btn-default" ng-click="save();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">{{role.id>0?'修改角色':'添加角色'}}</button>
                     </div>
                 </div>
             </form>

@@ -34,6 +34,11 @@ angular.module("user.services", ["ngResource", "common.services"])
             assignUserMenu: {
                 method: "post",
                 url: appConstant.BASE_URL + "/user/assignUserMenu"
+            },
+            /*获取角色列表*/
+            getRoleList: {
+                method: "post",
+                url: appConstant.BASE_URL + "/role/getList"
             }
         })
     }

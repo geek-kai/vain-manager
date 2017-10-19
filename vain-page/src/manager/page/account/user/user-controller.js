@@ -88,6 +88,8 @@ angular.module("user.controllers", [])
                         $scope.addWindow = 0;
                     case 3:
                         $scope.modifyWindow = 0;
+                    case 4:
+                        $scope.roleWindow = 0
                 }
                 $scope.coverShow = 0;
             };
@@ -181,6 +183,15 @@ angular.module("user.controllers", [])
             /*给用户赋值权限*/
             $scope.grant = function (user) {
                 window.location.href = "user-menu.html?id=" + user.id;
+            };
+
+            /*给用户分配角色*/
+            $scope.grantRole = function (user) {
+                $scope.role = {userId: user.id};
+                commonUtils.showCover();
+                $scope.converShow = 1;
+                $scope.roleWindow = 1;
+                commonUtils.centerElem($("#roleDiv"));
             };
 
             /*查询*/
