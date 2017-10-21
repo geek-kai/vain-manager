@@ -83,7 +83,7 @@
     </div>
 
     <!-- 遮罩层 -->
-    <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
+    <div class="cover am-block" ng-show="coverShow" id="coverDiv"></div>
 
     <!--新增角色的div-->
     <div class="form_div cover_alert" id="modifyDiv" ng-show="addWindow" style="width: 550px;height:400px;">
@@ -133,7 +133,7 @@
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="save();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">{{role.id>0?'修改角色':'添加角色'}}</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="save();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">{{role.id>0?'修改角色':'添加角色'}}</button>
                     </div>
                 </div>
             </form>

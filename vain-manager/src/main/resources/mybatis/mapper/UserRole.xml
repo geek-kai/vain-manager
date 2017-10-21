@@ -7,9 +7,9 @@
 
     <!-- 获取用户角色 -->
     <select id="get" resultType="com.vain.manager.entity.UserRole" parameterType="com.vain.manager.entity.UserRole">
-        select
+        SELECT
         <include refid="Base_Column_List"/>
-        from t_user_role
+        FROM t_user_role
         <where>
             <if test="userId != null">
                 userId = #{userId}
@@ -22,27 +22,27 @@
 
     <!-- 获取用户角色列表 -->
     <select id="getList" resultType="com.vain.manager.entity.UserRole" parameterType="com.vain.manager.entity.UserRole">
-        select *
+        SELECT *
         <include refid="Base_Column_List"/>
-        from t_user_role
+        FROM t_user_role
     </select>
 
     <!-- 删除用户角色 -->
     <delete id="delete" parameterType="com.vain.manager.entity.UserRole">
-        delete from t_user_role
+        DELETE FROM t_user_role
         <where>
             <if test="userId != null">
                 userId = #{userId}
             </if>
             <if test="roleId != null">
-                and roleId =#{roleId}
+                AND roleId =#{roleId}
             </if>
         </where>
     </delete>
 
     <!-- 添加用戶角色 -->
     <insert id="insert" parameterType="com.vain.manager.entity.UserRole" useGeneratedKeys="true" keyProperty="id">
-        insert into t_user_role
+        INSERT INTO t_user_role
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
                 userId,
@@ -65,7 +65,7 @@
 
     <!-- 更新用户角色 -->
     <update id="update" parameterType="com.vain.manager.entity.UserRole">
-        update t_user_role
+        UPDATE t_user_role
         <set>
             <if test="userId != null">
                 userId = #{userId},
@@ -75,6 +75,6 @@
             </if>
             modifyTime = now()
         </set>
-        where id = #{id}
+        WHERE id = #{id}
     </update>
 </mapper>

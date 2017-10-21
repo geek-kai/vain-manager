@@ -26,7 +26,7 @@ public class UserRoleDao extends AbstractBaseDao<UserRole> {
 
     @Override
     public UserRole get(UserRole entity) {
-        return this.sqlSession.selectOne("com.vain.manager.entity.UserRole.insert", entity);
+        return this.sqlSession.selectOne("com.vain.manager.entity.UserRole.get", entity);
     }
 
     @Override

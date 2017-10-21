@@ -144,8 +144,8 @@ public class RoleController extends AbstractBaseController<Role> {
      */
     @RequestMapping(value = "/grantUserRole", method = RequestMethod.POST)
     @ResponseBody
-    public Response<Role> grantUserRole(@RequestBody UserRole entity, HttpServletRequest request) throws Exception {
-        Response<Role> response = new Response<>();
+    public Response<UserRole> grantUserRole(@RequestBody UserRole entity, HttpServletRequest request) throws Exception {
+        Response<UserRole> response = new Response<>();
         response.setData(roleService.grantUserRole(entity));
         return response;
     }

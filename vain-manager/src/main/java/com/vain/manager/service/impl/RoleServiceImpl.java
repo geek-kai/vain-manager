@@ -93,7 +93,7 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
         UserRole dbUserRole = new UserRole();
         dbUserRole.setUserId(userRole.getUserId());
         dbUserRole = userRoleDao.get(dbUserRole);//获取userRole在数据库的ID
-        if (dbUserRole.getId() != null) {
+        if (dbUserRole != null && dbUserRole.getId() != null) {
             userRole.setId(dbUserRole.getId());
             return userRoleDao.update(userRole);
         } else {

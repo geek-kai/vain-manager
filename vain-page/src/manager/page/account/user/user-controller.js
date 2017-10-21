@@ -202,6 +202,8 @@ angular.module("user.controllers", [])
             $scope.modifyRole = function () {
                 userHttpServices.grantUserRole($scope.role, function (data) {
                     msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    if (data.code == 200)
+                        $scope.init();
                 });
             };
 
