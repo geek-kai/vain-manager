@@ -2,8 +2,8 @@ package com.vain.manager.controller;
 
 import com.vain.manager.common.controller.AbstractBaseController;
 import com.vain.manager.common.entity.Response;
-import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.Role;
+import com.vain.manager.entity.UserRole;
 import com.vain.manager.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -131,6 +131,22 @@ public class RoleController extends AbstractBaseController<Role> {
     public Response<Role> delete(@RequestBody Role entity, HttpServletRequest request) throws Exception {
         Response<Role> response = new Response<>();
         response.setData(roleService.delete(entity));
+        return response;
+    }
+
+    /**
+     * 给账号赋予角色
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/grantUserRole", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<Role> grantUserRole(@RequestBody UserRole entity, HttpServletRequest request) throws Exception {
+        Response<Role> response = new Response<>();
+        response.setData(roleService.grantUserRole(entity));
         return response;
     }
 }

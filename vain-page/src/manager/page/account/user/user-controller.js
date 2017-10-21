@@ -185,13 +185,24 @@ angular.module("user.controllers", [])
                 window.location.href = "user-menu.html?id=" + user.id;
             };
 
-            /*给用户分配角色*/
+            /*给用户分配角色弹窗div*/
             $scope.grantRole = function (user) {
                 $scope.role = {userId: user.id};
                 commonUtils.showCover();
                 $scope.converShow = 1;
                 $scope.roleWindow = 1;
                 commonUtils.centerElem($("#roleDiv"));
+                userHttpServices.getRoleList({}, function (data) {
+                    if (data.code == 200)
+                        $scope.roles = data.dataList;
+                });
+            };
+
+            /*给用户分配角色*/
+            $scope.modifyRole = function () {
+                userHttpServices.grantUserRole($scope.role, function (data) {
+                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                });
             };
 
             /*查询*/

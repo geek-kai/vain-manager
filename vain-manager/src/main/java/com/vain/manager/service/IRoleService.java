@@ -1,8 +1,8 @@
 package com.vain.manager.service;
 
 import com.vain.manager.common.service.BaseService;
-import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.Role;
+import com.vain.manager.entity.UserRole;
 
 /**
  * @author vain
@@ -16,4 +16,12 @@ public interface IRoleService extends BaseService<Role> {
      * @param entity
      */
     int assignRoleMenu(Role entity);
+
+    /**
+     * 给账号分配角色
+     *
+     * @param entity
+     * @return
+     */
+    int grantUserRole(UserRole entity);
 }

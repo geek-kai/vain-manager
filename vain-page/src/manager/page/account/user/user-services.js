@@ -39,6 +39,11 @@ angular.module("user.services", ["ngResource", "common.services"])
             getRoleList: {
                 method: "post",
                 url: appConstant.BASE_URL + "/role/getList"
+            },
+            /*赋予账号角色*/
+            grantUserRole: {
+                method: "post",
+                url: appConstant.BASE_URL + "/role/grantUserRole"
             }
         })
     }

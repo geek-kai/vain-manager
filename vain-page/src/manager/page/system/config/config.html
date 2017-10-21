@@ -119,9 +119,8 @@
                     <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">配置类型：</label>
                         <div class="am-u-sm-9">
-                            <select data-am-selected="{btnSize: 'sm'}" ng-model="config.type">
-                                <option value="" hidden>请选择</option>
-                                <option value="{{type.value}}"  ng-repeat="type in configType">{{type.key}}</option>
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="config.type" ng-options="type.value as type.key for type in configType">
+                                <option value="">请选择</option>
                             </select>
                         </div>
                     </div>
@@ -139,7 +138,7 @@
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="modify();" ng-disabled="config.name!=null && config.code!=null && config.value!=null?'':'disabled'">修改配置</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();" ng-disabled="config.name!=null && config.code!=null && config.value!=null?'':'disabled'">修改配置</button>
                     </div>
                 </div>
             </form>

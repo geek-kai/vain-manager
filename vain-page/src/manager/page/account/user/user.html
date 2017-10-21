@@ -91,9 +91,7 @@
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger" ng-click="grantRole(user)"><span class="am-icon-user-secret"></span> 分配角色</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grant(user);"><span class="am-icon-wrench"></span> 分配权限</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);">
-                                                    <span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}
-                                                </button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);"><span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}</button>
                                                 <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(user.id);" ><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
                                         </div>
@@ -113,7 +111,7 @@
     </div>
 
     <!-- 遮罩层 -->
-    <div style="display: block;" class="cover" ng-show="coverShow" id="coverDiv"></div>
+    <div class="cover am-block" ng-show="coverShow" id="coverDiv"></div>
 
     <!--重置密码的div-->
     <div class="form_div cover_alert" id="pwdDiv" ng-show="resetPwdWindow" style="width: 550px;height:350px;">
@@ -121,7 +119,7 @@
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(1);"></i></p></div>
 
             <form class="am-form am-form-horizontal" name="pwdForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="resetNewPassword!=null && (resetNewPassword==resetPassword)?'am-form-success':'am-form-error'" style="margin: 20px;">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-margin-lg" ng-class="resetNewPassword!=null && (resetNewPassword==resetPassword)?'am-form-success':'am-form-error'">
                     <label for="password" class="am-u-sm-3 am-form-label">新密码:</label>
                     <div class="am-u-sm-9">
                         <input type="password" id="password" name="password" class="am-form-field" placeholder="设置新密码" ng-maxlength="16" ng-minlength="6"
@@ -149,7 +147,7 @@
 
                 <div class="am-form-group am-padding-top-xs">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
                     </div>
                 </div>
             </form>
@@ -163,7 +161,7 @@
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(2);"></i></p></div>
 
             <form class="am-form am-form-horizontal" name="accountForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback" ng-class="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'am-form-success':'am-form-error'" style="margin: 20px;">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-margin-lg" ng-class="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'am-form-success':'am-form-error'">
                     <div>
                         <label for="userName" class="am-u-sm-3 am-form-label">用户账号：</label>
                         <div class="am-u-sm-9" >
@@ -172,7 +170,7 @@
                         </div>
                     </div>
 
-                    <div style="padding-top: 60px;">
+                    <div style="padding-top: 6rem;">
                         <label for="accountPassword" class="am-u-sm-3 am-form-label">用户密码：</label>
                         <div class="am-u-sm-9">
                             <input type="password" id="accountPassword" name="accountPassword" class="am-form-field" placeholder="用户密码" ng-maxlength="16" ng-minlength="6"
@@ -188,7 +186,7 @@
                         <span ng-show="accountForm.accountPassword.$error.minlength">输入长度为6-16个字符</span>
                     </div>
 
-                    <div style="padding-top: 60px;">
+                    <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">用户类型：</label>
                         <div class="am-u-sm-9">
                             <select data-am-selected="{btnSize: 'sm'}" ng-model="addUser.type">
@@ -200,9 +198,9 @@
 
                 </div>
 
-                <div class="am-form-group" style="padding-top: 20px;">
+                <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="add();" ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="add();" ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
                     </div>
                 </div>
             </form>
@@ -214,8 +212,8 @@
         <div>
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(3);"></i></p></div>
 
-            <form class="am-form am-form-horizontal" name="accountForm" novalidate="novalidate">
-                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-form-success" style="margin: 20px;">
+            <form class="am-form am-form-horizontal" name="accountInfoForm" novalidate="novalidate">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-form-success am-margin-lg">
                     <div>
                         <label class="am-u-sm-3 am-form-label">用户账号：</label>
                         <div class="am-u-sm-9" >
@@ -224,32 +222,35 @@
                         </div>
                     </div>
 
-                    <div style="padding-top: 60px;">
+                    <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">电话号码：</label>
                         <div class="am-u-sm-9">
-                            <input type="number" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6"
-                                   ng-pattern="/^[0-9]*$/" ng-model="modifyUser.phone">
+                            <input type="number" id="accountPhone" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6" ng-pattern="/^[0-9]*$/" ng-model="modifyUser.phone">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
                     <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
-                        <span ng-show="accountForm.accountPhone.$error.pattern&&!accountForm.accountPhone.$error.maxlength&&!accountForm.accountPhone.$error.minlength">请输入正确的电话号码</span>
+                        <span ng-show="accountInfoForm.accountPhone.$error.pattern&&!accountInfoForm.accountPhone.$error.maxlength&&!accountInfoForm.accountPhone.$error.minlength">请输入正确的电话号码</span>
                     </div>
 
-                    <div style="padding-top: 60px;">
+                    <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">电子邮箱：</label>
                         <div class="am-u-sm-9">
-                            <input type="text" class="am-form-field" placeholder="电子邮箱" ng-pattern="/^[0-9]*$/" ng-model="modifyUser.email">
+                            <input type="email" name="accountEmail" id="accountEmail" class="am-form-field" placeholder="电子邮箱" ng-pattern="/^[0-9]*$/" ng-model="modifyUser.email">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>
 
+                    <div class="am-u-sm-12 am-u am-u-sm-offset-3 tips">
+                        <span ng-show="accountInfoForm.accountEmail.$error.pattern">请输入正确的电子邮箱</span>
+                    </div>
+
                 </div>
 
-                <div class="am-form-group" style="padding-top: 20px;">
+                <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="modify();">修改信息</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();">修改信息</button>
                     </div>
                 </div>
             </form>
@@ -257,24 +258,22 @@
     </div>
 
     <!--分配角色的div-->
-    <div class="form_div cover_alert" id="roleDiv" ng-show="roleWindow" style="width: 500px;min-height: 300px;">
+    <div class="form_div cover_alert" id="roleDiv" ng-show="roleWindow" style="width:450px;min-height: 300px;">
         <div>
             <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close(4);"></i></p></div>
 
             <form class="am-form am-form-horizontal" name="roleForm" novalidate="novalidate">
                 <div class="am-form-group am-form-error am-form-icon am-form-feedback am-form-success ">
                     <div class="am-form-group am-text-center">
-                        <select data-am-selected="{btnSize: 'sm'}" ng-model="role.type" ng-change="search();">
+                        <select data-am-selected="{btnSize: 'sm'}" ng-model="role.roleId" ng-options="role.id as role.name for role in roles">
                             <option value="" hidden>请选择</option>
-                            <option value="0" selected>所有类别</option>
-                            <option value="{{type.value}}"  ng-repeat="type in userType">{{type.key}}</option>
                         </select>
                     </div>
                 </div>
 
-                <div class="am-form-group" style="padding-top: 20px;">
+                <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default" ng-click="modify();">分配角色</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modifyRole();">分配角色</button>
                     </div>
                 </div>
             </form>

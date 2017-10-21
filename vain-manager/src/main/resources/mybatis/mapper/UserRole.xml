@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.vain.manager.entity.UserRole">
+    <sql id="Base_Column_List">
+        id, userId, roleId, createTime, modifyTime
+    </sql>
+
+    <!-- 获取用户角色 -->
+    <select id="get" resultType="com.vain.manager.entity.UserRole" parameterType="com.vain.manager.entity.UserRole">
+        select
+        <include refid="Base_Column_List"/>
+        from t_user_role
+        <where>
+            <if test="userId != null">
+                userId = #{userId}
+            </if>
+            <if test="id != null">
+                and id =#{id}
+            </if>
+        </where>
+    </select>
+
+    <!-- 获取用户角色列表 -->
+    <select id="getList" resultType="com.vain.manager.entity.UserRole" parameterType="com.vain.manager.entity.UserRole">
+        select *
+        <include refid="Base_Column_List"/>
+        from t_user_role
+    </select>
+
+    <!-- 删除用户角色 -->
+    <delete id="delete" parameterType="com.vain.manager.entity.UserRole">
+        delete from t_user_role
+        <where>
+            <if test="userId != null">
+                userId = #{userId}
+            </if>
+            <if test="roleId != null">
+                and roleId =#{roleId}
+            </if>
+        </where>
+    </delete>
+
+    <!-- 添加用戶角色 -->
+    <insert id="insert" parameterType="com.vain.manager.entity.UserRole" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user_role
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                userId,
+            </if>
+            <if test="roleId != null">
+                roleId,
+            </if>
+            createTime
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">
+                #{userId},
+            </if>
+            <if test="roleId != null">
+                #{roleId},
+            </if>
+            now()
+        </trim>
+    </insert>
+
+    <!-- 更新用户角色 -->
+    <update id="update" parameterType="com.vain.manager.entity.UserRole">
+        update t_user_role
+        <set>
+            <if test="userId != null">
+                userId = #{userId},
+            </if>
+            <if test="roleId != null">
+                roleId = #{roleId},
+            </if>
+            modifyTime = now()
+        </set>
+        where id = #{id}
+    </update>
+</mapper>

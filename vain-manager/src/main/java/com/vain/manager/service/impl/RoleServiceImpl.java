@@ -5,9 +5,11 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.dao.RoleDao;
 import com.vain.manager.dao.RoleMenuDao;
+import com.vain.manager.dao.UserRoleDao;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.Role;
 import com.vain.manager.entity.RoleMenu;
+import com.vain.manager.entity.UserRole;
 import com.vain.manager.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +30,9 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
 
     @Autowired
     private RoleMenuDao roleMenuDao;
+
+    @Autowired
+    private UserRoleDao userRoleDao;
 
     @Override
     public PageList<Role> getPagedList(Role entity) throws ErrorCodeException {
@@ -75,6 +80,25 @@ public class RoleServiceImpl extends AbstractBaseService implements IRoleService
         if (!roleMenus.isEmpty())
             return roleMenuDao.assignRoleMenu(roleMenus); //批量插入
         return 0;
+    }
+
+    /**
+     * 之前有角色就更新 没有就添加
+     *
+     * @param userRole
+     * @return
+     */
+    @Override
+    public int grantUserRole(UserRole userRole) {
+        UserRole dbUserRole = new UserRole();
+        dbUserRole.setUserId(userRole.getUserId());
+        dbUserRole = userRoleDao.get(dbUserRole);//获取userRole在数据库的ID
+        if (dbUserRole.getId() != null) {
+            userRole.setId(dbUserRole.getId());
+            return userRoleDao.update(userRole);
+        } else {
+            return userRoleDao.insert(userRole);
+        }
     }
 
     //递归遍历menu  不受菜单层级限制

@@ -24,7 +24,7 @@
             <if test="id !=null">
                 and id = #{id}
             </if>
-            and deleted=0
+            and deleted=0 AND id !=1
         </where>
     </select>
 
@@ -35,9 +35,9 @@
         from t_role
         <where>
             <if test="id!=null">
-                and id != #{id}
+                and id = #{id}
             </if>
-            and deleted=0
+            and deleted=0 AND id !=1
         </where>
         order by createTime
     </select>
@@ -55,7 +55,7 @@
             <if test="roleKey!=null and roleKey!=''">
                 roleKey = #{roleKey},
             </if>
-                modifyTime=now()
+            modifyTime=now()
         </set>
         <where>
             id=#{id}
