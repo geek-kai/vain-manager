@@ -12,10 +12,9 @@ angular.module("home.controllers", [])
                 }
                 $scope.menuUrl = "../../page/main/main.html";
                 homeHttpServices.getMyMenus({}, function (data) {
-                    if (data.code == 200) {
+                    if (data.code == 200)
                         $scope.menus = data.dataList;
-                    } else {
-                    }
+
                 });
             };
 
@@ -37,8 +36,10 @@ angular.module("home.controllers", [])
 
             //跳转对应的子菜单页面
             $scope.clickMenu = function (menu) {
+                console.log(menu);
                 if (typeof menu.url != "undefined")
-                    $scope.menuUrl = menu.url;
+                    $scope.menuUrl = menu.url+"?menuKey="+menu.menuKey;
+
             };
 
             $scope.logout = function () {//注销登录

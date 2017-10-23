@@ -24,7 +24,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     <aop:aspectj-autoproxy/>
 
     <!-- 数据库连接池 -->
-    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <!-- 基本属性 url、user、password -->
         <property name="url" value="${jdbc_url}"/>
         <property name="username" value="${jdbc_username}"/>
@@ -56,6 +56,19 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
         <!-- 配置监控统计拦截的filters -->
         <property name="filters" value="stat,slf4j"/>
+        <property name="proxyFilters">
+            <list>
+                <ref bean="stat-filter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <!--sql执行过慢时间-->
+        <property name="slowSqlMillis" value="10000"/>
+        <property name="logSlowSql" value="true"/>
+        <!--合并sql-->
+        <property name="mergeSql" value="true"/>
     </bean>
 
     <!-- MyBatis sqlSessionFactory 配置 mybatis -->

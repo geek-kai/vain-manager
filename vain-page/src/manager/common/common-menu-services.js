@@ -7,7 +7,8 @@
  */
 angular.module("common.menu.services", ["ngResource", "common.services"])
     .factory("commonMenuHttpServices", ["$Resource", "appConstant", function ($resource, appConstant) {
-        return $resource("", {}, {
+        return $resource(
+            "", {}, {
             getUserMenusByMenuKey: {
                 method: "post",
                 url: appConstant.BASE_URL + "/menu/getMyMenus"
@@ -15,7 +16,7 @@ angular.module("common.menu.services", ["ngResource", "common.services"])
         });
 
     }])
-    .factory("menuUtils", ["commonMenuHttpServices", "msgModal", function (commonMenuHttpServices) {
+    .factory("menuUtils", ["commonMenuHttpServices", function (commonMenuHttpServices) {
         return {
             getUserPermissionsByMenuKey: function (menuKey, permissions) {
                 if (menuKey) {
