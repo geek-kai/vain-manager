@@ -1,10 +1,13 @@
 /**系统配置列表**/
-angular.module("config.controllers", ["config.services","common.services"])
-    .controller("ConfigListCtrl", ["appConstant", "$scope","configHttpServices", "commonUtils", "msgModal",
-        function (appConstant, $scope,configHttpServices, commonUtils, msgModal) {
+angular.module("config.controllers", ["config.services","common.menu.services","common.services"])
+    .controller("ConfigListCtrl", ["appConstant","$scope","menuUtils","configHttpServices", "commonUtils", "msgModal",
+        function (appConstant, $scope,menuUtils,configHttpServices, commonUtils, msgModal) {
             $scope.init = function () {
 
                 console.log(commonUtils.getUrlParameter("menuKey"));
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 configHttpServices.getPagedList({}, function (data) {
                     if (data.code == 200) {
                         $scope.configs = data.dataList;

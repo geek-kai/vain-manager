@@ -1,2 +1,2 @@
 
-angular.module("config.app",["common.services","config.controllers","config.services"]);
+angular.module("config.app",["common.services","common.menu.services","config.controllers","config.services"]);
