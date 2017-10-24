@@ -6,7 +6,7 @@
  *
  */
 angular.module("common.menu.services", ["ngResource", "common.services"])
-    .factory("commonMenuHttpServices", ["$Resource", "appConstant", function ($resource, appConstant) {
+    .factory("commonMenuHttpServices", ["$resource", "appConstant", function ($resource, appConstant) {
         return $resource(
             "", {}, {
                 getUserMenusByMenuKey: {

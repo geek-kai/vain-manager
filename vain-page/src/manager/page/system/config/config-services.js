@@ -10,6 +10,10 @@ angular.module("config.services", ["ngResource", "common.services"])
             modify: {
                 method: "post",
                 url: appConstant.BASE_URL + "/systemConfig/modify"
+            },
+            delete:{
+                method: "post",
+                url: appConstant.BASE_URL + "/systemConfig/delete"
             }
         })
     }]);

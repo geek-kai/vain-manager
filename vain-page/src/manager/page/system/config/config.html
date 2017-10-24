@@ -56,7 +56,7 @@
                                     <td>{{config.createTime}}</td>
                                     <td>
                                         <div class="am-btn-group am-btn-group-xs">
-                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyConfig(config);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyConfig(config);" ng-if="permissions['system.config.modify']"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -138,7 +138,7 @@
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();" ng-disabled="config.name!=null && config.code!=null && config.value!=null?'':'disabled'">修改配置</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();" ng-if="permissions['system.config.modify']" ng-disabled="config.name!=null && config.code!=null && config.value!=null?'':'disabled'">修改配置</button>
                     </div>
                 </div>
             </form>

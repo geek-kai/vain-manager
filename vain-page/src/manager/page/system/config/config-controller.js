@@ -3,8 +3,6 @@ angular.module("config.controllers", ["config.services","common.menu.services","
     .controller("ConfigListCtrl", ["appConstant","$scope","menuUtils","configHttpServices", "commonUtils", "msgModal",
         function (appConstant, $scope,menuUtils,configHttpServices, commonUtils, msgModal) {
             $scope.init = function () {
-
-                console.log(commonUtils.getUrlParameter("menuKey"));
                 var menuKey = commonUtils.getUrlParameter("menuKey");
                 $scope.permissions = [];
                 menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);

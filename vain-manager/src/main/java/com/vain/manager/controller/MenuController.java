@@ -41,8 +41,13 @@ public class MenuController extends AbstractBaseController<Menu> {
     public Response<Menu> getMyMenu(@RequestBody Menu entity, HttpServletRequest request) throws ErrorCodeException {
         PermissionCache cache = getPermissionCacheFromSession(request);
         Response<Menu> response = cache.getMenus(); //获取session中的缓存menu
-        if (!StrUtil.isEmpty(entity.getMenuKey())) {
+        if (!StrUtil.isBlank(entity.getMenuKey())) {
             logger.info("菜单操作权限列表");
+            Response<Menu> res = new Response<>(); //返回新对象 不修改缓存内数据
+            res.setDataList(menuService.getChildMenu(response.getDataList(), entity.getMenuKey()));
+            res.setCode(SysConstants.Code.SUCCESS_CODE);
+            res.setData(SysConstants.Code.SUCCESS_MSG);
+            return res;
         } else {
             if (response != null) {
                 logger.info("获取菜单权限缓存数据");
@@ -54,7 +59,7 @@ public class MenuController extends AbstractBaseController<Menu> {
             entity.setType(UserSession.getUserType());
             response = new Response<>();
             response.setDataList(menuService.getMyMenus(entity));
-            return response;
+            cache.setMenus(response);//重新缓存
         }
         return response;
     }

@@ -10,14 +10,14 @@
 
     <context:component-scan base-package="com.vain.manager.shiro"/>
 
-    <bean id="sessionyManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager"/>
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager"/>
 
     <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
     <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
         <property name="realm" ref="defaultRealm"/>
         <property name="cacheManager" ref="shiroCacheManager"/>
-        <property name="sessionManager" ref="sessionyManager"/>
+        <property name="sessionManager" ref="sessionManager"/>
     </bean>
 
     <!--配置的自己的realm-->
@@ -55,7 +55,7 @@
                 /images/** = anon
                 /resources/** = anon
                 /api/user/login = anon
-                /api/** = url
+                /api/** = url,user
             </value>
         </property>
     </bean>

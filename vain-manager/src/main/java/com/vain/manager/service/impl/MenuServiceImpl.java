@@ -9,6 +9,7 @@ import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.Role;
 import com.vain.manager.entity.User;
 import com.vain.manager.service.IMenuService;
+import com.vain.manager.util.StrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -209,6 +210,33 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
             }
         } else {
             throwErrorCodeException(SysConstants.Code.NOT_FOUND_CODE, SysConstants.Code.NOT_FOUND_MSG);
+        }
+        return returnMenus;
+    }
+
+    /**
+     * 获取menukey 的子集菜单
+     *
+     * @param dataList
+     * @param menuKey
+     * @return
+     */
+    @Override
+    public List<Menu> getChildMenu(List<Menu> dataList, String menuKey) {
+        List<Menu> returnMenus = new ArrayList<>();
+        if (StrUtil.isNotEmptyCollection(dataList)) {
+            for (Menu data : dataList) {
+                List<Menu> children = data.getChildren();
+                if (StrUtil.isNotEmptyCollection(children)) {
+                    for (Menu child : children) {
+                        if (StrUtil.isNotEmpty(child.getMenuKey()) && child.getMenuKey().equals(menuKey)) {
+                            if (StrUtil.isNotEmptyCollection(child.getChildren()))
+                                returnMenus.addAll(child.getChildren());
+                        }
+                    }
+                }
+
+            }
         }
         return returnMenus;
     }

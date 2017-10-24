@@ -21,7 +21,7 @@ public class SysConfigComponent {
     @Autowired
     private SystemConfigDao sysConfigDao;
 
-    private final HashMap<String, String> configMapFromDb = new HashMap<String, String>();
+    private final HashMap<String, String> configMapFromDb = new HashMap<>();
 
     public void loadSystemConfigFromDb() {
         List<SystemConfig> sysConfigs = sysConfigDao.getList(null);

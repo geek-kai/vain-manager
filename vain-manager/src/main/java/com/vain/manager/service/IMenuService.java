@@ -39,4 +39,13 @@ public interface IMenuService extends BaseService<Menu> {
      * @return
      */
     List<Menu> getMenusByRoleId(Role entity) throws ErrorCodeException;
+
+    /**
+     * 获取menukey 的子集菜单
+     *
+     * @param dataList
+     * @param menuKey
+     * @return
+     */
+    List<Menu> getChildMenu(List<Menu> dataList, String menuKey);
 }

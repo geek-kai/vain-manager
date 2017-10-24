@@ -1,5 +1,6 @@
 package com.vain.manager.util;
 
+import java.util.Collection;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -139,5 +140,15 @@ public class StrUtil {
      */
     public static boolean isEmail(String str) {
         return str != null && str.contains("@");
+    }
+
+    /**
+     * 判断是否为空
+     *
+     * @param collection
+     * @return
+     */
+    public static boolean isNotEmptyCollection(Collection collection) {
+        return collection != null && collection.size() > 0;
     }
 }

@@ -36,13 +36,13 @@ angular.module("home.controllers", [])
 
             //跳转对应的子菜单页面
             $scope.clickMenu = function (menu) {
-                console.log(menu);
                 if (typeof menu.url != "undefined")
-                    $scope.menuUrl = menu.url+"?menuKey="+menu.menuKey;
+                    $scope.menuUrl = menu.url + "?menuKey=" + menu.menuKey;
 
             };
 
-            $scope.logout = function () {//注销登录
+            //注销登录
+            $scope.logout = function () {
                 homeHttpServices.logout({}, function () {
                     $cookieStore.remove("vain-user");
                     window.location.href = "../login/login.html";

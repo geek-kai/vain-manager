@@ -7,7 +7,6 @@ import com.vain.manager.constant.SysConstants;
 import com.vain.manager.dao.UserDao;
 import com.vain.manager.dao.UserMenuDao;
 import com.vain.manager.entity.Menu;
-import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.entity.User;
 import com.vain.manager.entity.UserMenu;
 import com.vain.manager.service.IUserService;
