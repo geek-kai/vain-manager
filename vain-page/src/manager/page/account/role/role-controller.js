@@ -1,8 +1,11 @@
-angular.module("role.controllers", [])
+angular.module("role.controllers", ["role.services", "common.menu.services", "common.services"])
 /**角色列表**/
-    .controller("RoleListCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils", "msgModal",
-        function (appConstant, $scope, roleHttpServices, commonUtils, msgModal) {
+    .controller("RoleListCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils", "msgModal", "menuUtils",
+        function (appConstant, $scope, roleHttpServices, commonUtils, msgModal, menuUtils) {
             $scope.init = function () {
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 roleHttpServices.getList({}, function (data) {
                     if (data.code == 200) {
                         $scope.roles = data.dataList;
@@ -45,7 +48,7 @@ angular.module("role.controllers", [])
 
             /*分配权限*/
             $scope.grantMenu = function (id) {
-                window.location.href = "role-menu.html?id=" + id;
+                window.location.href = "role-menu.html?id=" + id + "&menuKey=" + commonUtils.getUrlParameter("menuKey");
             };
 
             /*新增和修改*/
@@ -63,9 +66,12 @@ angular.module("role.controllers", [])
             };
         }])
     /**角色权限列表**/
-    .controller("RoleGrantCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils", "msgModal",
-        function (appConstant, $scope, roleHttpServices, commonUtils, msgModal) {
+    .controller("RoleGrantCtrl", ["appConstant", "$scope", "roleHttpServices", "commonUtils", "msgModal", "menuUtils",
+        function (appConstant, $scope, roleHttpServices, commonUtils, msgModal, menuUtils) {
             $scope.init = function () {
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 roleHttpServices.getMenusByRoleId({id: commonUtils.getUrlParameter("id")}, function (data) {
                     if (data.code == 200) {
                         $scope.menus = data.dataList;

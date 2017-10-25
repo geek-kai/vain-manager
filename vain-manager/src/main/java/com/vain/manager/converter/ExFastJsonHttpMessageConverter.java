@@ -22,7 +22,7 @@ import java.nio.charset.Charset;
  */
 public class ExFastJsonHttpMessageConverter extends AbstractHttpMessageConverter<Object> {
 
-    public static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
+    private static final Charset DEFAULT_CHARSET = Charset.forName("UTF-8");
 
     private static final Logger logger = LoggerFactory.getLogger(ExFastJsonHttpMessageConverter.class);
 

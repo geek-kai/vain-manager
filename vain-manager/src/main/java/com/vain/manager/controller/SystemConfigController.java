@@ -4,6 +4,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.common.controller.AbstractBaseController;
 import com.vain.manager.common.entity.Response;
 import com.vain.manager.common.exception.ErrorCodeException;
+import com.vain.manager.component.SysConfigComponent;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.service.ISystemConfigService;
@@ -27,6 +28,9 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
 
     @Autowired
     private ISystemConfigService systemConfigService;
+
+    @Autowired
+    private SysConfigComponent sysConfigComponent;
 
     /**
      * 获取系统配置信息
@@ -93,6 +97,7 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
     @Override
     public Response<SystemConfig> modify(@RequestBody SystemConfig entity, HttpServletRequest request) throws Exception {
         Response<SystemConfig> response = new Response<>();
+        sysConfigComponent.reload();
         response.setData(systemConfigService.modify(entity));
         return response;
     }

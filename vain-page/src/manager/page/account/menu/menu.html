@@ -55,7 +55,7 @@
                             <td>{{menu.url}}</td>
                             <td>{{menu.description}}</td>
                             <td>
-                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyMenu(menu);"><span class="am-icon-pencil-square-o"></span> 编辑</button>
+                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modifyMenu(menu);" ng-if="permissions['account.menu.modify']"><span class="am-icon-pencil-square-o"></span> 编辑</button>
                             </td>
                         </tr>
                         </tbody>
@@ -147,7 +147,8 @@
 
             <div class="am-form-group am-padding-top-sm">
                 <div class="am-u-sm-10 am-u-sm-offset-4">
-                    <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();" ng-disabled="menu.name!=null && menu.menuKey!=null && menu.type!=null?'':'disabled'">修改菜单</button>
+                    <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();"
+                            ng-if="permissions['account.menu.modify']"  ng-disabled="menu.name!=null && menu.menuKey!=null && menu.type!=null?'':'disabled'">修改菜单</button>
                 </div>
             </div>
         </form>
@@ -167,6 +168,7 @@
 <script type="application/javascript" src="menu-controller.js"></script>
 <script type="application/javascript" src="menu-services.js"></script>
 <script type="application/javascript" src="../../../common/common-services.js"></script>
+<script type="application/javascript" src="../../../common/common-menu-services.js"></script>
 </body>
 
 </html>

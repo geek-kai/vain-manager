@@ -29,16 +29,16 @@ import java.util.regex.Pattern;
  * 百度网页抓取帮助类 java爬虫实验 可删除
  */
 public class ReptileUtils {
-    protected static Log log = LogFactory.getLog(ReptileUtils.class);
+    private static Log log = LogFactory.getLog(ReptileUtils.class);
     /**
      * 等待数据连接时间
      */
-    public static final int connectionTimeout = 10000;
+    private static final int connectionTimeout = 10000;
     /**
      * 等待数据返回时间
      */
-    public static final int soTimeout = 20000;
-    public static final int soLinger = 60;
+    private static final int soTimeout = 20000;
+    private static final int soLinger = 60;
 
     /**
      * 通过get方式获取网页数据
@@ -47,7 +47,7 @@ public class ReptileUtils {
      * @param contentEncode
      * @return
      */
-    public static String getHttp(String url, String contentEncode) {
+    private static String getHttp(String url, String contentEncode) {
         //1.设置连接时长等默认参数
         HttpParams httpParameters = new BasicHttpParams();
         HttpConnectionParams.setConnectionTimeout(httpParameters, connectionTimeout);
@@ -95,9 +95,7 @@ public class ReptileUtils {
                     EntityUtils.consume(httpEntity);
                 }
             }
-        } catch (ClientProtocolException e) {
-            log.error(ReptileUtils.class.getName() + " getMethod error:", e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error(ReptileUtils.class.getName() + " getMethod error:", e);
         } finally {
             httpClient.getConnectionManager().shutdown();
@@ -120,7 +118,7 @@ public class ReptileUtils {
      * @param html
      * @return
      */
-    public static String getEncoding(String html) {
+    private static String getEncoding(String html) {
         Document document = Jsoup.parse(html);
         Elements elements = document.select("meta");
         String meta = elements.toString();

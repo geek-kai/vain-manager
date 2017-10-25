@@ -33,8 +33,8 @@
                     <div class="am-u-sm-12 am-u-md-12">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addRole();"><span class="am-icon-plus"></span> 新增角色</button>
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteRole();"  ><span class="am-icon-trash-o"></span> 删除角色</button>
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addRole();" ng-if="permissions['account.role.add']"><span class="am-icon-plus"></span> 新增角色</button>
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteRole();" ng-if="permissions['account.role.delete']"  ><span class="am-icon-trash-o"></span> 删除角色</button>
                             </div>
                         </div>
                     </div>
@@ -66,9 +66,9 @@
                                     <td>
                                         <div class="am-btn-toolbar am-margin-left-sm">
                                             <div class="am-btn-group am-btn-group-xs">
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modify(role);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);"><span class="am-icon-wrench"></span> 分配权限</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(role.id);" ><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="modify(role);" ng-if="permissions['account.role.modify']"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grantMenu(role.id);" ng-if="permissions['account.role.grant']"><span class="am-icon-wrench"></span> 分配权限</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(role.id);" ng-if="permissions['account.role.delete']"><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
                                         </div>
                                     </td>
@@ -133,7 +133,8 @@
 
                 <div class="am-form-group am-padding-top-sm">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="save();" ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">{{role.id>0?'修改角色':'添加角色'}}</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="save();"
+                                ng-if="permissions['account.role.modify']||permissions['account.role.add']"  ng-disabled="role.name!=null && role.roleKey!=null && role.description!=null?'':'disabled'">{{role.id>0?'修改角色':'添加角色'}}</button>
                     </div>
                 </div>
             </form>
@@ -152,6 +153,7 @@
     <script type="application/javascript" src="role-controller.js"></script>
     <script type="application/javascript" src="role-services.js"></script>
     <script type="application/javascript" src="../../../common/common-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-menu-services.js"></script>
 </body>
 
 </html>

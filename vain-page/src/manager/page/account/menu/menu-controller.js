@@ -1,8 +1,11 @@
-angular.module("menu.controllers", [])
+angular.module("menu.controllers", ["menu.services","common.menu.services","common.services"])
 /**角色列表**/
-    .controller("MenuListCtrl", ["appConstant", "$scope", "menuHttpServices", "commonUtils", "msgModal",
-        function (appConstant, $scope, menuHttpServices, commonUtils, msgModal) {
+    .controller("MenuListCtrl", ["appConstant", "$scope", "menuHttpServices", "commonUtils", "msgModal","menuUtils",
+        function (appConstant, $scope, menuHttpServices, commonUtils, msgModal,menuUtils) {
             $scope.init = function () {
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 menuHttpServices.getMenuList({}, function (data) {
                     if (data.code == 200) {
                         if (commonUtils.isArray(data.dataList)) {

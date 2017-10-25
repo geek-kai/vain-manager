@@ -29,17 +29,17 @@
         <div class="row">
             <div class="tpl-portlet">
                 <div class="am-g">
-                    <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-u-sm-4 am-u-md-4 am-padding-bottom-sm">
                         <div class="am-btn-toolbar">
                             <div class="am-btn-group am-btn-group-xs">
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addAccount();"><span class="am-icon-plus"></span> 新增用户</button>
-                                <button type="button" class="am-btn am-btn-default" ng-click="lockBatch();"><span class="am-icon-lock"></span> 冻结用户</button>
-                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteBatch();"  ><span class="am-icon-trash-o"></span> 删除用户</button>
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="addAccount();" ng-if="permissions['account.user.add']"><span class="am-icon-plus"></span> 新增用户</button>
+                                <button type="button" class="am-btn am-btn-default" ng-click="lockBatch();" ng-if="permissions['account.user.lock']"><span class="am-icon-lock"></span> 冻结用户</button>
+                                <button type="button" class="am-btn am-btn-default am-round am-btn-xs" ng-click="deleteBatch();" ng-if="permissions['account.user.delete']"><span class="am-icon-trash-o"></span> 删除用户</button>
                             </div>
                         </div>
                     </div>
 
-                    <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-u-sm-4 am-u-md-4" ng-if="permissions['account.user.getPagedList']">
                         <div class="am-form-group">
                             <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.type" ng-change="search();">
                                 <option value="" hidden>请选择</option>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-                    <div class="am-u-sm-12 am-u-md-4">
+                    <div class="am-u-sm-4 am-u-md-4" ng-if="permissions['account.user.getPagedList']">
                         <div class="am-form-group">
                               <input type="text" class="form-search" placeholder="搜索..." ng-model="queryParam.userName">
                               <span class="am-input-group-btn form-search-span">
@@ -87,12 +87,14 @@
                                     <td>
                                         <div class="am-btn-toolbar am-margin-left-sm">
                                             <div class="am-btn-group am-btn-group-xs">
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showModify(user);"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger" ng-click="grantRole(user)"><span class="am-icon-user-secret"></span> 分配角色</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grant(user);"><span class="am-icon-wrench"></span> 分配权限</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);"><span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}</button>
-                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(user.id);" ><span class="am-icon-trash-o"></span> 删除</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showModify(user);" ng-if="permissions['account.user.modify']"><span class="am-icon-pencil-square-o"></span> 编辑信息</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-secondary" ng-click="showResetPwdDiv(user);" ng-if="permissions['account.user.resetPwd']"><span class="am-icon-pencil-square-o"></span> 重置密码</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger" ng-click="grantRole(user)" ng-if="permissions['account.user.role']"><span class="am-icon-user-secret"></span> 分配角色</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="grant(user);" ng-if="permissions['account.user.grant']"><span class="am-icon-wrench"></span> 分配权限</button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="lock(user);" ng-if="permissions['account.user.lock']">
+                                                    <span class="{{user.state==0?'am-icon-lock':'am-icon-unlock'}}"></span>{{user.state==0?" 锁定":" 解锁"}}
+                                                </button>
+                                                <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only" ng-click="delete(user.id);" ng-if="permissions['account.user.delete']"><span class="am-icon-trash-o"></span> 删除</button>
                                             </div>
                                         </div>
                                     </td>
@@ -147,7 +149,8 @@
 
                 <div class="am-form-group am-padding-top-xs">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="resetPwd();" ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="resetPwd();" ng-if="permissions['account.user.resetPwd']"
+                                ng-disabled="resetNewPassword!=null && (resetNewPassword==resetPassword)?'':'disabled'">重置密码</button>
                     </div>
                 </div>
             </form>
@@ -200,7 +203,8 @@
 
                 <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="add();" ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="add();" ng-if="permissions['account.user.add']"
+                                ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
                     </div>
                 </div>
             </form>
@@ -250,7 +254,8 @@
 
                 <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modify();">修改信息</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-if="permissions['account.user.modify']"
+                                ng-click="modify();">修改信息</button>
                     </div>
                 </div>
             </form>
@@ -273,7 +278,7 @@
 
                 <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="modifyRole();">分配角色</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-if="permissions['account.user.role']" ng-click="modifyRole();">分配角色</button>
                     </div>
                 </div>
             </form>
@@ -292,6 +297,7 @@
     <script type="application/javascript" src="user-controller.js"></script>
     <script type="application/javascript" src="user-services.js"></script>
     <script type="application/javascript" src="../../../common/common-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-menu-services.js"></script>
 </body>
 
 </html>

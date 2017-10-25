@@ -49,16 +49,16 @@
                             <span>{{menu.name}}</span>
                         </label>
                     </td>
-                    <td>
+                    <td class="am-text-middle">
                         <label class="checkboxs">
                             <i class="{{child.hasPermission?'active':''}}"></i>
                             <input type="checkbox" ng-model="child.hasPermission" ng-click="grantMenus(child);">
                             <span>{{child.name}}</span>
                         </label>
                     </td>
-                    <td>
-                        <label class="checkboxs" ng-repeat="grandChild in child.children track by $index">
-                            <i class="{{grandChild.hasPermission?'active':''}}"></i>
+                    <td class="am-text-middle">
+                        <label class="checkboxs am-u-lg-12 am-padding-xs" ng-repeat="grandChild in child.children track by $index">
+                            <i class="{{grandChild.hasPermission?'active':''}}" ></i>
                             <input type="checkbox" ng-model="grandChild.hasPermission"
                                    ng-click="grantMenus(grandChild);">
                             <span>{{grandChild.name}}</span>
@@ -71,9 +71,9 @@
 
             <div class="am-g">
                 <div class="am-form-group am-padding-top-xs">
-                    <div class="am-u-sm-10 am-u-sm-offset-4">
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="save();">保存</button>
-                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="cancel();">返回</button>
+                    <div class="am-text-center">
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="save();" ng-if="permissions['account.role.grant']">保存</button>
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="cancel();" ng-if="permissions['account.role.grant']">返回</button>
                     </div>
                 </div>
             </div>
@@ -94,6 +94,7 @@
 <script type="application/javascript" src="role-controller.js"></script>
 <script type="application/javascript" src="role-services.js"></script>
 <script type="application/javascript" src="../../../common/common-services.js"></script>
+<script type="application/javascript" src="../../../common/common-menu-services.js"></script>
 </body>
 
 </html>

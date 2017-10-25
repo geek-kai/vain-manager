@@ -3,6 +3,8 @@ package com.vain.manager.component;
 import com.alibaba.fastjson.JSON;
 import com.vain.manager.dao.SystemConfigDao;
 import com.vain.manager.entity.SystemConfig;
+import com.vain.manager.listener.StartupListener;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.ContextLoader;
@@ -18,10 +20,12 @@ import java.util.List;
 @Component
 public class SysConfigComponent {
 
+    private static final Logger logger = org.slf4j.LoggerFactory.getLogger(StartupListener.class);
+
     @Autowired
     private SystemConfigDao sysConfigDao;
 
-    private final HashMap<String, String> configMapFromDb = new HashMap<>();
+    private HashMap<String, String> configMapFromDb = new HashMap<>();
 
     public void loadSystemConfigFromDb() {
         List<SystemConfig> sysConfigs = sysConfigDao.getList(null);
@@ -30,7 +34,7 @@ public class SysConfigComponent {
         }
     }
 
-    public String getStringValue(String key) {
+    private String getStringValue(String key) {
         return configMapFromDb.get(key);
     }
 
@@ -47,14 +51,23 @@ public class SysConfigComponent {
         return JSON.toJSONString(this);
     }
 
-    private static SysConfigComponent _instance;
+    private static SysConfigComponent instance;
 
     public static SysConfigComponent instance() {
-        if (_instance == null) {
-            _instance = ContextLoader.getCurrentWebApplicationContext().getBean(SysConfigComponent.class);
+        if (instance == null) {
+            instance = ContextLoader.getCurrentWebApplicationContext().getBean(SysConfigComponent.class);
         }
 
-        return _instance;
+        return instance;
+    }
+
+    /**
+     * 在修改后重新加载数据
+     */
+    public synchronized void reload() {
+        configMapFromDb = new HashMap<>();
+        logger.info("**************重新加载系统配置信息****************");
+        loadSystemConfigFromDb();//重新加载
     }
 
 }

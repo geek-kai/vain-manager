@@ -1,11 +1,13 @@
 /**
  * 系统管理用户中心的controller
  */
-angular.module("user.controllers", [])
-    .controller("UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpServices", "commonUtils", "msgModal",
-        function ($cookieStore, appConstant, $cookies, $scope, userHttpServices, commonUtils, msgModal) {
+angular.module("user.controllers", ["user.services", "common.services", "common.menu.services"])
+    .controller("UserListCtrl", ["$cookieStore", "appConstant", "$cookies", "$scope", "userHttpServices", "commonUtils", "msgModal", "menuUtils",
+        function ($cookieStore, appConstant, $cookies, $scope, userHttpServices, commonUtils, msgModal, menuUtils) {
             $scope.init = function () {
-                $scope.paginator = null;
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 $scope.queryParam = commonUtils.initQueryParam();
                 if (!$scope.queryParam) {
                     $scope.queryParam = {curPage: 1, pageSize: appConstant.QUERY_PARAM_PAGE_SIZE};
@@ -182,7 +184,7 @@ angular.module("user.controllers", [])
 
             /*给用户赋值权限*/
             $scope.grant = function (user) {
-                window.location.href = "user-menu.html?id=" + user.id;
+                window.location.href = "user-menu.html?id=" + user.id + "&menuKey=" + commonUtils.getUrlParameter("menuKey");
             };
 
             /*给用户分配角色弹窗div*/
@@ -223,9 +225,12 @@ angular.module("user.controllers", [])
 
         }])
     /**用户权限列表**/
-    .controller("UserGrantCtrl", ["appConstant", "$scope", "userHttpServices", "commonUtils", "msgModal",
-        function (appConstant, $scope, userHttpServices, commonUtils, msgModal) {
+    .controller("UserGrantCtrl", ["appConstant", "$scope", "userHttpServices", "commonUtils", "msgModal", "menuUtils",
+        function (appConstant, $scope, userHttpServices, commonUtils, msgModal, menuUtils) {
             $scope.init = function () {
+                var menuKey = commonUtils.getUrlParameter("menuKey");
+                $scope.permissions = [];
+                menuUtils.getUserPermissionsByMenuKey(menuKey, $scope.permissions);
                 userHttpServices.getMenusByUserId({id: commonUtils.getUrlParameter("id")}, function (data) {
                     if (data.code == 200) {
                         $scope.menus = data.dataList;
