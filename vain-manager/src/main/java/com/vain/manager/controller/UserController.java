@@ -14,6 +14,7 @@ import com.vain.manager.shiro.exception.AuthenticationException;
 import com.vain.manager.shiro.session.UserSession;
 import com.vain.manager.shiro.token.AccountToken;
 import com.vain.manager.util.ReptileUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;

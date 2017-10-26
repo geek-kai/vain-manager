@@ -59,7 +59,7 @@ public class PermissionFilterManager extends DefaultFilterChainManager {
             Map<String, String> urlPerms = new HashMap<>();
             for (Menu data : menus) {
                 if (!StrUtil.isEmpty(data.getUrl())) {
-                    urlPerms.put(data.getUrl(), data.getMenuKey());
+                    urlPerms.put(data.getUrl(), data.getMenuKey()); //将menuKey作为权限key
                 }
                 if (null == this.filterName)
                     this.filterName = "perms";

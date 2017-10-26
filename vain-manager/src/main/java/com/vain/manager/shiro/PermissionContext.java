@@ -7,7 +7,7 @@ import java.util.Set;
 
 /**
  * Created by vain on 2017/9/20.
- * 菜单上下文
+ * 菜单权限上下文
  */
 public class PermissionContext implements Serializable {
 

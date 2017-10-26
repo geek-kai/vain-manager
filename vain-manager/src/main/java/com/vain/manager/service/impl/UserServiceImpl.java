@@ -72,9 +72,8 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
      */
     @Override
     public int resetPwd(User entity) {
-        String salt = UUID.randomUUID().toString();
         entity.setSalt(UUID.randomUUID().toString());
-        entity.setPasswd(MD5Util.getMD5Str(entity.getNewpasswd() + salt));
+        entity.setPasswd(MD5Util.getMD5Str(entity.getNewpasswd() + entity.getSalt()));
         return userDao.resetPwd(entity);
     }
 

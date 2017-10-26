@@ -204,7 +204,7 @@
                 <div class="am-form-group am-padding-top-lg">
                     <div class="am-u-sm-10 am-u-sm-offset-4">
                         <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-click="add();" ng-if="permissions['account.user.add']"
-                                ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'disabled':''">添加账号</button>
+                                ng-disabled="addUser.passwd!=null && addUser.userName!=null && addUser.type>0?'':'disabled'">添加账号</button>
                     </div>
                 </div>
             </form>

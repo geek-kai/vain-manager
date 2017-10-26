@@ -27,6 +27,16 @@ public class UserFilter extends AuthorizationFilter {
             servletRequest.setAttribute("NO_SESSION", 1);
             return false;
         }
+        String[] perms = (String[]) mapperValue;
+        boolean isPermitted = false;
+        if (perms != null && perms.length > 0) {
+            for (String perm : perms) {
+                logger.info(perm);
+                if (subject.isPermitted(perm)) {
+                    return true;
+                }
+            }
+        }
         return true;
     }
 
