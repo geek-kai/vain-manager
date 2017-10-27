@@ -8,6 +8,7 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.BNews;
 import com.vain.manager.entity.User;
+import com.vain.manager.model.OnLineUser;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.authenticator.DefaultAccountSubject;
 import com.vain.manager.shiro.exception.AuthenticationException;
@@ -106,8 +107,8 @@ public class UserController extends AbstractBaseController<User> {
 
     /**
      * 修改账号部分信息
-     * @param entity
-     *            参数实体
+     *
+     * @param entity  参数实体
      * @param request
      * @return
      * @throws Exception
@@ -242,6 +243,34 @@ public class UserController extends AbstractBaseController<User> {
     public Response<User> assignUserMenu(@RequestBody User entity) {
         Response<User> response = new Response<>();
         response.setData(userService.assignUserMenu(entity));
+        return response;
+    }
+
+    /**
+     * 获取在线用户
+     *
+     * @return
+     */
+    @RequestMapping(value = "/onLineUser", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<OnLineUser> onLineUser() {
+        Response<OnLineUser> response = new Response<>();
+        response.setDataList(userService.getOnLineUser());
+        return response;
+    }
+
+    /**
+     * 在线用户强制下线
+     *
+     * @return
+     */
+    @RequestMapping(value = "/forcedOffLine", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<OnLineUser> forcedOffLine(@RequestBody OnLineUser entity) {
+        if (entity == null || entity.getId() == null)
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        Response<OnLineUser> response = new Response<>();
+        response.setData(userService.forcedOffLine(entity));
         return response;
     }
 }

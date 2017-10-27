@@ -20,9 +20,11 @@ public class UrlFilter extends UserFilter {
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
     /**
-     * 通过原来的过滤上面添加自己逻辑
-     * 通过获取请求的referer来保证 除了shiro配置了anno的路径或文件 其余的都需要保证是项目内部跳转
+     * UserFilter 当前用户必须登录或者是通过之前的登录时的remember me可以获得principalCollection，也就是必须知道用户是谁才可以。否则返回false
+     * 通过获取请求的referer来保证 除了shiro配置了anno的路径或文件 其余的都需要保证是项目内部跳转 并且通过UserFilter的验证
      *
+     * @see org.apache.shiro.web.filter.authc.UserFilter
+     * @see org.apache.shiro.web.filter.authc.FormAuthenticationFilter
      * @param request
      * @param response
      * @param mappedValue

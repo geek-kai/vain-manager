@@ -8,13 +8,20 @@ import com.vain.manager.component.SysConfigComponent;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.SystemConfig;
 import com.vain.manager.service.ISystemConfigService;
+import com.vain.manager.shiro.SecurityHelper;
+import com.vain.manager.shiro.authenticator.AccountSubject;
 import com.vain.manager.util.OSUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.DefaultSessionContext;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 
 /**
  * @author vain
@@ -32,6 +39,9 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
 
     @Autowired
     private SysConfigComponent sysConfigComponent;
+
+    @Autowired
+    private SessionDAO sessionDAO;
 
     /**
      * 获取系统配置信息
@@ -108,7 +118,6 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
      *
      * @return
      */
-    @RequiresPermissions("system.info.getSystemInfo")
     @RequestMapping(value = "/getSystemInfo", method = RequestMethod.POST)
     @ResponseBody
     public Response getSystemInfo() {
@@ -122,7 +131,6 @@ public class SystemConfigController extends AbstractBaseController<SystemConfig>
      *
      * @return
      */
-    @RequiresPermissions("xxxxxxxxxx")
     @RequestMapping(value = "/getSystemCpuInfo", method = RequestMethod.POST)
     @ResponseBody
     public Response getSystemCpuInfo() {

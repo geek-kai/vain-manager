@@ -66,7 +66,7 @@ public class SysConfigComponent {
      */
     public synchronized void reload() {
         configMapFromDb = new HashMap<>();
-        logger.info("**************重新加载系统配置信息****************");
+        logger.info("------------------重新加载系统配置信息------------------");
         loadSystemConfigFromDb();//重新加载
     }
 

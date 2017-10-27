@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by vain on 2017/9/20.
- * 用户状态拦截 菜单权限拦截
+ * @author vain
+ * @date： 2017/10/27 11:39
+ * @description： 基于t-menu的menuKey来拦截
  */
 public class UserFilter extends AuthorizationFilter {
 
@@ -27,8 +28,9 @@ public class UserFilter extends AuthorizationFilter {
             servletRequest.setAttribute("NO_SESSION", 1);
             return false;
         }
+
+        //验证menuKey
         String[] perms = (String[]) mapperValue;
-        boolean isPermitted = false;
         if (perms != null && perms.length > 0) {
             for (String perm : perms) {
                 logger.info(perm);
@@ -37,7 +39,7 @@ public class UserFilter extends AuthorizationFilter {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     @Override

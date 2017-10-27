@@ -9,14 +9,20 @@ import com.vain.manager.dao.UserMenuDao;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.User;
 import com.vain.manager.entity.UserMenu;
+import com.vain.manager.model.OnLineUser;
 import com.vain.manager.service.IUserService;
+import com.vain.manager.shiro.SecurityHelper;
+import com.vain.manager.shiro.authenticator.AccountSubject;
 import com.vain.manager.util.MD5Util;
 import com.vain.manager.util.StrUtil;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,6 +39,9 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
 
     @Autowired
     private UserMenuDao userMenuDao;
+
+    @Autowired
+    private SessionDAO sessionDAO;
 
     @Override
     public User login(User entity) throws ErrorCodeException {
@@ -191,5 +200,50 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
     public int delete(User entity) throws ErrorCodeException {
         entity.setDeleted(SysConstants.DeletedStatus.STATUS_DELETED);
         return userDao.delete(entity);
+    }
+
+    /**
+     * 获取在线用户信息
+     *
+     * @return
+     */
+    @Override
+    public List<OnLineUser> getOnLineUser() {
+        List<OnLineUser> onLineUsers = new ArrayList<>();
+        Collection<Session> sessions = sessionDAO.getActiveSessions();
+        for (Session session : sessions) {
+            AccountSubject account = (AccountSubject) session.getAttribute(SecurityHelper.USER_KEY);
+            if (account == null)
+                continue;
+            OnLineUser user = new OnLineUser();
+            user.setLoginIP(session.getHost());
+            user.setLastAccessTime(new Timestamp(session.getLastAccessTime().getTime())); //最后操作时间
+            user.setStartTime(new Timestamp(session.getStartTimestamp().getTime()));
+            user.setId(account.getSubjectInfo().getUserId());
+            user.setUserName(account.getSubjectInfo().getUserName());
+            user.setNickName(account.getSubjectInfo().getNickName());
+            onLineUsers.add(user);
+        }
+        return onLineUsers;
+    }
+
+    /**
+     * 在线用户下线
+     *
+     * @param entity
+     * @return
+     */
+    @Override
+    public int forcedOffLine(OnLineUser entity) {
+        Collection<Session> activeSessions = sessionDAO.getActiveSessions();
+        for (Session session : activeSessions) {
+            AccountSubject account = (AccountSubject) session.getAttribute(SecurityHelper.USER_KEY);
+            if (account != null && entity.getId().equals(account.getSubjectInfo().getUserId())) {
+                logger.info("------------------账号:" + account.getSubjectInfo().getUserName() + "已被下线---------------------");
+                session.setTimeout(0);
+                return 1;
+            }
+        }
+        return 0;
     }
 }

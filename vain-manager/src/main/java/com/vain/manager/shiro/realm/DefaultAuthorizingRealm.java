@@ -19,21 +19,24 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.authz.permission.AllPermission;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
+import org.apache.shiro.session.mgt.eis.SessionDAO;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.subject.support.DefaultSubjectContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by vain on 2017/9/19.
  * 实现自己的shiro认证登录方式
  */
 public class DefaultAuthorizingRealm extends AuthorizingRealm {
+
+    @Autowired
+    private SessionDAO sessionDAO;
 
     protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -87,6 +90,16 @@ public class DefaultAuthorizingRealm extends AuthorizingRealm {
         SubjectInfo subjectInfo = authenticate((Token) token);
         if (subjectInfo == null)
             throw new AuthenticationException("SubjectInfo is null");
+        Long userId = subjectInfo.getUserId(); //用户id
+        Collection<Session> activeSessions = sessionDAO.getActiveSessions();
+        for (Session session : activeSessions) {
+            AccountSubject account = (AccountSubject) session.getAttribute(SecurityHelper.USER_KEY);
+            if (account != null && userId.equals(account.getSubjectInfo().getUserId())) {
+                logger.error("------------------账号:" + account.getSubjectInfo().getUserName() + "同时登录，已被下线---------------------");
+                session.setTimeout(0);//设置session立即失效，即将其踢出系统
+                break;
+            }
+        }
         AuthenticationInfo info = new SimpleAuthenticationInfo(subjectInfo.getIdentification(), token.getCredentials(), getName());
         DefaultAccountSubject accountSubject = new DefaultAccountSubject();
         accountSubject.setSubjectInfo(subjectInfo);

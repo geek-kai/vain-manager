@@ -91,16 +91,6 @@ public class User extends PagedEntity {
     private Timestamp modifyTime;
 
     /**
-     * token, 后续的接口请求需要携带作为令牌
-     */
-    private String token;
-
-    /**
-     * refreshToken，用于刷新token，延迟有效期
-     */
-    private String refreshToken;
-
-    /**
      * 新密码
      */
     private String newpasswd;
@@ -306,22 +296,6 @@ public class User extends PagedEntity {
 
     public void setModifyTime(Timestamp modifyTime) {
         this.modifyTime = modifyTime;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getRefreshToken() {
-        return refreshToken;
-    }
-
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
     }
 
     public String getNewpasswd() {

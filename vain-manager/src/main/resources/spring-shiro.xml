@@ -10,7 +10,20 @@
 
     <context:component-scan base-package="com.vain.manager.shiro"/>
 
-    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.ServletContainerSessionManager"/>
+    <!--将session交由sessionDao 之后 可以获取session数据-->
+    <bean id="sessionDao" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDao"/>
+        <!-- 设置session过期时间为1小时(单位：毫秒)，默认为30分钟 -->
+        <property name="globalSessionTimeout" value="3600000"/>
+        <property name="sessionValidationSchedulerEnabled" value="true"/>
+        <property name="sessionIdCookie">
+            <bean class="org.apache.shiro.web.servlet.SimpleCookie">
+                <property name="name" value="JSESSID"/>
+            </bean>
+        </property>
+    </bean>
 
     <bean id="shiroCacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager"/>
 
@@ -31,10 +44,11 @@
     </bean>
 
 
-    <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
     <bean id="userFilter" class="com.vain.manager.shiro.filter.UserFilter"/>
+    <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
+    <!--设置默认拦截方式-->
     <bean id="permissionFilterManager" class="com.vain.manager.shiro.filter.PermissionFilterManager">
-        <property name="filterName" value="url"/>
+        <property name="filterName" value="user"/>
     </bean>
 
     <bean id="authFilter" class="com.vain.manager.shiro.web.ShiroFilterFactoryBean">
@@ -44,7 +58,7 @@
             <map>
                 <!--基于url拦截 -->
                 <entry key="url" value-ref="urlFilter"/>
-                <!--shiro自带拦截器，判断用户是否登录-->
+                <!--判断用户是否登录和菜单权限-->
                 <entry key="user" value-ref="userFilter"/>
             </map>
         </property>
@@ -55,7 +69,7 @@
                 /images/** = anon
                 /resources/** = anon
                 /api/user/login = anon
-                /api/** = url,user
+                /api/** = url
             </value>
         </property>
     </bean>

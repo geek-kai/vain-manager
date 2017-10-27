@@ -4,6 +4,9 @@ package com.vain.manager.service;
 import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.BaseService;
 import com.vain.manager.entity.User;
+import com.vain.manager.model.OnLineUser;
+
+import java.util.List;
 
 /**
  * @author vain
@@ -42,4 +45,19 @@ public interface IUserService extends BaseService<User> {
      * @param entity
      */
     int assignUserMenu(User entity);
+
+    /**
+     * 获取在线用户信息
+     *
+     * @return
+     */
+    List<OnLineUser> getOnLineUser();
+
+    /**
+     * 在线用户下线
+     *
+     * @param entity
+     * @return
+     */
+    int forcedOffLine(OnLineUser entity);
 }

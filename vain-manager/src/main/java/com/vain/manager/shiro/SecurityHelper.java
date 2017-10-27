@@ -4,6 +4,11 @@ import com.vain.manager.shiro.authenticator.AccountSubject;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
 
+/**
+ * @author vain
+ * @date： 2017/10/27 16:51
+ * @description： session获取attribute的key
+ */
 public class SecurityHelper {
 
     public static final String USER_KEY = "_Security_USER_KEY";
