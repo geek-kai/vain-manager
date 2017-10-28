@@ -334,23 +334,22 @@ gallery.html css
 
 /*******************角色-菜单***************/
 .checkboxs {
-    height: 16px;
+    height: 17px;
     position: relative;
     cursor: pointer;
-    padding: 5px;
     font-weight: 500;
 }
 
 .checkboxs i {
-    width: 14px;
-    height: 14px;
+    width: 16px;
+    height: 16px;
     border: 1px solid #666;
     background: white;
     position: absolute;
     left: 50%;
     top: 50%;
     margin-left: -42px;
-    margin-top: 2px;
+    margin-top: -5px;
 }
 
 .checkboxs i.active {

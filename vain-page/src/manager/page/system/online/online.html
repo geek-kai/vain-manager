@@ -1,0 +1,89 @@
+<!doctype html>
+<html data-ng-app="online.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+</head>
+
+<body ng-controller="OnLineListCtrl" ng-init="init()">
+<div class="tpl-content-scope tpl-content-wrapper">
+    <div class="tpl-content-page-title">
+        系统管理
+    </div>
+    <ol class="am-breadcrumb">
+        <li><a href="#" class="am-icon-cog">系统管理</a></li>
+        <li class="am-active">系统在线用户</li>
+    </ol>
+
+    <div class="row">
+        <div class="tpl-portlet">
+            <div class="am-g am-margin-vertical-sm">
+            </div>
+
+            <div class="am-g div_table">
+                <form class="am-form">
+                    <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
+                        <thead>
+                        <tr class="am-primary">
+                            <th width="5%">序号</th>
+                            <th width="20%">账号名</th>
+                            <th width="20%">昵称</th>
+                            <th width="20%">登录IP</th>
+                            <th width="15%">最近操作时间</th>
+                            <th width="15%">开始时间</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="user in onlineUsers track by $index">
+                            <td>{{$index+1}}</td>
+                            <td>{{user.userName}}</td>
+                            <td>{{user.nickName}}</td>
+                            <td>{{user.loginIP}}</td>
+                            <td>{{user.startTime}}</td>
+                            <td>{{user.lastAccessTime}}</td>
+                            <td>
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="forcedOffLine(user);"><span class="am-icon-hand-o-down"></span>
+                                        强制下线
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/amazeui.min.js"></script>
+<script src="../../../assets/js/app.js"></script>
+<script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+<script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+<script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="application/javascript" src="online-app.js"></script>
+<script type="application/javascript" src="online-controller.js"></script>
+<script type="application/javascript" src="online-services.js"></script>
+<script type="application/javascript" src="../../../common/common-services.js"></script>
+<script type="application/javascript" src="../../../common/common-menu-services.js"></script>
+</body>
+
+</html>

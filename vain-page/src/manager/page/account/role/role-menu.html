@@ -56,8 +56,8 @@
                             <span>{{child.name}}</span>
                         </label>
                     </td>
-                    <td class="am-text-middle">
-                        <label class="checkboxs am-u-lg-12 am-padding-xs" ng-repeat="grandChild in child.children track by $index">
+                    <td>
+                        <label class="checkboxs am-u-lg-12" ng-repeat="grandChild in child.children track by $index">
                             <i class="{{grandChild.hasPermission?'active':''}}" ></i>
                             <input type="checkbox" ng-model="grandChild.hasPermission"
                                    ng-click="grantMenus(grandChild);">

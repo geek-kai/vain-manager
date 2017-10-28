@@ -69,7 +69,7 @@
                 /images/** = anon
                 /resources/** = anon
                 /api/user/login = anon
-                /api/** = url
+                /api/** = url,user
             </value>
         </property>
     </bean>
