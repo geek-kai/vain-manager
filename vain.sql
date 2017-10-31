@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-10-28 17:01:16
+Date: 2017-10-31 17:48:53
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -140,6 +140,31 @@ INSERT INTO `t_role_menu` VALUES ('28', '1', '120301', '2017-10-28 12:20:36', nu
 INSERT INTO `t_role_menu` VALUES ('29', '1', '120302', '2017-10-28 12:20:36', null);
 INSERT INTO `t_role_menu` VALUES ('30', '1', '130000', '2017-10-28 12:20:36', null);
 INSERT INTO `t_role_menu` VALUES ('31', '1', '130100', '2017-10-28 12:20:36', null);
+
+-- ----------------------------
+-- Table structure for `t_schedule_job`
+-- ----------------------------
+DROP TABLE IF EXISTS `t_schedule_job`;
+CREATE TABLE `t_schedule_job` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `createTime` timestamp NULL DEFAULT NULL,
+  `modifyTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `jobName` varchar(255) DEFAULT NULL,
+  `jobGroup` varchar(255) DEFAULT NULL,
+  `jobStatus` varchar(255) DEFAULT NULL,
+  `cronExpression` varchar(40) NOT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `jobClass` varchar(255) DEFAULT NULL,
+  `isConcurrent` varchar(255) DEFAULT NULL COMMENT '1',
+  `springId` varchar(255) DEFAULT NULL,
+  `jobMethod` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name_group` (`jobName`,`jobGroup`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of t_schedule_job
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for `t_system_config`

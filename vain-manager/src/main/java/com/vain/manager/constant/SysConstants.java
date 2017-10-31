@@ -146,6 +146,12 @@ public class SysConstants {
         public static final int ACCOUNT_IS_NOT_EXISTS_CODE = 1108;
         public static final String ACCOUNT_IS_NOT_EXISTS_MSG = "输入的账号信息不存在";
 
+        /**
+         * 定时表达式错误
+         */
+        public static final int TASK_CRON_EXPRESSION_ERROR_CODE = 1201;
+        public static final String TASK_CRON_EXPRESSION_ERROR_MSG = "定时表达式错误";
+
     }
 
     /**
@@ -209,5 +215,24 @@ public class SysConstants {
      * referer允许的地址
      */
     public static final String RefererConstant = "manager";
+
+    public enum ENUMTASK {
+        ISRUN(1, "运行"), NOTRUN(0, "没运行"), ISCONCURRENT(1, "并发"), NOTCONCURRENT(0, "禁止并发");
+        private int state;
+        private String name;
+
+        private ENUMTASK(int state, String name) {
+            this.state = state;
+            this.name = name;
+        }
+
+        public int getState() {
+            return state;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.vain.manager.listener;
 
 import com.vain.manager.component.SysConfigComponent;
+import com.vain.manager.component.TaskComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,8 +10,8 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 /**
+ * @author vain
  * @description: 系统启动时读取组件信息
- * @author  vain
  * @date 2017/8/31 12:00
  */
 @Component
@@ -21,6 +22,9 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private SysConfigComponent sysConfigComponent;
 
+    @Autowired
+    private TaskComponent taskComponent;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (event.getApplicationContext().getParent() == null) {
@@ -29,6 +33,9 @@ public class StartupListener implements ApplicationListener<ContextRefreshedEven
 
             // 此处初始化数据库里保存的配置项
             sysConfigComponent.loadSystemConfigFromDb();
+
+            // 此处初始化数据库定时任务
+            taskComponent.loadTaskFromDb();
         }
 
     }
