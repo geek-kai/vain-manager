@@ -9,8 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author vain
+ * @Descritpion 定时任务的dao类
+ * @Date 21:23 2017/10/31
+ */
 @Repository
-public class ScheduleDao extends AbstractBaseDao<ScheduleJob> {
+public class ScheduleJobDao extends AbstractBaseDao<ScheduleJob> {
+
     @Override
     public PageList<ScheduleJob> getPagedList(ScheduleJob entity, int curPage, int pageSize) {
         return null;
@@ -18,12 +24,12 @@ public class ScheduleDao extends AbstractBaseDao<ScheduleJob> {
 
     @Override
     public List<ScheduleJob> getList(ScheduleJob entity) {
-        return null;
+        return this.sqlSession.selectList("com.vain.manager.entity.ScheduleJob.getList", entity);
     }
 
     @Override
     public ScheduleJob get(ScheduleJob entity) {
-        return null;
+        return this.sqlSession.selectOne("com.vain.manager.entity.ScheduleJob.get", entity);
     }
 
     @Override
@@ -33,11 +39,11 @@ public class ScheduleDao extends AbstractBaseDao<ScheduleJob> {
 
     @Override
     public int update(ScheduleJob entity) {
-        return 0;
+        return this.sqlSession.update("com.vain.manager.entity.ScheduleJob.modify", entity);
     }
 
     @Override
     public int delete(ScheduleJob entity) {
-        return 0;
+        return this.sqlSession.delete("com.vain.manager.entity.ScheduleJob.delete", entity);
     }
 }

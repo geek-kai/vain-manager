@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.vain.manager.entity.ScheduleJob">
+
+  <select id="getList" resultType="com.vain.manager.entity.ScheduleJob"
+          parameterType="com.vain.manager.entity.ScheduleJob">
+    SELECT * FROM t_schedule_job
+    <where>
+      <if test="jobStatus != null">
+        AND jobStatus = #{jobStatus}
+      </if>
+      <if test="jobGroup != null">
+        AND jobGroup = #{jobGroup}
+      </if>
+    </where>
+  </select>
+
+
+  <select id="get" resultType="com.vain.manager.entity.ScheduleJob"
+          parameterType="com.vain.manager.entity.ScheduleJob">
+    SELECT * FROM t_schedule_job
+    <where>
+      <if test="id!=null">
+        id = #{id}
+      </if>
+    </where>
+  </select>
+
+  <update id="update" parameterType="com.vain.manager.entity.ScheduleJob">
+    update t_schedule_job
+    <set>
+      <if test="cronExpression != null and cronExpression.trim() !=''">
+        cronExpression = #{cronExpression},
+      </if>
+      <if test="jobStatus != null">
+        jobStatus = #{jobStatus},
+      </if>
+      <if test="description != null and description != ''">
+        description=#{description},
+      </if>
+      modifyTime=now()
+    </set>
+    where id=#{id}
+  </update>
+
+  <update id="delete" parameterType="com.vain.manager.entity.ScheduleJob">
+    update t_schedule set deleted=#{deleted},modifyTime=now() where id=#{id}
+  </update>
+
+</mapper>

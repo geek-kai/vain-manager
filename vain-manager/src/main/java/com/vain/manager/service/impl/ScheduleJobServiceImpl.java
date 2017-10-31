@@ -4,7 +4,7 @@ import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.common.service.AbstractBaseService;
 import com.vain.manager.constant.SysConstants;
-import com.vain.manager.dao.ScheduleDao;
+import com.vain.manager.dao.ScheduleJobDao;
 import com.vain.manager.entity.ScheduleJob;
 import com.vain.manager.quartz.QuartzJobFactory;
 import com.vain.manager.quartz.QuartzJobFactoryDisallowConcurrent;
@@ -22,13 +22,13 @@ import java.util.List;
  * @description：
  */
 @Service
-public class ScheduleServiceImpl extends AbstractBaseService implements IScheduleJobService {
+public class ScheduleJobServiceImpl extends AbstractBaseService implements IScheduleJobService {
 
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
 
     @Autowired
-    private ScheduleDao scheduleDao;
+    private ScheduleJobDao scheduleDao;
 
     @Override
     public PageList<ScheduleJob> getPagedList(ScheduleJob entity) throws ErrorCodeException {
@@ -52,7 +52,7 @@ public class ScheduleServiceImpl extends AbstractBaseService implements ISchedul
         try {
             addJob(entity);
         } catch (SchedulerException e) {
-            logger.info("任务名称 = [" + entity.getJobName() + "] 添加失败 " +e.getMessage());
+            logger.info("任务名称 = [" + entity.getJobName() + "] 添加失败 " + e.getMessage());
             throwErrorCodeException(SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_CODE, SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_MSG);
         }
         return 1;
@@ -65,7 +65,13 @@ public class ScheduleServiceImpl extends AbstractBaseService implements ISchedul
 
     @Override
     public int delete(ScheduleJob entity) throws ErrorCodeException {
-        return 0;
+        try {
+            deleteJob(entity);
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+            return 0;
+        }
+        return scheduleDao.delete(entity);
     }
 
     /**
