@@ -69,6 +69,7 @@
                 /images/** = anon
                 /resources/** = anon
                 /api/user/login = anon
+                /api/user/logout = anon
                 /api/** = url,user
             </value>
         </property>

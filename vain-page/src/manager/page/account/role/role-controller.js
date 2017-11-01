@@ -33,7 +33,7 @@ angular.module("role.controllers", ["role.services", "common.menu.services", "co
                 var msg = msgModal.confirmMsg(appConstant.ROLE_DELETE_WARNING);
                 msg.result.then(function () {
                     roleHttpServices.delete({id: id}, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                         $scope.init();
                     });
                 })
@@ -55,11 +55,11 @@ angular.module("role.controllers", ["role.services", "common.menu.services", "co
             $scope.save = function () {
                 if (typeof ($scope.role.id)) {
                     roleHttpServices.modify($scope.role, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                     });
                 } else {
                     roleHttpServices.add($scope.role, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                     });
                 }
                 $scope.close();
@@ -122,7 +122,7 @@ angular.module("role.controllers", ["role.services", "common.menu.services", "co
                         if (data.code == 200) {
                             history.go(-1);
                         } else {
-                            msgModal.alertMsg(commonUtils.convertResult(data.code));
+                            msgModal.alertMsg(commonUtils.convertResult(data));
                         }
                     });
                 }

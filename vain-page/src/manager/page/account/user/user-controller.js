@@ -55,7 +55,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             $scope.lock = function (user) {
                 user.state = user.state == 0 ? 1 : 0;
                 userHttpServices.lock(user, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     $scope.init();
                 })
             };
@@ -74,7 +74,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
                 if (new RegExp("^[0-9]*(([a-zA-Z]+[0-9]+)|([0-9]+[a-zA-Z]+))+[a-zA-Z]*$").test($scope.resetPassword)) {
                     $scope.resetPwdUser.newpasswd = $scope.resetPassword;
                     userHttpServices.resetPwd($scope.resetPwdUser, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                         $scope.close();
                     })
                 }
@@ -86,12 +86,16 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
                 switch (type) {
                     case 1:
                         $scope.resetPwdWindow = 0;
+                        break;
                     case 2:
                         $scope.addWindow = 0;
+                        break;
                     case 3:
                         $scope.modifyWindow = 0;
+                        break;
                     case 4:
-                        $scope.roleWindow = 0
+                        $scope.roleWindow = 0;
+                        break;
                 }
                 $scope.coverShow = 0;
             };
@@ -116,7 +120,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             /*添加账号*/
             $scope.add = function () {
                 userHttpServices.add($scope.addUser, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     $scope.close();
                     $scope.init();
                 })
@@ -125,7 +129,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             /*删除账号*/
             $scope.delete = function (id) {
                 userHttpServices.delete({id: id}, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     $scope.init();
                 })
             };
@@ -133,7 +137,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             /*修改用户信息*/
             $scope.modify = function () {
                 userHttpServices.modify($scope.modifyUser, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     $scope.init();
                 })
             };
@@ -162,7 +166,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             $scope.deleteBatch = function () {
                 if (commonUtils.isArray($scope.ids)) {
                     userHttpServices.delete({ids: $scope.ids}, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                         if (data.code == 200)
                             $scope.ids = [];
                         $scope.init();
@@ -174,7 +178,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             $scope.lockBatch = function () {
                 if (commonUtils.isArray($scope.ids)) {
                     userHttpServices.lock({ids: $scope.ids, state: 1}, function (data) {
-                        msgModal.alertMsg(commonUtils.convertResult(data.code));
+                        msgModal.alertMsg(commonUtils.convertResult(data));
                         if (data.code == 200)
                             $scope.ids = [];
                         $scope.init();
@@ -203,7 +207,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
             /*给用户分配角色*/
             $scope.modifyRole = function () {
                 userHttpServices.grantUserRole($scope.role, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     if (data.code == 200)
                         $scope.init();
                 });
@@ -281,7 +285,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
                         if (data.code == 200) {
                             history.go(-1);
                         } else {
-                            msgModal.alertMsg(commonUtils.convertResult(data.code));
+                            msgModal.alertMsg(commonUtils.convertResult(data));
                         }
                     });
                 }

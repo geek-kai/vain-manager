@@ -16,7 +16,7 @@ angular.module("online.controllers", ["online.services", "common.menu.services",
             /*强制下线*/
             $scope.forcedOffLine = function (user) {
                 onlineHttpServices.forcedOffLine(user, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     if (data.code == 200)
                         $scope.init();
                 });

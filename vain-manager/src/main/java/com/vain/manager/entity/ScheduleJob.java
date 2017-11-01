@@ -51,9 +51,32 @@ public class ScheduleJob extends PagedEntity {
      */
     private Integer isConcurrent;
 
+    /**
+     * spring容器中的对象名称（优先级大于类的全路径）
+     */
+    private String springName;
+
+    private Boolean deleted;
+
     private Timestamp createTime;
 
     private Timestamp modifyTime;
+
+    public String getSpringName() {
+        return springName;
+    }
+
+    public void setSpringName(String springName) {
+        this.springName = springName;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
+    }
 
     public String getJobName() {
         return jobName;

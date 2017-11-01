@@ -134,8 +134,8 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                 $('.cover', window.parent.document).hide();
             },
             /*将错误码转换为对应的错误信息*/
-            convertResult: function (code) {
-                switch (code) {
+            convertResult: function (data) {
+                switch (data.code) {
                     case 200:
                         return appConstant.OPERATION_SUCCESS;
                     case 404:
@@ -145,7 +145,7 @@ angular.module("common.services", ["ui.bootstrap", 'ngCookies', 'ngResource'])
                     case 1001:
                         return appConstant.PARAM_ERROR;
                     default:
-                        return appConstant.UNKNOWN_ERROR;
+                        return data.msg;
                 }
 
             },

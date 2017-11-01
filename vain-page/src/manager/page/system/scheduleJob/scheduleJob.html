@@ -1,0 +1,141 @@
+<!doctype html>
+<html data-ng-app="scheduleJob.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+</head>
+
+<body ng-controller="scheduleJobListCtrl" ng-init="init()">
+<div class="tpl-content-scope tpl-content-wrapper">
+    <div class="tpl-content-page-title">
+        系统管理
+    </div>
+    <ol class="am-breadcrumb">
+        <li><a href="#" class="am-icon-cog">系统管理</a></li>
+        <li class="am-active">定时任务</li>
+    </ol>
+
+    <div class="row">
+        <div class="tpl-portlet">
+            <div class="am-g am-margin-vertical-sm">
+            </div>
+
+            <div class="am-g div_table">
+                <form class="am-form">
+                    <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
+                        <thead>
+                        <tr class="am-primary">
+                            <th width="5%">序号</th>
+                            <th width="5%">任务名称</th>
+                            <th width="5%">任务组</th>
+                            <th width="15%">任务类</th>
+                            <th width="5%">任务方法</th>
+                            <th width="10%">Cron表达式</th>
+                            <th width="5%">状态</th>
+                            <th width="5%">是否并发</th>
+                            <th width="10%">任务描述</th>
+                            <th width="8%">创建时间</th>
+                            <th width="8%">修改时间</th>
+                            <th width="19%">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        <tr ng-repeat="job in jobs track by $index">
+                            <td>{{$index+1}}</td>
+                            <td title="{{job.jobName}}">{{job.jobName}}</td>
+                            <td title="{{job.jobGroup}}">{{job.jobGroup}}</td>
+                            <td title="{{job.jobClass}}">{{job.jobClass}}</td>
+                            <td title="{{job.jobMethod}}">{{job.jobMethod}}</td>
+                            <td title="{{job.cronExpression}}">{{job.cronExpression}}</td>
+                            <td title="{{job.jobStatus}}">
+                                <span ng-class="job.jobStatus==1?'am-icon-toggle-on am-text-success':'am-icon-toggle-off am-text-danger'"></span>
+                            </td>
+                            <td title="{{job.isConcurrent}}">{{job.isConcurrent==1?'并发':'禁止并发'}}</td>
+                            <td title="{{job.description}">{{job.description}}</td>
+                            <td title="{{job.createTime}}">{{job.createTime}}</td>
+                            <td title="{{job.modifyTime}}">{{job.modifyTime}}</td>
+                            <td>
+                                <div class="am-btn-group am-btn-group-xs">
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="pause(job);"><span class="am-icon-pause"></span>
+                                        暂停
+                                    </button>
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="resume(job);"><span class="am-icon-refresh"></span>
+                                        恢复
+                                    </button>
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="trigger(job);"><span class="am-icon-bug"></span>
+                                        测试
+                                    </button>
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="modify(job);"><span class="am-icon-pencil-square-o"></span>
+                                        修改
+                                    </button>
+                                    <button class="am-btn am-btn-default am-btn-xs am-text-danger"
+                                            ng-click="delete(job);"><span class="am-icon-trash"></span>
+                                        删除
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!--修改cron表达式-->
+    <div class="form_div cover_alert" id="modifyDiv" ng-show="modifyWindow" style="width:450px;height: 300px;">
+        <div>
+            <div class="am-modal-hd cover_title"><p class="am-sans-serif">提示:<i class="am-icon-close am-icon-sm cover_close" ng-click="close();"></i></p></div>
+
+            <form class="am-form am-form-horizontal">
+                <div class="am-form-group am-form-error am-form-icon am-form-feedback am-form-success ">
+                    <div>
+                        <label  class="am-u-sm-4 am-form-label am-fl">cron表达式：</label>
+                        <div class="am-u-sm-7" style="float: left;!important;" >
+                            <input type="text" ng-model="cronExpression" class="am-form-field" required>
+                            <span class="am-icon-warning" style="right:1.7rem;"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-form-group am-padding-top-lg">
+                    <div class="am-u-sm-10 am-u-sm-offset-4">
+                        <button type="submit" class="am-btn am-btn-default am-round am-padding-left-lg am-padding-right-lg" ng-if="permissions['system.scheduleJob.modify']" ng-click="modifyJob();">修改</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/amazeui.min.js"></script>
+<script src="../../../assets/js/app.js"></script>
+<script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+<script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+<script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="application/javascript" src="scheduleJob-app.js"></script>
+<script type="application/javascript" src="scheduleJob-controller.js"></script>
+<script type="application/javascript" src="scheduleJob-services.js"></script>
+<script type="application/javascript" src="../../../common/common-services.js"></script>
+<script type="application/javascript" src="../../../common/common-menu-services.js"></script>
+</body>
+
+</html>

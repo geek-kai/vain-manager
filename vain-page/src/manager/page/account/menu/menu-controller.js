@@ -69,7 +69,7 @@ angular.module("menu.controllers", ["menu.services","common.menu.services","comm
             /*修改*/
             $scope.modify = function () {
                 menuHttpServices.modify($scope.menu, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     if (data.code == 200)
                         $scope.close();
                 })

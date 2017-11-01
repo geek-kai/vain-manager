@@ -17,7 +17,6 @@
     </where>
   </select>
 
-
   <select id="get" resultType="com.vain.manager.entity.ScheduleJob"
           parameterType="com.vain.manager.entity.ScheduleJob">
     SELECT * FROM t_schedule_job
@@ -37,7 +36,7 @@
       <if test="jobStatus != null">
         jobStatus = #{jobStatus},
       </if>
-      <if test="description != null and description != ''">
+      <if test="description != null and description.trim() != ''">
         description=#{description},
       </if>
       modifyTime=now()

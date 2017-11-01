@@ -98,7 +98,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     </bean>
 
     <!--定时任务-->
-    <bean id="springUtils" class="com.vain.manager.quartz.SpringUtils" />
+    <bean id="springUtils" class="com.vain.manager.util.SpringUtils" />
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
 
 </beans>

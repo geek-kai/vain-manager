@@ -9,6 +9,7 @@ import com.vain.manager.entity.ScheduleJob;
 import com.vain.manager.quartz.QuartzJobFactory;
 import com.vain.manager.quartz.QuartzJobFactoryDisallowConcurrent;
 import com.vain.manager.service.IScheduleJobService;
+import com.vain.manager.util.StrUtil;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -37,12 +38,12 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
 
     @Override
     public List<ScheduleJob> getList(ScheduleJob entity) throws ErrorCodeException {
-        return null;
+        return scheduleDao.getList(entity);
     }
 
     @Override
     public ScheduleJob get(ScheduleJob entity) throws ErrorCodeException {
-        return null;
+        return scheduleDao.get(entity);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
         try {
             addJob(entity);
         } catch (SchedulerException e) {
-            logger.info("任务名称 = [" + entity.getJobName() + "] 添加失败 " + e.getMessage());
+            logger.error("任务名称 = [" + entity.getJobName() + "] 添加失败 " + e.getMessage());
             throwErrorCodeException(SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_CODE, SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_MSG);
         }
         return 1;
@@ -60,7 +61,19 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
 
     @Override
     public int modify(ScheduleJob entity) throws ErrorCodeException {
-        return 0;
+        if (!StrUtil.isBlank(entity.getCronExpression())) { //cron表达式有修改
+            try {
+                if (entity.getJobStatus() == SysConstants.ENUMTASK.ISRUN.getState()) { //在运行状态才去修改表达式
+                    updateJobCronExpression(entity);
+                } else {//否则只修改数据库
+                    triggerJob(entity); //触发一次任务并验证 防止输入错误的cron表达式
+                }
+            } catch (SchedulerException e) {
+                logger.error("任务名称 = [" + entity.getJobName() + "] 修改失败 " + e.getMessage());
+                throwErrorCodeException(SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_CODE, SysConstants.Code.TASK_CRON_EXPRESSION_ERROR_MSG);
+            }
+        }
+        return scheduleDao.update(entity);
     }
 
     @Override
@@ -68,7 +81,7 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
         try {
             deleteJob(entity);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            logger.error("任务名称 = [" + entity.getJobName() + "] 删除失败 " + e.getMessage());
             return 0;
         }
         return scheduleDao.delete(entity);
@@ -107,19 +120,19 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
      * @param job
      * @throws SchedulerException
      */
-    private void pauseJob(ScheduleJob job) throws SchedulerException {
+    public void pauseJob(ScheduleJob job) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         scheduler.pauseJob(jobKey);
     }
 
     /**
-     * 回复任务
+     * 恢复任务
      *
      * @param job
      * @throws SchedulerException
      */
-    private void resumeJob(ScheduleJob job) throws SchedulerException {
+    public void resumeJob(ScheduleJob job) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         scheduler.resumeJob(jobKey);
@@ -143,7 +156,7 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
      * @param job
      * @throws SchedulerException
      */
-    private void triggerJob(ScheduleJob job) throws SchedulerException {
+    public void triggerJob(ScheduleJob job) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         JobKey jobKey = JobKey.jobKey(job.getJobName(), job.getJobGroup());
         scheduler.triggerJob(jobKey);
@@ -159,6 +172,8 @@ public class ScheduleJobServiceImpl extends AbstractBaseService implements ISche
     private void updateJobCronExpression(ScheduleJob job) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
         TriggerKey triggerKey = TriggerKey.triggerKey(job.getJobName(), job.getJobGroup());
+        if (triggerKey == null)
+            return;
         CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
         CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
         trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();

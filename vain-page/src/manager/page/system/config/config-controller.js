@@ -25,7 +25,7 @@ angular.module("config.controllers", ["config.services","common.menu.services","
             /*修改*/
             $scope.modify = function () {
                 configHttpServices.modify($scope.config, function (data) {
-                    msgModal.alertMsg(commonUtils.convertResult(data.code));
+                    msgModal.alertMsg(commonUtils.convertResult(data));
                     if (data.code == 200)
                         $scope.close();
                 })

@@ -1,6 +1,7 @@
 package com.vain.manager.quartz;
 
 import com.vain.manager.entity.ScheduleJob;
+import com.vain.manager.util.SpringUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -12,7 +13,7 @@ import java.lang.reflect.Method;
  * @date： 2017/10/31 11:23
  * @description 通过反射调用任务job执行方法
  */
-public class TaskUtils {
+class TaskUtils {
     private final static Logger log = Logger.getLogger(TaskUtils.class);
 
     /**
@@ -23,10 +24,9 @@ public class TaskUtils {
     public static void invokeMethod(ScheduleJob scheduleJob) {
         Object object = null;
         Class clazz = null;
-        /*if (StringUtils.isNotBlank(scheduleJob.getSpringId())) {
-            object = SpringUtils.getBean(scheduleJob.getSpringId());
-        } else*/
-        if (StringUtils.isNotBlank(scheduleJob.getJobClass())) {
+        if (StringUtils.isNotBlank(scheduleJob.getSpringName())) {
+            object = SpringUtils.getBean(scheduleJob.getSpringName());
+        } else if (StringUtils.isNotBlank(scheduleJob.getJobClass())) {
             try {
                 clazz = Class.forName(scheduleJob.getJobClass());
                 object = clazz.newInstance();

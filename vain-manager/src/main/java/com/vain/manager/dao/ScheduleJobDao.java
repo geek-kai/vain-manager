@@ -39,7 +39,7 @@ public class ScheduleJobDao extends AbstractBaseDao<ScheduleJob> {
 
     @Override
     public int update(ScheduleJob entity) {
-        return this.sqlSession.update("com.vain.manager.entity.ScheduleJob.modify", entity);
+        return this.sqlSession.update("com.vain.manager.entity.ScheduleJob.update", entity);
     }
 
     @Override
