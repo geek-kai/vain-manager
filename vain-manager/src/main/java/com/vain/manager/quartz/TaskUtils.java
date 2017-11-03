@@ -21,7 +21,7 @@ class TaskUtils {
      *
      * @param scheduleJob
      */
-    public static void invokeMethod(ScheduleJob scheduleJob) {
+    static void invokeMethod(ScheduleJob scheduleJob) {
         Object object = null;
         Class clazz = null;
         if (StringUtils.isNotBlank(scheduleJob.getSpringName())) {

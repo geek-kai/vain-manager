@@ -9,6 +9,8 @@ import com.vain.manager.dao.UserMenuDao;
 import com.vain.manager.entity.Menu;
 import com.vain.manager.entity.User;
 import com.vain.manager.entity.UserMenu;
+import com.vain.manager.log.OperationLog;
+import com.vain.manager.log.constant.LogConstants;
 import com.vain.manager.model.OnLineUser;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.SecurityHelper;
@@ -44,6 +46,7 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
     private SessionDAO sessionDAO;
 
     @Override
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN,isOnlyId = false)
     public User login(User entity) throws ErrorCodeException {
         if (StrUtil.isEmail(entity.getUserName())) { //通过邮箱登录
             entity.setEmail(entity.getUserName());

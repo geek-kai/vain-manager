@@ -21,7 +21,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 拦截service层日志操作参数 -->
     <!-- 启动对@AspectJ注解的支持 -->
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
