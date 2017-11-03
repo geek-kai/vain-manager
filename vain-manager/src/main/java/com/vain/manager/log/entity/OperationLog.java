@@ -14,14 +14,35 @@ public class OperationLog extends PagedEntity {
     private Integer operationType;
 
     /**
-     * 用户类型
+     * 操作用户Id
      */
     private Long userId;
 
     /**
      * 操作数据id
      */
-    private Long operationId;
+    private String operationData;
+
+    /**
+     * 操作ip
+     */
+    private String operationIP;
+
+    /**
+     * 操作类
+     */
+    private String className;
+
+
+    /**
+     * 操作方法
+     */
+    private String methodName;
+
+    /**
+     * 异常信息
+     */
+    private String exceptionMessage;
 
     /**
      * 操作信息
@@ -44,12 +65,44 @@ public class OperationLog extends PagedEntity {
         this.userId = userId;
     }
 
-    public Long getOperationId() {
-        return operationId;
+    public String getOperationData() {
+        return operationData;
     }
 
-    public void setOperationId(Long operationId) {
-        this.operationId = operationId;
+    public void setOperationData(String operationData) {
+        this.operationData = operationData;
+    }
+
+    public String getOperationIP() {
+        return operationIP;
+    }
+
+    public void setOperationIP(String operationIP) {
+        this.operationIP = operationIP;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
+    }
+
+    public String getExceptionMessage() {
+        return exceptionMessage;
+    }
+
+    public void setExceptionMessage(String exceptionMessage) {
+        this.exceptionMessage = exceptionMessage;
     }
 
     public String getInfo() {

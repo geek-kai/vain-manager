@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.vain.manager.log.FieldsUtil;
 import com.vain.manager.log.OperationLog;
 import com.vain.manager.log.service.IOperationLogService;
+import com.vain.manager.shiro.session.UserSession;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
@@ -15,8 +16,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author vain
@@ -53,11 +55,12 @@ public class OperationLogAspect {
     }
 
     /**
-     * 日志操作
+     * 切面操作
      *
      * @param joinPoint
      * @param e
      */
+    @SuppressWarnings("all")
     private void logServiceHandler(JoinPoint joinPoint, Exception e) {
         Signature signature = joinPoint.getSignature();
         MethodSignature methodSignature = (MethodSignature) signature;
@@ -68,62 +71,73 @@ public class OperationLogAspect {
                 try {
                     com.vain.manager.log.entity.OperationLog log = new com.vain.manager.log.entity.OperationLog();
                     // 拦截的方法参数
-                    Long operationId = null;
+                    String classType = joinPoint.getTarget().getClass().getName();
+                    Class<?> clazz = Class.forName(classType);
+                    String clazzName = clazz.getName();
+                    String methodName = joinPoint.getSignature().getName();
+                    log.setClassName(clazzName);
+                    log.setMethodName(methodName);
+                    logger.info(">>>>>>>>>操作类：{},操作方法{}", clazzName, methodName);
                     Object[] args = joinPoint.getArgs();
-                    if (operationLog.isOnlyId()) {
-                        for (Object obj : args) {
-                            Map<String, String> map = FieldsUtil.getFieldsByReflect(obj);
-                            if (!map.isEmpty() && map.containsKey("id") && !map.get("id").isEmpty()) {
-                                operationId = Long.valueOf(map.get("id"));
-                                break;
-                            }
-                            logger.info(">>>>>拦截到的注解参数为:{}", map);
+                    for (Object obj : args) {
+                        Map<String, String> map = FieldsUtil.getFieldsByReflect(obj);
+                        Set<Map.Entry<String, String>> entries = map.entrySet();
+                        Iterator<Map.Entry<String, String>> iterator = entries.iterator();
+                        while (iterator.hasNext()) {
+                            Map.Entry<String, String> next = iterator.next();
+                            if (null == next.getValue() || "".equals(next.getValue()) || "0".equals(next.getValue()))
+                                iterator.remove();
                         }
-                    } else {
-                        for (Object obj : args) {
-                            Map<String, String> map = FieldsUtil.getFieldsByReflect(obj);
-                            Set<Map.Entry<String, String>> entries = map.entrySet();
-                            Iterator<Map.Entry<String, String>> iterator = entries.iterator();
-                            while (iterator.hasNext()) {
-                                Map.Entry<String, String> next = iterator.next();
-                                if (null == next.getValue() || "".equals(next.getValue())) {
-                                    iterator.remove();
-                                }
-                            }
-                            log.setInfo(JSONObject.toJSONString(map));
-                            logger.info(">>>>>拦截到的注解参数为:{}", map);
-                        }
+                        if (method.equals("login"))
+                            map.remove("passwd");//清除密码
+                        log.setOperationData(JSONObject.toJSONString(map));
+                        logger.info(">>>>>>>>>拦截到的注解参数为:{}", map);
                     }
 
-                    //  log.setInfo(operationLog.info());
                     log.setOperationType(operationLog.operationType());
-                    if (operationId != null) {
-                        log.setOperationId(operationId);
-                    }
+                    log.setUserId(UserSession.getUserId()); //操作用户id
                     operationLogService.add(log);
                 } catch (Exception e1) {
                     e1.printStackTrace();
-                    logger.info(">>>>>异常:{}", e1.getMessage());
+                    logger.info(">>>>>>>>>异常:{}", e1.getMessage());
                 }
             }
         }
     }
 
+
+    /**
+     * 异常拦截
+     *
+     * @param joinPoint
+     * @param e
+     */
     @AfterThrowing(pointcut = "logPoint()", throwing = "e")
     public void doAfterThrowing(JoinPoint joinPoint, Throwable e) {
         //请求方法的参数并序列化为JSON格式字符串
-        String params = "";
-        if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
-            for (int i = 0; i < joinPoint.getArgs().length; i++) {
-                params += JSON.toJSONString(joinPoint.getArgs()[i]) + ";";
-            }
-        }
+        com.vain.manager.log.entity.OperationLog log = new com.vain.manager.log.entity.OperationLog();
         try {
-            logger.info("=====异常通知开始=====");
-        } catch (Exception ex) {
-            logger.error("异常信息:{}", ex.getMessage());
+            String classType = joinPoint.getTarget().getClass().getName();
+            Class<?> clazz = Class.forName(classType);
+            String clazzName = clazz.getName();
+            String methodName = joinPoint.getSignature().getName();
+            log.setClassName(clazzName);
+            log.setMethodName(methodName);
+            log.setExceptionMessage(e.getMessage());
+            log.setInfo(e.getClass().getName());
+            String params = null;
+            if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
+                for (int i = 0; i < joinPoint.getArgs().length; i++) {
+                    params += JSON.toJSONString(joinPoint.getArgs()[i]) + ";";
+                }
+            }
+            log.setOperationData(params);
+            log.setUserId(UserSession.getUserId()); //操作用户id
+            operationLogService.add(log);
+        } catch (Exception e1) {
+            e1.printStackTrace();
         }
-        logger.error(params);
+        logger.info(">>>>>>>>>异常捕捉:{}", e.getMessage());
     }
 
 

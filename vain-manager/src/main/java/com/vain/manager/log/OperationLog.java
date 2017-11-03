@@ -15,6 +15,4 @@ public @interface OperationLog {
     int operationType(); //操作类型
 
     String info() default ""; // 操作信息
-
-    boolean isOnlyId() default true; //是否只获取数据id
 }

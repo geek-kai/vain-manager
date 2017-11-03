@@ -8,6 +8,8 @@ import com.vain.manager.common.exception.ErrorCodeException;
 import com.vain.manager.constant.SysConstants;
 import com.vain.manager.entity.BNews;
 import com.vain.manager.entity.User;
+import com.vain.manager.log.OperationLog;
+import com.vain.manager.log.constant.LogConstants;
 import com.vain.manager.model.OnLineUser;
 import com.vain.manager.service.IUserService;
 import com.vain.manager.shiro.authenticator.DefaultAccountSubject;
@@ -151,6 +153,7 @@ public class UserController extends AbstractBaseController<User> {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN)
     public Response<User> login(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getUserName() == null || entity.getPasswd() == null)
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);

@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50717
 File Encoding         : 65001
 
-Date: 2017-11-03 18:10:29
+Date: 2017-11-03 22:45:13
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -83,22 +83,26 @@ INSERT INTO `t_menu` VALUES ('130100', '发布动态', '130000', 'dynamic.send',
 DROP TABLE IF EXISTS `t_operation_log`;
 CREATE TABLE `t_operation_log` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `operationType` int(11) DEFAULT NULL,
-  `operation` int(11) DEFAULT NULL,
-  `userId` bigint(20) DEFAULT NULL COMMENT '系统：0',
-  `operationId` bigint(20) DEFAULT NULL,
+  `userId` bigint(20) DEFAULT NULL COMMENT '操作用户id',
+  `operationType` int(11) DEFAULT NULL COMMENT '日志操作类型',
+  `operationData` varchar(256) DEFAULT NULL COMMENT '操作数据',
   `operationTime` datetime NOT NULL,
-  `info` varchar(256) DEFAULT NULL,
+  `info` varchar(256) DEFAULT NULL COMMENT '操作信息',
+  `methodName` varchar(40) DEFAULT NULL COMMENT '操作方法',
+  `className` varchar(60) DEFAULT NULL COMMENT '操作类',
+  `operationIP` varchar(20) DEFAULT NULL,
+  `exceptionMessage` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `AK_Key_1` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of t_operation_log
 -- ----------------------------
-INSERT INTO `t_operation_log` VALUES ('1', '6', null, null, null, '2017-11-03 15:49:47', '登录');
-INSERT INTO `t_operation_log` VALUES ('2', '6', null, null, null, '2017-11-03 17:56:05', null);
-INSERT INTO `t_operation_log` VALUES ('3', '6', null, null, null, '2017-11-03 18:09:10', '{\"type\":\"0\",\"state\":\"0\",\"sex\":\"0\",\"userName\":\"admin\",\"deleted\":\"0\",\"passwd\":\"vain123\"}');
+INSERT INTO `t_operation_log` VALUES ('11', null, '5', '{\"type\":\"2\",\"modifyTime\":\"2017-11-03 21:54:01.0\",\"state\":\"1\",\"id\":\"5\",\"userName\":\"admin1\",\"createTime\":\"2017-10-26 15:18:56.0\"}', '2017-11-03 22:42:33', null, 'lock', 'com.vain.manager.service.impl.UserServiceImpl', null, null);
+INSERT INTO `t_operation_log` VALUES ('12', null, '5', '{\"type\":\"2\",\"modifyTime\":\"2017-11-03 21:54:01.0\",\"state\":\"1\",\"id\":\"5\",\"userName\":\"admin1\",\"createTime\":\"2017-10-26 15:18:56.0\"}', '2017-11-03 22:42:34', null, 'lock', 'com.vain.manager.service.impl.UserServiceImpl', null, null);
+INSERT INTO `t_operation_log` VALUES ('13', null, '5', '{\"type\":\"3\",\"modifyTime\":\"2017-11-03 22:09:33.0\",\"state\":\"1\",\"id\":\"4\",\"userName\":\"用户A\",\"createTime\":\"2017-10-14 14:01:46.0\"}', '2017-11-03 22:44:13', null, 'lock', 'com.vain.manager.service.impl.UserServiceImpl', null, null);
+INSERT INTO `t_operation_log` VALUES ('14', null, '5', '{\"type\":\"3\",\"modifyTime\":\"2017-11-03 22:09:33.0\",\"state\":\"1\",\"id\":\"4\",\"userName\":\"用户A\",\"createTime\":\"2017-10-14 14:01:46.0\"}', '2017-11-03 22:44:13', null, 'lock', 'com.vain.manager.service.impl.UserServiceImpl', null, null);
 
 -- ----------------------------
 -- Table structure for `t_role`
@@ -265,10 +269,10 @@ CREATE TABLE `t_user` (
 -- Records of t_user
 -- ----------------------------
 INSERT INTO `t_user` VALUES ('1', '1', 'admin', 'a0bca5d6fede811f6238a0eb475e2931', 'f74518bf-9b68-4f42-a680-eb3abdeaa1d6', '管理员', null, null, null, '0', null, null, null, null, null, null, null, '0', '2017-09-17 16:42:25', '2017-10-13 20:36:08');
-INSERT INTO `t_user` VALUES ('2', '2', '小明', 'd6f175817754c5c0dae2520d0b7effe3', '6acf8206-0869-4e50-af61-835ad15c05f3', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-09-30 21:41:46', '2017-10-19 18:34:30');
-INSERT INTO `t_user` VALUES ('3', '2', '张三丰', '28573cf398dcdfb9085fdc4f5dcb382d', 'b96fedde-0c1b-424e-bf50-c3a2480d267a', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-10-14 13:31:05', '2017-10-14 16:10:02');
-INSERT INTO `t_user` VALUES ('4', '3', '用户A', '0102cafa8d3a463e347a379529280472', '997b3972-3fa2-4bcd-90e1-a109ac959611', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-10-14 14:01:46', '2017-10-14 15:19:23');
-INSERT INTO `t_user` VALUES ('5', '2', 'admin1', 'c469ac8dcba977627b56ee712efad1f8', '4fb2f8d8-d420-4666-bdd9-abb7c0a25e61', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-10-26 15:18:56', '2017-11-01 13:39:09');
+INSERT INTO `t_user` VALUES ('2', '2', '小明', 'd6f175817754c5c0dae2520d0b7effe3', '6acf8206-0869-4e50-af61-835ad15c05f3', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-09-30 21:41:46', '2017-11-03 22:04:55');
+INSERT INTO `t_user` VALUES ('3', '2', '张三丰', '28573cf398dcdfb9085fdc4f5dcb382d', 'b96fedde-0c1b-424e-bf50-c3a2480d267a', null, null, '0', null, '1', null, null, null, null, null, null, null, '0', '2017-10-14 13:31:05', '2017-11-03 22:41:22');
+INSERT INTO `t_user` VALUES ('4', '3', '用户A', '0102cafa8d3a463e347a379529280472', '997b3972-3fa2-4bcd-90e1-a109ac959611', null, null, '0', null, '1', null, null, null, null, null, null, null, '0', '2017-10-14 14:01:46', '2017-11-03 22:44:13');
+INSERT INTO `t_user` VALUES ('5', '2', 'admin1', 'c469ac8dcba977627b56ee712efad1f8', '4fb2f8d8-d420-4666-bdd9-abb7c0a25e61', null, null, '0', null, '1', null, null, null, null, null, null, null, '0', '2017-10-26 15:18:56', '2017-11-03 22:42:34');
 INSERT INTO `t_user` VALUES ('6', '2', 'admin2', '909f2105d2a6271da2299b13d356c7b3', 'f1843ae5-e9a2-49d8-8b92-c92dd6e7f65a', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-10-26 15:21:06', '2017-10-27 11:34:55');
 INSERT INTO `t_user` VALUES ('7', '3', 'admin5', '32b92f2864cada4f2e3056e2ecdac4ef', '6a1aab2f-6b53-47fc-90ce-ddd057c0da2a', null, null, '0', null, '0', null, null, null, null, null, null, null, '0', '2017-10-26 15:31:44', '2017-10-27 11:15:36');
 INSERT INTO `t_user` VALUES ('8', '2', 'admin4', '91243404dd46595e84f2d59ecdc4d08e', 'b0070f46-ff38-4c43-83eb-0f0d94cba132', null, null, '0', null, '1', null, null, null, null, null, null, null, '0', '2017-10-26 15:36:15', '2017-10-28 12:24:43');

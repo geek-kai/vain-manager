@@ -46,7 +46,6 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
     private SessionDAO sessionDAO;
 
     @Override
-    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN,isOnlyId = false)
     public User login(User entity) throws ErrorCodeException {
         if (StrUtil.isEmail(entity.getUserName())) { //通过邮箱登录
             entity.setEmail(entity.getUserName());
@@ -96,6 +95,7 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
      * @return
      */
     @Override
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_DISABLE)
     public int lock(User entity) {
         return userDao.lock(entity);
     }

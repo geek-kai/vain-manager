@@ -16,7 +16,7 @@ public class UserSession {
      *
      * @return
      */
-    public static UserSubjectInfo getUserSubjectInfo() {
+    private static UserSubjectInfo getUserSubjectInfo() {
         AccountSubject accountSubject = SecurityHelper.getAccountSubject();
         if (accountSubject != null) {
             SubjectInfo subjectInfo = accountSubject.getSubjectInfo();

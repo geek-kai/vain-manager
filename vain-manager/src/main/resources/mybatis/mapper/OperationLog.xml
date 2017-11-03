@@ -4,16 +4,12 @@
         "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 <mapper namespace="com.vain.manager.log.entity.OperationLog">
 
-    <sql id="Base_Column_List">
-        id,operationType,operation,userId,operationId,operationTime,info
-    </sql>
-
     <insert id="insert" parameterType="com.vain.manager.log.entity.OperationLog" useGeneratedKeys="true"
             keyProperty="id">
     INSERT INTO t_operation_log
-    (operationType,operationId,operationTime,info)
+    (operationType,operationData,operationIP,className,methodName,operationTime,info,exceptionMessage)
     VALUES
-    (#{operationType},#{operationId},now(),#{info})
+    (#{operationType},#{operationData},#{operationIP},#{className},#{methodName},now(),#{info},#{exceptionMessage})
     </insert>
 
 </mapper>

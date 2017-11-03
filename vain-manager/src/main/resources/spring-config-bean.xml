@@ -10,9 +10,7 @@ http://www.springframework.org/schema/context
 http://www.springframework.org/schema/context/spring-context.xsd
 http://www.springframework.org/schema/aop 
 http://www.springframework.org/schema/aop/spring-aop.xsd
-
-
-http://www.springframework.org/schema/tx 
+http://www.springframework.org/schema/tx
 http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="com.vain.manager"/>
@@ -21,7 +19,7 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 拦截service层日志操作参数 -->
     <!-- 启动对@AspectJ注解的支持 -->
-    <aop:aspectj-autoproxy proxy-target-class="true"/>
+    <aop:aspectj-autoproxy />
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
