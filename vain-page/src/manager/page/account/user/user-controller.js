@@ -43,6 +43,7 @@ angular.module("user.controllers", ["user.services", "common.services", "common.
                             commonUtils.storeQueryParam(curQueryParam);
                             $scope.datas = null;
                             $scope.paginator = null;
+                            $scope.noData = true;
                             return;
                         }
                         $scope.jumpPage(curQueryParam.curPage - 1);

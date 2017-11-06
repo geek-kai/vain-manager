@@ -2,6 +2,9 @@ package com.vain.manager.log.entity;
 
 import com.vain.manager.common.entity.PagedEntity;
 
+import java.security.Timestamp;
+import java.util.List;
+
 /**
  * @author vain
  * @date： 2017/11/3 11:12
@@ -48,6 +51,37 @@ public class OperationLog extends PagedEntity {
      * 操作信息
      */
     private String info;
+
+    /**
+     * 用户名
+     */
+    private String userName;
+
+    /**
+     * 操作时间
+     */
+    private Timestamp operationTime;
+
+    /**
+     * 状态集合
+     */
+    private List<Integer> operationTypes;
+
+    public List<Integer> getOperationTypes() {
+        return operationTypes;
+    }
+
+    public void setOperationTypes(List<Integer> operationTypes) {
+        this.operationTypes = operationTypes;
+    }
+
+    public Timestamp getOperationTime() {
+        return operationTime;
+    }
+
+    public void setOperationTime(Timestamp operationTime) {
+        this.operationTime = operationTime;
+    }
 
     public Integer getOperationType() {
         return operationType;
@@ -111,5 +145,13 @@ public class OperationLog extends PagedEntity {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

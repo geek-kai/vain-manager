@@ -15,4 +15,6 @@ public @interface OperationLog {
     int operationType(); //操作类型
 
     String info() default ""; // 操作信息
+
+    boolean isOnlyId() default false;//是否只保存请求参数id
 }

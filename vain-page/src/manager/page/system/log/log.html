@@ -1,0 +1,97 @@
+<!doctype html>
+<html data-ng-app="log.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="系统管理">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+</head>
+
+<body ng-controller="LogListCtrl" ng-init="init()">
+    <div class="tpl-content-scope tpl-content-wrapper">
+        <div class="tpl-content-page-title">
+            系统管理
+        </div>
+        <ol class="am-breadcrumb">
+            <li><a href="#" class="am-icon-cog">系统管理</a></li>
+            <li class="am-active">系统日志</li>
+        </ol>
+
+        <div class="row">
+            <div class="tpl-portlet">
+                <div class="am-g am-margin-vertical-sm">
+                    <div class="am-u-sm-4 am-u-md-4">
+                        <div class="am-form-group">
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.operationTypes" ng-change="search();" ng-options="log.value as log.key for log in logType">
+                                <option value="">所有类别</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="am-g div_table">
+                        <form class="am-form">
+                            <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
+                                <thead>
+                                <tr class="am-primary">
+                                    <th width="5%">序号</th>
+                                    <th width="10%">操作人</th>
+                                    <th width="25%">操作数据</th>
+                                    <th width="10%">操作路径</th>
+                                    <th width="10%">操作方法</th>
+                                    <th width="10%">描述</th>
+                                    <th width="15%">异常信息</th>
+                                    <th width="10%">操作地址</th>
+                                    <th width="10%">操作日期</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr ng-repeat="log in logs track by $index">
+                                    <td>{{$index+1}}</td>
+                                    <td title="{{log.userName}}">{{log.userName}}</td>
+                                    <td title="{{log.operationData}}">{{log.operationData}}</td>
+                                    <td title="{{log.className}}">{{log.className}}</td>
+                                    <td title="{{log.methodName}}">{{log.methodName}}</td>
+                                    <td title="{{log.info}}">{{log.info}}</td>
+                                    <td title="{{log.exceptionMessage}}">{{log.exceptionMessage}}</td>
+                                    <td title="{{log.operationIP}}">{{log.operationIP}}</td>
+                                    <td title="{{log.operationTime}}">{{log.operationTime}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                </div>
+                <!--分页div-->
+                <div class="am-g">
+                    <div ng-include="'../../../common/paginator.html'"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../../../assets/js/jquery.min.js"></script>
+    <script src="../../../assets/js/amazeui.min.js"></script>
+    <script src="../../../assets/js/app.js"></script>
+    <script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+    <script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script type="application/javascript" src="log-app.js"></script>
+    <script type="application/javascript" src="log-controller.js"></script>
+    <script type="application/javascript" src="log-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-services.js"></script>
+    <script type="application/javascript" src="../../../common/common-menu-services.js"></script>
+</body>
+
+</html>

@@ -19,7 +19,8 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- 拦截service层日志操作参数 -->
     <!-- 启动对@AspectJ注解的支持 -->
-    <aop:aspectj-autoproxy />
+    <aop:aspectj-autoproxy/>
+
 
     <!-- 数据库连接池 -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -98,5 +99,4 @@ http://www.springframework.org/schema/tx/spring-tx.xsd">
     <!--定时任务-->
     <bean id="springUtils" class="com.vain.manager.util.SpringUtils" />
     <bean id="schedulerFactoryBean" class="org.springframework.scheduling.quartz.SchedulerFactoryBean" />
-
 </beans>

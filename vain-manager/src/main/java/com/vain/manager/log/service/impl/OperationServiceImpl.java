@@ -20,7 +20,8 @@ public class OperationServiceImpl extends AbstractBaseService implements IOperat
 
     @Override
     public PageList<OperationLog> getPagedList(OperationLog entity) throws ErrorCodeException {
-        return null;
+        entity.initPageParam();
+        return operationLogDao.getPagedList(entity, entity.getCurPage(), entity.getPageSize());
     }
 
     @Override

@@ -17,7 +17,6 @@ import com.vain.manager.shiro.exception.AuthenticationException;
 import com.vain.manager.shiro.session.UserSession;
 import com.vain.manager.shiro.token.AccountToken;
 import com.vain.manager.util.ReptileUtils;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -118,6 +117,7 @@ public class UserController extends AbstractBaseController<User> {
     @RequestMapping(value = "/modify", method = RequestMethod.POST)
     @ResponseBody
     @Override
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_UPDATE, info = "修改账号信息", isOnlyId = true)
     public Response<User> modify(@RequestBody User entity, HttpServletRequest request) throws Exception {
         if (entity == null || entity.getId() == null)
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
@@ -153,7 +153,7 @@ public class UserController extends AbstractBaseController<User> {
      */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN)
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN, info = "登录")
     public Response<User> login(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || entity.getUserName() == null || entity.getPasswd() == null)
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
@@ -224,12 +224,12 @@ public class UserController extends AbstractBaseController<User> {
      * @param entity
      * @return
      */
+    @OperationLog(operationType = LogConstants.OperationLogType.OPERATION_LOGIN, info = "锁定/解锁")
     @RequestMapping(value = "/lock", method = RequestMethod.POST)
     @ResponseBody
     public Response lockUser(@RequestBody User entity) throws ErrorCodeException {
         if (entity == null || (entity.getId() == null && entity.getIds() == null))
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
-        userService.lock(entity);
         Response response = new Response<>();
         response.setData(userService.lock(entity));
         return response;

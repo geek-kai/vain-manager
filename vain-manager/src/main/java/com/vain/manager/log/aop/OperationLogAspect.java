@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.Map;
@@ -23,7 +24,7 @@ import java.util.Set;
 /**
  * @author vain
  * @date： 2017/11/3 11:23
- * @description：
+ * @description： 如出现aop拦截方法执行2次 检查bean的生成是否重复
  */
 @Aspect
 @Component
@@ -39,7 +40,6 @@ public class OperationLogAspect {
      */
     @Pointcut("@annotation(com.vain.manager.log.OperationLog)")
     public void logPoint() {
-
     }
 
     /**
@@ -79,21 +79,31 @@ public class OperationLogAspect {
                     log.setMethodName(methodName);
                     logger.info(">>>>>>>>>操作类：{},操作方法{}", clazzName, methodName);
                     Object[] args = joinPoint.getArgs();
-                    for (Object obj : args) {
-                        Map<String, String> map = FieldsUtil.getFieldsByReflect(obj);
+                    //可以通过foreach来遍历 存储请求的所有参数 这里请求的实体参数设置为第一个 所以只将第一个转换为String存
+                    Map<String, String> map = FieldsUtil.getFieldsByReflect(args[0]);
+                    if (operationLog.isOnlyId()) {
+                        log.setOperationData("{id:" + map.get("id") + "}");
+                        logger.info(">>>>>>>>>拦截到的参数ID为:{}", map.get("id"));
+                    } else {
                         Set<Map.Entry<String, String>> entries = map.entrySet();
                         Iterator<Map.Entry<String, String>> iterator = entries.iterator();
                         while (iterator.hasNext()) {
                             Map.Entry<String, String> next = iterator.next();
-                            if (null == next.getValue() || "".equals(next.getValue()) || "0".equals(next.getValue()))
+                            if (null == next.getValue() || "".equals(next.getValue()) || "0".equals(next.getValue()) || "passwd".equals(next.getKey()) ||
+                                    "createTime".equals(next.getKey()) || "modifyTime".equals(next.getKey()))
                                 iterator.remove();
                         }
-                        if (method.equals("login"))
-                            map.remove("passwd");//清除密码
                         log.setOperationData(JSONObject.toJSONString(map));
-                        logger.info(">>>>>>>>>拦截到的注解参数为:{}", map);
+                        logger.info(">>>>>>>>>拦截到的参数为:{}", map);
                     }
-
+                    if (joinPoint.getArgs().length > 1) {
+                        Object request = joinPoint.getArgs()[1];
+                        if (request instanceof HttpServletRequest) {
+                            HttpServletRequest req = (HttpServletRequest) request;
+                            log.setOperationIP(req.getRemoteAddr());
+                        }
+                    }
+                    log.setInfo(operationLog.info());
                     log.setOperationType(operationLog.operationType());
                     log.setUserId(UserSession.getUserId()); //操作用户id
                     operationLogService.add(log);
@@ -125,9 +135,9 @@ public class OperationLogAspect {
             log.setMethodName(methodName);
             log.setExceptionMessage(e.getMessage());
             log.setInfo(e.getClass().getName());
-            String params = null;
+            String params = "";
             if (joinPoint.getArgs() != null && joinPoint.getArgs().length > 0) {
-                for (int i = 0; i < joinPoint.getArgs().length; i++) {
+                for (int i = 0; i < 1; i++) {
                     params += JSON.toJSONString(joinPoint.getArgs()[i]) + ";";
                 }
             }

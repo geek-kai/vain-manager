@@ -7,9 +7,25 @@
     <insert id="insert" parameterType="com.vain.manager.log.entity.OperationLog" useGeneratedKeys="true"
             keyProperty="id">
     INSERT INTO t_operation_log
-    (operationType,operationData,operationIP,className,methodName,operationTime,info,exceptionMessage)
+    (operationType,operationData,operationIP,className,methodName,operationTime,info,exceptionMessage,userId)
     VALUES
-    (#{operationType},#{operationData},#{operationIP},#{className},#{methodName},now(),#{info},#{exceptionMessage})
+    (#{operationType},#{operationData},#{operationIP},#{className},#{methodName},now(),#{info},#{exceptionMessage},#{userId})
     </insert>
+
+    <select id="getPagedList" parameterType="com.vain.manager.log.entity.OperationLog"
+            resultType="com.vain.manager.log.entity.OperationLog">
+        SELECT *,(SELECT userName FROM t_user WHERE id = userId)AS userName FROM t_operation_log
+        <where>
+            <if test="operationType!=null">
+                AND operationType = #{operationType}
+            </if>
+            <if test="operationTypes!=null">
+                AND operationType IN
+                <foreach collection="operationTypes" item="type" separator="," open="(" close=")">
+                    #{type}
+                </foreach>
+            </if>
+        </where>
+    </select>
 
 </mapper>

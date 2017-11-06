@@ -41,10 +41,8 @@
 
                     <div class="am-u-sm-4 am-u-md-4" ng-if="permissions['account.user.getPagedList']">
                         <div class="am-form-group">
-                            <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.type" ng-change="search();">
-                                <option value="" hidden>请选择</option>
-                                <option value="0" selected>所有类别</option>
-                                <option value="{{type.value}}"  ng-repeat="type in userType">{{type.key}}</option>
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.type" ng-change="search();" ng-options="type.value as type.key for type in userType">
+                                <option value=""></option>
                             </select>
                         </div>
                     </div>
@@ -192,9 +190,8 @@
                     <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">用户类型：</label>
                         <div class="am-u-sm-9">
-                            <select data-am-selected="{btnSize: 'sm'}" ng-model="addUser.type">
+                            <select data-am-selected="{btnSize: 'sm'}" ng-model="addUser.type" ng-options="type.value as type.key for type in userType">
                                 <option value="">所有类别</option>
-                                <option value="{{type.value}}"  ng-repeat="type in userType">{{type.key}}</option>
                             </select>
                         </div>
                     </div>
@@ -229,7 +226,7 @@
                     <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">电话号码：</label>
                         <div class="am-u-sm-9">
-                            <input type="number" id="accountPhone" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6" ng-pattern="/^[0-9]*$/" ng-model="modifyUser.phone">
+                            <input type="number" id="accountPhone" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6" ng-pattern="/^[0-11]*$/" ng-model="modifyUser.phone">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>

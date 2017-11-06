@@ -1,5 +1,6 @@
 package com.vain.manager.log.dao;
 
+import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.common.dao.AbstractBaseDao;
 import com.vain.manager.log.entity.OperationLog;
@@ -12,7 +13,8 @@ public class OperationLogDao extends AbstractBaseDao<OperationLog> {
 
     @Override
     public PageList<OperationLog> getPagedList(OperationLog entity, int curPage, int pageSize) {
-        return null;
+        PageBounds pageBounds = new PageBounds(curPage, pageSize);
+        return (PageList) this.sqlSession.selectList("com.vain.manager.log.entity.OperationLog.getPagedList", entity, pageBounds);
     }
 
     @Override

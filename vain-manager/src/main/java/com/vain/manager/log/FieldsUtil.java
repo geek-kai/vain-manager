@@ -13,35 +13,36 @@ import java.util.Map;
 /**
  * @author vain
  * @date： 2017/11/3 11:12
- * @description： 
+ * @description：
  */
 public class FieldsUtil {
 
     /**
      * 获取反射属性及属性值
+     *
      * @param model
      * @return
      * @throws IllegalArgumentException
      * @throws IllegalAccessException
      */
-    public static Map<String, String> getFieldsByReflect(Object model) throws IllegalArgumentException, IllegalAccessException  {
-        Map<String, String> map = new HashMap<String, String>();
+    public static Map<String, String> getFieldsByReflect(Object model) throws IllegalArgumentException, IllegalAccessException {
+        Map<String, String> map = new HashMap<>();
         // 获取实体类的所有属性，返回Field数组
         Field[] fields = model.getClass().getDeclaredFields();
         // 递归获取父类所有属性
         Field[] field = getBeanFields(model.getClass(), fields);
         // 遍历所有属性
-        for (int j = 0; j < field.length; j++) {
+        for (Field data : field) {
             // 将字段的访问权限设为true：即去除private修饰符的影响
-            field[j].setAccessible(true);
-            map.put(field[j].getName(), field[j].get(model) == null ? "" : field[j].get(model).toString());
+            data.setAccessible(true);
+            map.put(data.getName(), data.get(model) == null ? "" : data.get(model).toString());
         }
         return map;
     }
 
     /**
      * 递归获取父类
-     * 
+     *
      * @param cls
      * @param fs
      * @return
@@ -57,8 +58,8 @@ public class FieldsUtil {
     }
 
     /**
-     * 通过判断类型获取发射属性及值
-     * 
+     * 通过判断类型获取反射属性及值
+     *
      * @param model
      * @return
      * @throws NoSuchMethodException
@@ -70,7 +71,7 @@ public class FieldsUtil {
      */
     public static Map<String, String> getReflectFieldByType(Object model) throws NoSuchMethodException, IllegalAccessException,
             IllegalArgumentException, InvocationTargetException, SecurityException, NoSuchFieldException {
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         // 获取实体类的所有属性，返回Field数组
         Field[] fields = model.getClass().getDeclaredFields();
         // 递归获取父类所有属性

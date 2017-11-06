@@ -40,6 +40,11 @@ public class LogConstants {
          * 登录
          */
         public static final int OPERATION_LOGIN = 6;
+
+        /**
+         * 注销
+         */
+        public static final int OPERATION_LOGIN_OUT = 7;
     }
 
 
