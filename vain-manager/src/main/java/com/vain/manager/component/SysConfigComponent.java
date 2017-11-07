@@ -34,7 +34,7 @@ public class SysConfigComponent {
         }
     }
 
-    private String getStringValue(String key) {
+    public String getStringValue(String key) {
         return configMapFromDb.get(key);
     }
 
