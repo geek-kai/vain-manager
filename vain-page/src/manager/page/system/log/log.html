@@ -30,7 +30,7 @@
             <div class="tpl-portlet">
                 <div class="am-g am-margin-vertical-sm">
                     <div class="am-u-sm-4 am-u-md-4">
-                        <div class="am-form-group">
+                        <div class="am-form-group" ng-show="permissions['system.log.getPagedList']">
                             <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.operationTypes" ng-change="search();" ng-options="log.value as log.key for log in logType">
                                 <option value="">所有类别</option>
                             </select>

@@ -56,7 +56,12 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
     public HashSet<Menu> getMenusByUserId(Long userId, Integer userType) {
         HashSet<Menu> userOwnedMenus = new HashSet<>(); //去重 不包含重复元素菜单
         Menu menu = new Menu(userId);
-        if (userType == SysConstants.AccountConstant.ACCOUNT_TYPE_ADMIN) {
+        if (userType == SysConstants.AccountConstant.ACCOUNT_TYPE_SUPERADMIN) {
+            //超级管理员权限菜单集合
+            List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
+            if (menusByUserRoles.size() > 0)
+                userOwnedMenus.addAll(menusByUserRoles);
+        } else {
             //用户所属角色菜单集合
             List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
             if (menusByUserRoles.size() > 0)
@@ -65,11 +70,6 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
             List<Menu> userAllMenus = menuDao.getUserAllMenus(menu);
             if (userAllMenus.size() > 0)
                 userOwnedMenus.addAll(userAllMenus);
-        } else {
-            //管理员权限菜单集合
-            List<Menu> menusByUserRoles = menuDao.getMenusByUserRoles(menu);
-            if (menusByUserRoles.size() > 0)
-                userOwnedMenus.addAll(menusByUserRoles);
         }
         return userOwnedMenus;
     }
@@ -144,19 +144,20 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
             }
         } else {
             /*
-             超级管理员赋值的管理组 获取角色和个人权限集合
+             超级管理员赋值的其他类型用户 如管理组和普通用户 获取角色和个人权限集合
              */
-            logger.info("--------------管理组登录-------------");
+            logger.info("--------------其他类型登录-------------");
             List<Menu> menusByUserAllRoles = menuDao.getMenusByUserRoles(entity); //角色权限集合
             if (!menusByUserAllRoles.isEmpty())
                 userOwnedMenus.addAll(menusByUserAllRoles);
             List<Menu> userAllMenus = menuDao.getUserAllMenus(entity);   //用户权限集合
             if (!userAllMenus.isEmpty())
                 userOwnedMenus.addAll(userAllMenus);
-            List<Menu> menus = new ArrayList<>(userOwnedMenus); //去重之后 转换为list
+            List<Menu> menus = new ArrayList<>(userOwnedMenus); // 转换为list  转换结构
             for (Menu data : menus) {  //递归转换数据结构
                 if (data.getParentId() == SysConstants.MenuConstant.PARENT_ID_OF_NO_PARENT) {
-                    returnMenus.add(data);
+                    if (!isContainMenu(returnMenus, data))
+                        returnMenus.add(data);
                     fillMenuListChildren(menus, data);
                 }
             }
@@ -274,12 +275,33 @@ public class MenuServiceImpl extends AbstractBaseService implements IMenuService
         for (Menu childMenu : menus) {
             if (childMenu.getParentId().equals(menu.getId())) {
                 menu.setHasChildren(true);
+                if (!isContainMenu(childrenList, childMenu))
+                    childrenList.add(childMenu);
                 menu.setChildren(childrenList);
-                childrenList.add(childMenu);
                 if (childMenu.getType() != SysConstants.MenuConstant.TYPE_OPERATE) {
                     fillMenuListChildren(menus, childMenu);
                 }
+
             }
+
         }
+    }
+
+
+    /**
+     * 是否已包含菜单
+     *
+     * @param menus
+     * @param menu
+     * @return
+     */
+    private boolean isContainMenu(List<Menu> menus, Menu menu) {
+        if (menus == null || menus.isEmpty())
+            return false;
+        for (Menu data : menus) {
+            if (data.getId().equals(menu.getId()))
+                return true;
+        }
+        return false;
     }
 }

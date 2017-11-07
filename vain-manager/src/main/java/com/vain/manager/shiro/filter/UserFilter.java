@@ -8,14 +8,13 @@ import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
  * @author vain
  * @date： 2017/10/27 11:39
- * @description： 基于t-menu的menuKey来拦截
+ * @description： 基于t-menu的menuKey来拦截(数据库配置的路径基于web配置的api之后 否则mapperValue会为空!!)
  */
 public class UserFilter extends AuthorizationFilter {
 
@@ -29,20 +28,12 @@ public class UserFilter extends AuthorizationFilter {
             servletRequest.setAttribute("NO_SESSION", 1);
             return false;
         }
-        //基于请求路径的URI来验证权限(menu配置url要为URI)
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
-        if (request.getRequestURI() != null) {
-            logger.info(request.getRequestURI());
-            if (subject.isPermitted(request.getRequestURI())) {
-                return true;
-            }
-        }
         //验证menuKey
         String[] perms = (String[]) mapperValue;
         if (perms != null && perms.length > 0) {
             for (String perm : perms) {
-                logger.info(perm);
                 if (subject.isPermitted(perm)) {
+                    logger.info(perm);
                     return true;
                 }
             }

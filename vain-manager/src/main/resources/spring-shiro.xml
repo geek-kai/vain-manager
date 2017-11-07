@@ -46,7 +46,7 @@
 
     <bean id="userFilter" class="com.vain.manager.shiro.filter.UserFilter"/>
     <bean id="urlFilter" class="com.vain.manager.shiro.filter.UrlFilter"/>
-    <!--设置默认拦截方式-->
+    <!--注册filter-->
     <bean id="permissionFilterManager" class="com.vain.manager.shiro.filter.PermissionFilterManager">
         <property name="filterName" value="user"/>
     </bean>
@@ -70,6 +70,7 @@
                 /resources/** = anon
                 /api/user/login = anon
                 /api/user/logout = anon
+                /api/menu/getMyMenus = anon
                 /api/** = url,user
             </value>
         </property>

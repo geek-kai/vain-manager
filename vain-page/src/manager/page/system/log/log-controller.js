@@ -33,6 +33,7 @@ angular.module("log.controllers", ["log.services", "common.menu.services", "comm
                 }
                 logHttpServices.getPagedList(curQueryParam, function (data) {
                     if (data.code == 200) {
+                        $scope.noData = false;
                         commonUtils.storeQueryParam(curQueryParam);
                         $scope.logs = data.dataList;
                         $scope.paginator = commonUtils.initPaginator(data.totalSize, curQueryParam.curPage, curQueryParam.pageSize);

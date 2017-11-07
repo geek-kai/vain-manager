@@ -39,7 +39,7 @@
                         </div>
                     </div>
 
-                    <div class="am-u-sm-4 am-u-md-4" ng-if="permissions['account.user.getPagedList']">
+                    <div class="am-u-sm-4 am-u-md-4" ng-show="permissions['account.user.getPagedList']">
                         <div class="am-form-group">
                             <select data-am-selected="{btnSize: 'sm'}" ng-model="queryParam.type" ng-change="search();" ng-options="type.value as type.key for type in userType">
                                 <option value=""></option>
@@ -226,7 +226,7 @@
                     <div style="padding-top: 6rem;">
                         <label class="am-u-sm-3 am-form-label">电话号码：</label>
                         <div class="am-u-sm-9">
-                            <input type="number" id="accountPhone" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6" ng-pattern="/^[0-11]*$/" ng-model="modifyUser.phone">
+                            <input type="tel" id="accountPhone" class="am-form-field" placeholder="电话号码" ng-maxlength="11" ng-minlength="6" ng-pattern="/^[0-11]*$/" ng-model="modifyUser.phone">
                             <span class="am-icon-warning" style="right:1.7rem;"></span>
                         </div>
                     </div>

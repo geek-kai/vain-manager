@@ -14,7 +14,6 @@ angular.module("home.controllers", [])
                 homeHttpServices.getMyMenus({}, function (data) {
                     if (data.code == 200)
                         $scope.menus = data.dataList;
-
                 });
             };
 

@@ -36,10 +36,11 @@
                     <table class="am-table am-table-bordered am-table-radius am-table-hover am-table-centered">
                         <thead>
                         <tr class="am-primary">
-                            <th width="5%">序号</th>
+                            <th width="3%">序号</th>
                             <th width="5%">任务名称</th>
                             <th width="5%">任务组</th>
-                            <th width="15%">任务类</th>
+                            <th width="7%">任务类</th>
+                            <th width="5%">Spring对象</th>
                             <th width="5%">任务方法</th>
                             <th width="10%">Cron表达式</th>
                             <th width="5%">状态</th>
@@ -47,7 +48,7 @@
                             <th width="10%">任务描述</th>
                             <th width="8%">创建时间</th>
                             <th width="8%">修改时间</th>
-                            <th width="19%">操作</th>
+                            <th width="30%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -57,6 +58,7 @@
                             <td title="{{job.jobName}}">{{job.jobName}}</td>
                             <td title="{{job.jobGroup}}">{{job.jobGroup}}</td>
                             <td title="{{job.jobClass}}">{{job.jobClass}}</td>
+                            <td title="{{job.springName}}">{{job.springName}}</td>
                             <td title="{{job.jobMethod}}">{{job.jobMethod}}</td>
                             <td title="{{job.cronExpression}}">{{job.cronExpression}}</td>
                             <td title="{{job.jobStatus}}">

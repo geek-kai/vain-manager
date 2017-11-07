@@ -8,7 +8,7 @@ public class Constants {
     public static final int SUPER_ADMIN = 1;
 
     /**
-     * 普通用户
+     * 管理组
      */
     public static final int USER = 2;
 
@@ -18,7 +18,7 @@ public class Constants {
     public static final String ROLE_SUPER_ADMINISTRATOR = "ROLE_SUPER_ADMINISTRATOR";
 
     /**
-     * 普通角色
+     * 管理组
      */
     public static final String ROLE_USER = "ROLE_USER";
 

@@ -61,12 +61,11 @@ public class PermissionFilterManager extends DefaultFilterChainManager {
                 if (!StrUtil.isEmpty(data.getUrl())) {
                     urlPerms.put(data.getUrl(), data.getMenuKey()); //将url 作为key  menuKey作为权限value
                 }
-                if (null == this.filterName)
-                    this.filterName = "perms";
-                for (Map.Entry<String, String> entry : urlPerms.entrySet()) {
-                    this.addToChain(entry.getKey(), filterName, entry.getValue());
-                }
-
+            }
+            if (null == this.filterName)
+                this.filterName = "perms";
+            for (Map.Entry<String, String> entry : urlPerms.entrySet()) {
+                this.addToChain(entry.getKey(), filterName, entry.getValue());
             }
         } catch (Exception e) {
             e.printStackTrace();
