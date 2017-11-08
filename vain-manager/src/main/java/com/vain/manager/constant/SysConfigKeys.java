@@ -64,5 +64,15 @@ public class SysConfigKeys {
      */
     public static final String FILE_PATH = "vain";
 
+    ////////////////////////////////////////////////
 
+    /**
+     * 数据库备份文件地址
+     */
+    public static final String DB_DUMP_PATH = "DB_DUMP_PATH";
+
+    /**
+     * 备份数据库名
+     */
+    public static final String DB_DUMP_NAME = "DB_DUMP_NAME";
 }

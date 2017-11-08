@@ -303,6 +303,16 @@
             <artifactId>com.springsource.javax.media.jai.core</artifactId>
         </dependency>
 
+        <!--邮件发送-->
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.mail</groupId>
+            <artifactId>javax.mail-api</artifactId>
+        </dependency>
     </dependencies>
     <build>
         <finalName>vain-manager</finalName>
