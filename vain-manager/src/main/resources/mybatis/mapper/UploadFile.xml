@@ -2,10 +2,10 @@
 <!DOCTYPE mapper 
 PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
-<mapper namespace="com.mic.ikaycity.component.entity.UploadFile">
-	<insert id="insert" parameterType="com.mic.ikaycity.component.entity.UploadFile">
+<mapper namespace="com.vain.manager.entity.UploadFile">
+	<insert id="insert" parameterType="com.vain.manager.entity.UploadFile">
 		INSERT INTO t_upload_file
-		(uid, name, type, length, userId, url, createTime)
-		VALUES(#{uid}, #{name}, #{type}, #{length}, #{userId},#{url}, now())
+		(uuid, name, type, length, userId, url, width,height,createTime)
+		VALUES(#{UUID}, #{name}, #{type}, #{length}, #{userId},#{url},#{width},#{height},now())
 	</insert>
 </mapper>

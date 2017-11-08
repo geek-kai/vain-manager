@@ -162,7 +162,7 @@ public class UserServiceImpl extends AbstractBaseService implements IUserService
 
     @Override
     public User get(User entity) throws ErrorCodeException {
-        return null;
+        return userDao.get(entity);
     }
 
     /**

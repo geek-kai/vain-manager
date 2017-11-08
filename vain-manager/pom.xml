@@ -281,6 +281,28 @@
             <artifactId>jsch</artifactId>
         </dependency>
 
+        <!--图片压缩处理-->
+        <dependency>
+            <groupId>commons-digester</groupId>
+            <artifactId>commons-digester</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+        </dependency>
+
+        <!--图片翻红处理-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>simpleimage</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.media.jai</groupId>
+            <artifactId>com.springsource.javax.media.jai.core</artifactId>
+        </dependency>
+
     </dependencies>
     <build>
         <finalName>vain-manager</finalName>

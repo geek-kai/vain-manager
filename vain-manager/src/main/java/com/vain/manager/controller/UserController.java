@@ -77,9 +77,25 @@ public class UserController extends AbstractBaseController<User> {
         return null;
     }
 
+    /**
+     * 获取账户详细信息
+     *
+     * @param entity  参数实体
+     * @param request
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/get", method = RequestMethod.POST)
+    @ResponseBody
     @Override
     public Response<User> get(@RequestBody User entity, HttpServletRequest request) throws Exception {
-        return null;
+        entity = new User();
+        entity.setId(UserSession.getUserId()); //只获取自己信息
+        Response<User> response = new Response<>();
+        User user = userService.get(entity);
+        user.clearSecretField();
+        response.setData(user);
+        return response;
     }
 
     @Override
@@ -121,6 +137,25 @@ public class UserController extends AbstractBaseController<User> {
     public Response<User> modify(@RequestBody User entity, HttpServletRequest request) throws Exception {
         if (entity == null || entity.getId() == null)
             throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        Response<User> response = new Response<>();
+        response.setData(userService.modify(entity));
+        return response;
+    }
+
+    /**
+     * 修改个人信息
+     *
+     * @param entity  参数实体
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/modifyPersonInfo", method = RequestMethod.POST)
+    @ResponseBody
+    public Response<User> modifyPersonInfo(@RequestBody User entity) throws Exception {
+        if (entity == null || entity.getId() == null)
+            throw new ErrorCodeException(SysConstants.Code.PARAM_ERROR_CODE, SysConstants.Code.PARAM_ERROR_MSG);
+        if (!entity.getId().equals(UserSession.getUserId()))
+            throw new ErrorCodeException(SysConstants.Code.ONLY_PERSON_INFO_CODE, SysConstants.Code.ONLY_PERSON_INFO_MSG);
         Response<User> response = new Response<>();
         response.setData(userService.modify(entity));
         return response;

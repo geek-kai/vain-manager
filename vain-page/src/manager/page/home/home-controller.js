@@ -47,4 +47,8 @@ angular.module("home.controllers", [])
                     window.location.href = "../login/login.html";
                 });
             };
+
+            $scope.personData = function () {
+                $scope.menuUrl  = "../user/person-info/personal-info.html";
+            };
         }]);

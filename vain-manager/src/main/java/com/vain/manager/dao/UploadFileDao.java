@@ -3,6 +3,7 @@ package com.vain.manager.dao;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.vain.manager.common.dao.AbstractBaseDao;
 import com.vain.manager.entity.UploadFile;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,6 +12,7 @@ import java.util.List;
  * @date 2017/11/7 21:34
  * @description
  */
+@Repository
 public class UploadFileDao extends AbstractBaseDao<UploadFile> {
 
     @Override

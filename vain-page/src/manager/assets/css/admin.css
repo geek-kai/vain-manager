@@ -373,7 +373,7 @@ gallery.html css
     background: url(../../image/arrow_off.png) no-repeat 40px center;
 }
 
-/**checkbox替换**/
+/**菜单checkbox替换**/
 .arrow b.active {
     background: white url(../../image/arrow_on.png) no-repeat 40px center;
 }
@@ -406,5 +406,27 @@ gallery.html css
 
 .config_progress div {
     width: 0%;
+}
+
+/******个人资料****/
+.person_img img{
+    width: 70px;!important;
+    height: 70px;!important;
+}
+
+.person_img label input {
+    width: 0;
+    height: 0;
+}
+
+.person_img label {
+    width: 45px;
+    height: 45px;
+    position: absolute;
+    margin-left: -55px;
+    margin-top: 10px;
+}
+.person_line {
+    border-right:1px dashed #000;
 }
 

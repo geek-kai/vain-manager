@@ -1,0 +1,134 @@
+<!doctype html>
+<html data-ng-app="personalInfo.app">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>后台管理系统</title>
+    <meta name="description" content="个人资料">
+    <meta name="keywords" content="index">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="icon" type="image/png" href="../../../image/favicon.png">
+    <link rel="stylesheet" href="../../../assets/css/amazeui.min.css"/>
+    <link rel="stylesheet" href="../../../assets/css/admin.css">
+    <link rel="stylesheet" href="../../../assets/css/app.css">
+</head>
+
+<body ng-controller="PersonalInfoCtrl" ng-init="init()">
+<div class="tpl-content-scope tpl-content-wrapper">
+    <div class="tpl-content-page-title">
+        个人资料
+    </div>
+    <ol class="am-breadcrumb">
+        <li><a href="#" class="am-icon-cog">个人资料</a></li>
+        <li class="am-active">用户信息</li>
+    </ol>
+
+    <div class="row">
+        <div class="tpl-portlet">
+            <div class="am-g am-margin-vertical-sm">
+            </div>
+            <div class="am-g">
+                <div class="am-u-lg-6" >
+                    <form class="am-form am-form-horizontal person_line">
+                        <div class="am-form-group am-padding-xs ">
+                            <label class="am-u-sm-7 am-form-label am-text-right">头像</label>
+                            <div class="am-u-sm-5 ">
+                               <span class="person_img tpl-header-list-user-ico ">
+                                 <img src="../../../image/logo.gif" ng-src="{{user.head}}">
+                                    <label>
+                                        <input nv-file-select="" uploader="uploadMainImage" class="file_input file_input2" type="file">
+                                    </label>
+                               </span>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-7 am-form-label am-text-right">账户</label>
+                            <div class="am-u-sm-5 ">
+                                <input type="text" disabled ng-model="user.userName">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-7 am-form-label am-text-right">性别</label>
+                            <div class="am-u-sm-5 ">
+                                <label class="am-radio-inline">
+                                    <input type="radio" ng-checked="user.sex==0" name="docInlineRadio"> 男
+                                </label>
+                                <label class="am-radio-inline">
+                                    <input type="radio" ng-checked="user.sex==1" name="docInlineRadio"> 女
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-7 am-form-label am-text-right">角色</label>
+                            <div class="am-u-sm-5 ">
+                                <input type="text" disabled ng-model="user.roleName">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-7 am-form-label am-text-right">邮箱</label>
+                            <div class="am-u-sm-5 ">
+                                <input type="email" ng-model="user.email">
+                            </div>
+                        </div>
+
+                        <button class="am-btn am-btn-secondary am-fr am-margin-right-xl" ng-click="submit();">
+                            <i class="am-icon-check"></i>
+                            提交
+                        </button>
+                    </form>
+                </div>
+                <div class="am-u-lg-6 am-u-lg-offset-0">
+                    <form class="am-form am-form-horizontal">
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-2 am-form-label am-text-center">昵称</label>
+                            <div class="am-u-sm-5 am-u-end">
+                                <input type="text" placeholder="昵称" ng-model="user.nickname">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-2 am-form-label am-text-center">手机号码</label>
+                            <div class="am-u-sm-5 am-u-end">
+                                <input type="tel" placeholder="手机号码" ng-model="user.phone">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group am-padding-xs">
+                            <label class="am-u-sm-2 am-form-label am-text-center">出生日期</label>
+                            <div class="am-u-sm-5 am-u-end">
+                                <input type="text" placeholder="输入你的出生日期" ng-model="user.birthday" id="birthday"
+                                       data-am-datepicker="{format: 'yyyy-mm-dd'}" readonly>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="../../../assets/js/jquery.min.js"></script>
+<script src="../../../assets/js/amazeui.min.js"></script>
+<script src="../../../assets/js/app.js"></script>
+<script type="application/javascript" src="../../../lib/angular/angular.js"></script>
+<script type="application/javascript" src="../../../lib/angular-resource/angular-resource.js"></script>
+<script type="application/javascript" src="../../../lib/angular-cookie/angular-cookies.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap.js"></script>
+<script type="application/javascript" src="../../../lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+<script type="application/javascript" src="../../../lib/angular-file-upload/angular-file-upload.min.js"></script>
+<script type="application/javascript" src="personal-info-app.js"></script>
+<script type="application/javascript" src="personal-info-controller.js"></script>
+<script type="application/javascript" src="personal-info-services.js"></script>
+<script type="application/javascript" src="../../../common/common-services.js"></script>
+</body>
+
+</html>

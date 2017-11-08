@@ -146,6 +146,13 @@ public class SysConstants {
         public static final int ACCOUNT_IS_NOT_EXISTS_CODE = 1108;
         public static final String ACCOUNT_IS_NOT_EXISTS_MSG = "输入的账号信息不存在";
 
+
+        /**
+         * 只能修改个人信息
+         */
+        public static final int ONLY_PERSON_INFO_CODE = 1109;
+        public static final String ONLY_PERSON_INFO_MSG = "只能修改个人信息";
+
         /**
          * 定时表达式错误
          */

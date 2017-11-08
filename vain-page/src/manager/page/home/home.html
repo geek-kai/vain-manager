@@ -18,22 +18,21 @@
 </head>
 
 <body style="overflow: inherit;" ng-controller="HomeCtrl" ng-init="init()">
+
 <!--头部导航栏-->
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
         <a href="javascript:;" class="tpl-logo">
-             <span class="tpl-header-list-user-ico">
-                 <img src="../../image/logo.gif" alt="" style="width: 6rem;height: 6rem;">
-             </span>
+
         </a>
     </div>
     <div class="am-icon-list tpl-header-nav-hover-ico am-fl am-margin-right">
-
     </div>
 
-    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only"
-            data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span
-            class="am-icon-bars"></span></button>
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}">
+        <span class="am-sr-only">导航切换</span>
+        <span class="am-icon-bars"></span>
+    </button>
 
     <!--个人菜单-->
     <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
@@ -42,19 +41,17 @@
             <li class="am-hide-sm-only"><a href="javascript:;" id="admin-fullscreen" class="tpl-header-list-link"><span
                     class="am-icon-arrows-alt"></span> <span class="admin-fullText">开启全屏</span></a></li>
 
-            <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
+            <li class="am-dropdown am-margin-right-lg" data-am-dropdown data-am-dropdown-toggle>
                 <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
                     <span class="tpl-header-list-user-nick">{{user.userName}}</span>
-                    <span class="tpl-header-list-user-ico"> <img src="../../assets/img/user01.png"></span>
+                    <span class="tpl-header-list-user-ico"> <img src="../../assets/img/user01.png" ng-src="{{user.head}}" style="width: 4rem;height: 4rem;"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li><a href="#"><span class="am-icon-bell-o"></span> 资料</a></li>
+                    <li><a href="#" ng-click="personData();"><span class="am-icon-bell-o"></span> 资料</a></li>
                     <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
                     <li><a ng-click="logout();"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
             </li>
-            <li><a href="#" class="tpl-header-list-link"><span
-                    class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
         </ul>
     </div>
 </header>

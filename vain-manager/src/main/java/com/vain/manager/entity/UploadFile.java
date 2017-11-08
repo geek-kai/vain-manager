@@ -1,15 +1,19 @@
 package com.vain.manager.entity;
 
 import com.vain.manager.common.entity.PagedEntity;
+import com.vain.manager.util.DateUtil;
+import com.vain.manager.util.StrUtil;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.UUID;
 
 /**
  * @author vain
  * @date 2017/11/7 21:23
- * @description
+ * @description 上传文件实体
  */
-public class UploadFile extends PagedEntity{
+public class UploadFile extends PagedEntity {
     /**
      * 生成UUID
      */
@@ -45,13 +49,23 @@ public class UploadFile extends PagedEntity{
      */
     private String path;
 
+    /**
+     * 图片宽度
+     */
+    private Integer width;
+
+    /**
+     * 图片高度
+     */
+    private Integer height;
+
 
     private Timestamp createTime;
 
     private Timestamp modifyTime;
 
     /**
-     * 文件类型 1：photo 2：audio 3：video
+     * 文件类型 1：图片 2：音频 3：视频  4：其他
      */
     public static final int TYPE_PHOTO = 1;
 
@@ -59,17 +73,42 @@ public class UploadFile extends PagedEntity{
 
     public static final int TYPE_VIDEO = 3;
 
+    public static final int TYPE_OTHER = 4;
+
     public UploadFile() {
     }
 
-    public UploadFile(String UUID, String name, Integer type, Long length, Long userId, String url, String path) {
-        this.UUID = UUID;
+    public UploadFile(String UUID, String name, Integer type, Long length, Long userId) {
         this.name = name;
         this.type = type;
         this.length = length;
         this.userId = userId;
-        this.url = url;
-        this.path = path;
+        if (StrUtil.isBlank(UUID)) {
+            //日期/类别/UUID
+            this.UUID = DateUtil.dateToStr(Calendar.getInstance().getTime(), "yyyy-MM-dd") + "/" + type + "/" + java.util.UUID.randomUUID().toString();
+            // UUID+后缀名组成新的UUID
+        } else {
+            this.UUID = UUID + "/" + type + "/" + java.util.UUID.randomUUID().toString();
+        }
+        if (name != null)
+            this.UUID += name.substring(name.lastIndexOf("."));
+
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public String getUUID() {
