@@ -55,8 +55,8 @@ public class MenuController extends AbstractBaseController<Menu> {
                 response.setData(SysConstants.Code.SUCCESS_MSG);
                 return response;
             }
-            entity.setUserId(UserSession.getUserId());
-            entity.setType(UserSession.getUserType());
+            entity.setUserId(UserSession.getUserId() == 0 ? entity.getUserId() : UserSession.getUserId());
+            entity.setType(UserSession.getUserType() == 0 ? entity.getType() : UserSession.getUserType());
             response = new Response<>();
             response.setDataList(menuService.getMyMenus(entity));
             cache.setMenus(response);//重新缓存

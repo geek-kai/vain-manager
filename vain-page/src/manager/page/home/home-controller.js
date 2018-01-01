@@ -11,7 +11,7 @@ angular.module("home.controllers", [])
                     window.location.href = "../login/login.html";
                 }
                 $scope.menuUrl = "../../page/main/main.html";
-                homeHttpServices.getMyMenus({}, function (data) {
+                homeHttpServices.getMyMenus({userId: $scope.user.id, type: $scope.user.type}, function (data) {
                     if (data.code == 200)
                         $scope.menus = data.dataList;
                 });
@@ -49,6 +49,6 @@ angular.module("home.controllers", [])
             };
 
             $scope.personData = function () {
-                $scope.menuUrl  = "../user/person-info/personal-info.html";
+                $scope.menuUrl = "../user/person-info/personal-info.html";
             };
         }]);
